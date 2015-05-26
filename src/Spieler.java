@@ -24,6 +24,9 @@ public class Spieler {
 		
 	}
 	
+	/*
+	 * Methode, welche wahr ist, wenn in der Schiffliste eines Spielers kein Schiff mehr intakt ist
+	 */
 	public boolean spielerAus(){
 		boolean x=true;
 		for(Schiffe k:this.getSchiffListe()){
@@ -39,6 +42,10 @@ public class Spieler {
 		return x;
 	}
 	
+	/*
+	 * Fehler!? wenn einer ausgeschieden ist, dann immer true/false??
+	 * Methode, welche wahr ist, wenn irgendein Spieler neu ausgeschieden ist
+	 */
 	public boolean spielerAus(Spieler[] spielerArray){
 		boolean x=true;
 		for(Spieler i:spielerArray){
@@ -56,6 +63,9 @@ public class Spieler {
 		return x;
 	}
 	
+	/*
+	 * Methode, die prüft, ob ein Schiff versenkt ist
+	 */
 	public boolean versenktup(Spieler[] spielerArray){
 		for(Spieler i:spielerArray){
 			for(Schiffe k:i.getSchiffListe()){

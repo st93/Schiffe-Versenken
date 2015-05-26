@@ -4,11 +4,12 @@ public class UBoot extends Schiffe {
 	//private boolean schussFrei;
 	private int index;
 	private int size=2;
-	private int regZeit=0;
+	private int regZeit;
 	private boolean versenkt= false;
 	
 	public UBoot(int index){
 		this.index=index;
+		this.regZeit=0;
 	}
 	
 	public int getSize(){
@@ -21,5 +22,9 @@ public class UBoot extends Schiffe {
 	
 	public void setReg(){
 		this.regZeit=1;
+	}
+	
+	public int getReg(){
+		return this.regZeit;
 	}
 }

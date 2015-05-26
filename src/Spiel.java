@@ -17,6 +17,9 @@ public class Spiel {
 		
 	}
 	
+	/*
+	 * Methode, mit der das Spiel eingeleitet wird und alle erforderlichen Daten abgefragt werden
+	 */
 	public void einleitung(){
 		erstelleSpieler();
 		erstelleSpielfeld(); 
@@ -31,7 +34,10 @@ public class Spiel {
 		return this.schiffListe;
 	}
 	
- 	public void erstelleSpieler(){	
+ 	/*
+ 	 * Methode, mit der ein Array mit allen Spielern gefüllt wird
+ 	 */
+	public void erstelleSpieler(){	
 		System.out.println("Wie viele Spieler nehmen teil? (tippe 2-6)\n");
 		spielerZahl=scSpieler.nextInt();
 		
@@ -50,6 +56,9 @@ public class Spiel {
 		}
 	}
 	
+	/*
+	 * Methode mit der die Anzahl und Art der Schiffe abgefragt werden
+	 */
 	public void erstelleSchiffe(){	
 		schiffListe= new ArrayList<Schiffe>();
 		System.out.println("Wie viele Schiffe soll es geben?");
@@ -95,6 +104,9 @@ public class Spiel {
 		}
 	}
 	
+	/*
+	 * Methode, mit der das spielerArray durchgegangen wird und jeder Spieler seine Schiffe setzt
+	 */
 	public void schiffeAufFeld(){
 		for(Spieler i:this.spielerArray){
 			System.out.println(i.getName()+ " ist an der Reihe, seine Schiffe zu setzen");
@@ -102,6 +114,9 @@ public class Spiel {
 		}
 	}
 	
+	/*
+	 * Methode, um die Größe des Spielfelds abzufragen und ein Spielfeld für jeden Spieler zu erstellen
+	 */
 	public void erstelleSpielfeld(){
 		System.out.println("Wie groß soll das Spielfeld sein?");
 		System.out.println("Gib eine Zahl ein! (min. 6)");
@@ -119,12 +134,18 @@ public class Spiel {
 		}
 	}
 
+	/*
+	 * Methode, um die Schiffliste an die Spieler zu übertragen
+	 */
 	public void schiffeZuSpieler(){
 		for(Spieler k:spielerArray){
 			k.setSchiffListe(schiffListe);
 		}
 	}
 	
+	/*
+	 * Methode, um das Spielerarray an die einzelnen Spieler zu übergeben
+	 */
 	public void spielerZuSpieler(){
 		for(Spieler k:spielerArray){
 			k.setSpielerArray(spielerArray);
@@ -135,8 +156,10 @@ public class Spiel {
 		return this.rundenZahl;
 	}
 	
+	/*
+	 * Methode, in welcher der Spielverlauf geregelt wird, bis alle ausgeschieden sind
+	 */
 	public void spielVerlauf(){
-		
 		while(!abbruchBed()){
 			for(Spieler i:spielerArray){
 				if(i.getImSpiel()){
@@ -157,6 +180,9 @@ public class Spiel {
 		}
 	}
 	
+	/*
+	 * Methode, welche das Spielerarray durchläuft und testet, ob noch mehr als ein Spieler im Spiel sind
+	 */
 	public boolean abbruchBed(){
 		int x=0;
 		for(Spieler i:spielerArray){

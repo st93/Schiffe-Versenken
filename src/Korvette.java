@@ -2,11 +2,12 @@
 public class Korvette extends Schiffe {
 	private int index;
 	private int size=3;
-	private int regZeit=0;
+	private int regZeit;
 	private boolean versenkt= false;
 	
 	public Korvette(int index){
 		this.index=index;
+		this.regZeit=0;
 	}
 	
 	public int getSize(){
@@ -19,5 +20,9 @@ public class Korvette extends Schiffe {
 	
 	public void setReg(){
 		this.regZeit=1;
+	}
+	
+	public int getReg(){
+		return this.regZeit;
 	}
 }

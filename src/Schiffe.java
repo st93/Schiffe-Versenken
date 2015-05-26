@@ -35,15 +35,15 @@ public class Schiffe {
 	}
 	
 	public int getReg(){
-		return regZeit;
+		return this.regZeit;
 	}
 	
 	public void setReg(){
-		this.regZeit=1;
+		this.regZeit=2;
 	}
 	
 	public void updateReg(){
-		if (regZeit>0){
+		if (this.regZeit>0){
 			this.regZeit--;
 		}
 	}
