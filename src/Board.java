@@ -52,6 +52,11 @@ public class Board {
 		this.getSquare(height, width).setCounter(4);
 	}
 	
+	/*
+	 * Methode, um Koordianten zu überprüfen und die mögliche Richtung, das Schiff zu setzen auf true zu ändern.
+	 * liefert true, wenn das übergebene Schiff an den übergebenen Koordinaten gesetzt werden kann.
+	 * fragt alle möglichen Fälle ab
+	 */
 	public boolean koordinatenCheck(int h, int b, Schiffe s){
 		this.höhe=h;
 		this.breite=b;

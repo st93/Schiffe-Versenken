@@ -105,6 +105,10 @@ public class Spieler {
 		
 	}
 	
+	/*
+	 * Überprüft, ob ein Schiff verfügbar ist
+	 * liefert true, wenn mindestens ein Schiff verfügbar ist
+	 */
 	public boolean schiffCheck(){
 		for(Schiffe s:schiffListe){
 			if((s.getVersenkt()==false)&& s.getReg()==0){
@@ -115,12 +119,18 @@ public class Spieler {
 		return false;
 	}
 	
+	/*
+	 * Methode, mit der geschossen wird
+	 */
 	public void schießen(){
 		Spieler sp=this.spielerWahl();
 		this.shoot(sp);
 		
 	}
 	
+	/*
+	 * Überprüft zuerst, ob ein Spieler besiegt wurde und schießt, wenn ein Schiff verfügbar ist
+	 */
 	public void shoot(Spieler sp){
 		this.versenktup(spielerArray);
 		if(this.schiffCheck()){
@@ -131,6 +141,9 @@ public class Spieler {
 		
 	}
 	
+	/*
+	 * Überprüft, mit welchem Boot geschossen werden kann
+	 */
 	public void bootVerfügbar(){
 		boolean u=false;
 		boolean k=false;
@@ -173,6 +186,9 @@ public class Spieler {
 		}
 	}
 	
+	/*
+	 * Methode, zur Bestimmung der Zielkoordinaten und Ausrichtung, liefert auf die Konsole, ob getroffen wurde, oder nicht
+	 */
 	public void schuss(Schiffe s, Spieler sp){
 		sp.getSpielerFeld().printFeind();
 		System.out.println("Tippen sie die Zielkoordinaten!");
@@ -209,6 +225,9 @@ public class Spieler {
 		}
 	}
 	
+	/*
+	 * Methode, mit welcher der Gegner für den nächsten Schuss bestimmt wird
+	 */
 	public Spieler spielerWahl(){
 		for(int i=0;i<spielerArray.length;i++){
 			if(spielerArray[i].getImSpiel()){
@@ -224,6 +243,9 @@ public class Spieler {
 		return spielerArray[geg];
 	}
 	
+	/*
+	 * Methode, mit der das Boot zum Schießen ausgewählt wird
+	 */
 	public Schiffe bootWahl(){
 		System.out.println("Wählen sie ein Boot zum Schießen! 1=Zerstörer 2= Fregatte 3= Korvette 4=Uboot");
 		int b=scs.nextInt();
@@ -295,6 +317,9 @@ public class Spieler {
 		return this.spielerFeld;
 	}
 	
+	/*
+	 * ruft den Konstruktor der Klasse Board auf und speichert das Board in dem Spieler
+	 */
 	public void erstelleFeld(int size){
 		this.spielerFeld=new Board(size);
 	}
@@ -303,6 +328,10 @@ public class Spieler {
 		this.spielerArray=s;
 	}
 	
+	/*
+	 * Übernimmt die Schiffliste aus der Klasse Spiel und kopiert sie, damit die Listen
+	 * von jedem Spieler einzeln verändert werden können
+	 */
 	public void setSchiffListe(List<Schiffe> schiffListe){
 		int ub=1;
 		int ko=1;
@@ -334,6 +363,9 @@ public class Spieler {
 		return this.schiffListe;
 	}
 	
+	/*
+	 * Methode zum setzen der Schiffe (mit Überprüfung der Koordinaten)
+	 */
 	public void setzeSchiffe(){
 			for(int i=0;i<schiffListe.size();i++){
 				Schiffe s=schiffListe.get(i);
@@ -644,11 +676,17 @@ public class Spieler {
 		
 	}
 	
+	/*
+	 * Methode, um die Zeile abzufragen
+	 */
 	public int frageHöhe(){
 		System.out.println("In welcher Zeile soll der Startpunkt sein?");
 		int höhe=scHöhe.nextInt();
 		return höhe-1;
 	}
+	/*
+	 * Methode, um die Spalte abzufragen
+	 */
 	public int frageBreite(){
 		System.out.println("In welcher Spalte soll der Startpunkt sein?");
 		int breite=scBreite.nextInt();

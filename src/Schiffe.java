@@ -42,6 +42,9 @@ public class Schiffe {
 		this.regZeit=2;
 	}
 	
+	/*
+	 * Methode, um die Regenerationszeit um eins zu verringern
+	 */
 	public void updateReg(){
 		if (this.regZeit>0){
 			this.regZeit--;
