@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.Scanner;
 
 
 public class Spieler {
@@ -7,7 +6,7 @@ public class Spieler {
 	private int anzahlSchiffe=5;
 	private String name;
 	private Board spielerFeld;
-	private Scanner scHöhe= new Scanner(System.in);
+	private Scanner scHoehe= new Scanner(System.in);
 	private Scanner scBreite= new Scanner(System.in);
 	private Scanner scDir= new Scanner(System.in);
 	private Scanner scs= new Scanner(System.in);
@@ -122,9 +121,17 @@ public class Spieler {
 	/*
 	 * Methode, mit der geschossen wird
 	 */
-	public void schießen(){
-		Spieler sp=this.spielerWahl();
-		this.shoot(sp);
+	public void schiessen(){
+		int x=0;
+		for(Spieler i:spielerArray){
+			if(i.getImSpiel()){
+				x++;
+			}
+		}
+		if(x>1){
+			Spieler sp=this.spielerWahl();
+			this.shoot(sp);
+		}
 		
 	}
 	
@@ -133,10 +140,15 @@ public class Spieler {
 	 */
 	public void shoot(Spieler sp){
 		this.versenktup(spielerArray);
-		if(this.schiffCheck()){
-			this.bootVerfügbar();
-			Schiffe s=this.bootWahl();
-			this.schuss(s,sp);
+		if(!sp.spielerAus()){
+			if(this.schiffCheck()){
+				this.bootVerfügbar();
+				Schiffe s=this.bootWahl();
+				this.schuss(s,sp);
+			}
+		}
+		else{
+			this.schiessen();
 		}
 		
 	}
@@ -193,10 +205,10 @@ public class Spieler {
 		sp.getSpielerFeld().printFeind();
 		System.out.println("Tippen sie die Zielkoordinaten!");
 		System.out.println("Wählen sie eine Zeile!");
-		int höhe=scHöhe.nextInt()-1;
+		int hoehe=scHoehe.nextInt()-1;
 		System.out.println("Wählen sie eine Spalte!");
 		int breite=scBreite.nextInt()-1;
-		if(!spielerFeld.schussKoordinaten(höhe, breite)){
+		if(!spielerFeld.schussKoordinaten(hoehe, breite)){
 			System.out.println("Bitte wählen Sie Koordinaten innerhalb des Feldes");
 			this.schuss(s,sp);
 		}
@@ -205,13 +217,13 @@ public class Spieler {
 		if(!(a==2||a==1)){
 			System.out.println("Fehler, Bitte tippen Sie 1 oder 2.");
 		}
-		if(sp.getSpielerFeld().schießen(höhe,breite,a,s)){
+		if(sp.getSpielerFeld().schießen(hoehe,breite,a,s)){
 			System.out.println("Treffer!!!");
 			sp.getSpielerFeld().printFeind();
 			s.setReg();
 			System.out.println(s.getName() + " hat geschossen.");
 			if(sp.spielerAus()){
-				this.schießen();
+				this.schiessen();
 			}
 			else{
 				this.shoot(sp);
@@ -231,13 +243,13 @@ public class Spieler {
 	 */
 	public Spieler spielerWahl(){
 		for(int i=0;i<spielerArray.length;i++){
-			if(spielerArray[i].getImSpiel()){
+			if(spielerArray[i].getImSpiel()&&spielerArray[i].getName()!=this.getName()){
 				System.out.println(spielerArray[i].getName()+" kann angegriffen werden! wähle: "+i);
 			}
 			
 		}
 		int geg=scGeg.nextInt();
-		if(!spielerArray[geg].getImSpiel()){
+		if(!spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
 			System.out.println("Bitte wähle einen der genannten Spieler aus!");
 			this.spielerWahl();
 		}
@@ -399,7 +411,7 @@ public class Spieler {
 				this.schiffListe.add(new Fregatte(s.getIndex()));	
 			}
 			if(typ==4){
-				this.schiffListe.add(new Zerstörer(s.getIndex()));	
+				this.schiffListe.add(new Zerstoerer(s.getIndex()));	
 			}
 			if(typ==0){
 				System.out.println("leider klappt das nicht...");
@@ -419,7 +431,7 @@ public class Spieler {
 				Schiffe s=schiffListe.get(i);
 				s.getDirection().clean();
 				System.out.println("Setze " + s.getName()+ " "+s.getIndex());
-				int höhe=frageHöhe();
+				int höhe=frageHoehe();
 				int breite=frageBreite();
 				boolean l=false;
 				boolean r=false;
@@ -809,9 +821,9 @@ public class Spieler {
 	/*
 	 * Methode, um die Zeile abzufragen
 	 */
-	public int frageHöhe(){
+	public int frageHoehe(){
 		System.out.println("In welcher Zeile soll der Startpunkt sein?");
-		int höhe=scHöhe.nextInt();
+		int höhe=scHoehe.nextInt();
 		return höhe-1;
 	}
 	/*

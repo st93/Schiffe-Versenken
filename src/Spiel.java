@@ -76,7 +76,7 @@ public class Spiel {
 			System.out.println("4 = Zerstörer");
 			int x = scSchiffe.nextInt();
 			if(x==4){ 
-				schiffListe.add(new Zerstörer(zerstörerZähler));
+				schiffListe.add(new Zerstoerer(zerstörerZähler));
 				zerstörerZähler++;
 				System.out.println("Ein Zerstörer wurde erstellt!");
 			}
@@ -166,12 +166,13 @@ public class Spiel {
 				if(i.getImSpiel()){
 					System.out.println(i.getName()+" ist an der Reihe!");
 					System.out.println("");
-					i.schießen();
+					i.schiessen();
 					for(Schiffe x:i.getSchiffListe()){
 						System.out.println(x.getReg());
 					}
 				}
 				if(abbruchBed()){
+					System.out.println("Ende!");
 					break;
 				}
 			}
@@ -196,6 +197,7 @@ public class Spiel {
 			}
 		}
 		if(x>1){
+			System.out.println("Das Spiel geht mit "+ x+" Spielern weiter");
 			return false;
 		}
 		else{

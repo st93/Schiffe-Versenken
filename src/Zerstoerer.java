@@ -1,5 +1,5 @@
 
-public class Zerstörer extends Schiffe {
+public class Zerstoerer extends Schiffe {
 	private int index;
 	public final int typ;
 	public final String name;
@@ -9,7 +9,7 @@ public class Zerstörer extends Schiffe {
 	public final int schaden;
 	private boolean versenkt;
 	
-	public Zerstörer(int index){
+	public Zerstoerer(int index){
 		this.index=index;
 		this.typ=4;
 		this.name="Zerstörer";

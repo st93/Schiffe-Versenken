@@ -8,7 +8,7 @@ public class Board {
 	private char schiffTreffer='T';
 	private char wasserTreffer='W';
 	private char schiffVersenkt='V';
-	private int höhe;
+	private int hoehe;
 	private int breite;
 	
 	public Board (int size){
@@ -58,18 +58,18 @@ public class Board {
 	 * fragt alle möglichen Fälle ab
 	 */
 	public boolean koordinatenCheck(int h, int b, Schiffe s){
-		this.höhe=h;
+		this.hoehe=h;
 		this.breite=b;
-		if(oben(höhe,breite)){
-			if(obenLinks(höhe,breite)){
-				if(!feldFreiEck1(höhe,breite)){
+		if(oben(hoehe,breite)){
+			if(obenLinks(hoehe,breite)){
+				if(!feldFreiEck1(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck1Rechts(höhe,breite,s) || richtungEck1Unten(höhe,breite,s)){
-					if(richtungEck1Rechts(höhe,breite,s)){
+				if(richtungEck1Rechts(hoehe,breite,s) || richtungEck1Unten(hoehe,breite,s)){
+					if(richtungEck1Rechts(hoehe,breite,s)){
 						
 					}
-					if(richtungEck1Unten(höhe,breite,s)){
+					if(richtungEck1Unten(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -78,15 +78,15 @@ public class Board {
 					return false;
 				}
 			}
-			else if(obenRechts(höhe,breite)){
-				if(!feldFreiEck2(höhe,breite)){
+			else if(obenRechts(hoehe,breite)){
+				if(!feldFreiEck2(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck2Links(höhe,breite,s) || richtungEck2Unten(höhe,breite,s)){
-					if(richtungEck2Links(höhe,breite,s)){
+				if(richtungEck2Links(hoehe,breite,s) || richtungEck2Unten(hoehe,breite,s)){
+					if(richtungEck2Links(hoehe,breite,s)){
 						
 					}
-					if(richtungEck2Unten(höhe,breite,s)){
+					if(richtungEck2Unten(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -96,17 +96,17 @@ public class Board {
 				}
 			}
 			else{
-				if(!feldFreiOben(höhe,breite)){
+				if(!feldFreiOben(hoehe,breite)){
 					return false;
 				}
-				if(richtungObenLinks(höhe,breite,s) || richtungObenRechts(höhe,breite,s) || richtungObenUnten(höhe,breite,s)){
-					if(richtungObenRechts(höhe,breite,s)){
+				if(richtungObenLinks(hoehe,breite,s) || richtungObenRechts(hoehe,breite,s) || richtungObenUnten(hoehe,breite,s)){
+					if(richtungObenRechts(hoehe,breite,s)){
 						
 					}
-					if(richtungObenUnten(höhe,breite,s)){
+					if(richtungObenUnten(hoehe,breite,s)){
 						
 					}
-					if(richtungObenLinks(höhe,breite,s)){
+					if(richtungObenLinks(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -116,16 +116,16 @@ public class Board {
 				}
 			}
 		}
-		else if(unten(höhe,breite)){
-			if(untenLinks(höhe,breite)){
-				if(!feldFreiEck4(höhe,breite)){
+		else if(unten(hoehe,breite)){
+			if(untenLinks(hoehe,breite)){
+				if(!feldFreiEck4(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck4Rechts(höhe,breite,s) || richtungEck4Oben(höhe,breite,s)){
-					if(richtungEck4Rechts(höhe,breite,s)){
+				if(richtungEck4Rechts(hoehe,breite,s) || richtungEck4Oben(hoehe,breite,s)){
+					if(richtungEck4Rechts(hoehe,breite,s)){
 
 					}
-					if(richtungEck4Oben(höhe,breite,s)){
+					if(richtungEck4Oben(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -134,15 +134,15 @@ public class Board {
 					return false;
 				}
 			}
-			else if(untenRechts(höhe,breite)){
-				if(!feldFreiEck3(höhe,breite)){
+			else if(untenRechts(hoehe,breite)){
+				if(!feldFreiEck3(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck3Links(höhe,breite,s) || richtungEck3Oben(höhe,breite,s)){
-					if(richtungEck3Links(höhe,breite,s)){
+				if(richtungEck3Links(hoehe,breite,s) || richtungEck3Oben(hoehe,breite,s)){
+					if(richtungEck3Links(hoehe,breite,s)){
 						
 					}
-					if(richtungEck3Oben(höhe,breite,s)){
+					if(richtungEck3Oben(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -152,17 +152,17 @@ public class Board {
 				}
 			}
 			else{
-				if(!feldFreiUnten(höhe,breite)){
+				if(!feldFreiUnten(hoehe,breite)){
 					return false;
 				}
-				if(richtungUntenLinks(höhe,breite,s) || richtungUntenRechts(höhe,breite,s) || richtungUntenOben(höhe,breite,s)){
-					if(richtungUntenRechts(höhe,breite,s)){
+				if(richtungUntenLinks(hoehe,breite,s) || richtungUntenRechts(hoehe,breite,s) || richtungUntenOben(hoehe,breite,s)){
+					if(richtungUntenRechts(hoehe,breite,s)){
 						
 					}
-					if(richtungUntenLinks(höhe,breite,s)){
+					if(richtungUntenLinks(hoehe,breite,s)){
 						
 					}
-					if(richtungUntenOben(höhe,breite,s)){
+					if(richtungUntenOben(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -172,16 +172,16 @@ public class Board {
 				}
 			}
 		}
-		else if(links(höhe,breite)){
-			if(untenLinks(höhe,breite)){
-				if(!feldFreiEck3(höhe,breite)){
+		else if(links(hoehe,breite)){
+			if(untenLinks(hoehe,breite)){
+				if(!feldFreiEck3(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck4Rechts(höhe,breite,s) || richtungEck4Oben(höhe,breite,s)){
-					if(richtungEck4Rechts(höhe,breite,s)){
+				if(richtungEck4Rechts(hoehe,breite,s) || richtungEck4Oben(hoehe,breite,s)){
+					if(richtungEck4Rechts(hoehe,breite,s)){
 						
 					}
-					if(richtungEck4Oben(höhe,breite,s)){
+					if(richtungEck4Oben(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -190,15 +190,15 @@ public class Board {
 					return false;
 				}
 			}
-			else if(obenLinks(höhe,breite)){
-				if(!feldFreiEck1(höhe,breite)){
+			else if(obenLinks(hoehe,breite)){
+				if(!feldFreiEck1(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck1Rechts(höhe,breite,s) || richtungEck1Unten(höhe,breite,s)){
-					if(richtungEck1Rechts(höhe,breite,s)){
+				if(richtungEck1Rechts(hoehe,breite,s) || richtungEck1Unten(hoehe,breite,s)){
+					if(richtungEck1Rechts(hoehe,breite,s)){
 						
 					}
-					if(richtungEck1Unten(höhe,breite,s)){
+					if(richtungEck1Unten(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -208,17 +208,17 @@ public class Board {
 				}
 			}
 			else{
-				if(!feldFreiLinks(höhe,breite)){
+				if(!feldFreiLinks(hoehe,breite)){
 					return false;
 				}
-				if(richtungLinksOben(höhe,breite,s) || richtungLinksRechts(höhe,breite,s) || richtungLinksUnten(höhe,breite,s)){
-					if(richtungLinksUnten(höhe,breite,s)){
+				if(richtungLinksOben(hoehe,breite,s) || richtungLinksRechts(hoehe,breite,s) || richtungLinksUnten(hoehe,breite,s)){
+					if(richtungLinksUnten(hoehe,breite,s)){
 						
 					}
-					if(richtungLinksRechts(höhe,breite,s)){
+					if(richtungLinksRechts(hoehe,breite,s)){
 						
 					}
-					if(richtungLinksUnten(höhe,breite,s)){
+					if(richtungLinksUnten(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -229,16 +229,16 @@ public class Board {
 			}
 			
 		}
-		else if(rechts(höhe,breite)){
-			if(obenRechts(höhe,breite)){
-				if(!feldFreiEck2(höhe,breite)){
+		else if(rechts(hoehe,breite)){
+			if(obenRechts(hoehe,breite)){
+				if(!feldFreiEck2(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck2Links(höhe,breite,s) || richtungEck2Unten(höhe,breite,s)){
-					if(richtungEck2Links(höhe,breite,s)){
+				if(richtungEck2Links(hoehe,breite,s) || richtungEck2Unten(hoehe,breite,s)){
+					if(richtungEck2Links(hoehe,breite,s)){
 						
 					}
-					if(richtungEck2Unten(höhe,breite,s)){
+					if(richtungEck2Unten(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -247,15 +247,15 @@ public class Board {
 					return false;
 				}
 			}
-			else if(untenRechts(höhe,breite)){
-				if(!feldFreiEck4(höhe,breite)){
+			else if(untenRechts(hoehe,breite)){
+				if(!feldFreiEck4(hoehe,breite)){
 					return false;
 				}
-				if(richtungEck3Links(höhe,breite,s) || richtungEck3Oben(höhe,breite,s)){
-					if(richtungEck3Links(höhe,breite,s)){
+				if(richtungEck3Links(hoehe,breite,s) || richtungEck3Oben(hoehe,breite,s)){
+					if(richtungEck3Links(hoehe,breite,s)){
 						
 					}
-					if(richtungEck3Oben(höhe,breite,s)){
+					if(richtungEck3Oben(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -265,17 +265,17 @@ public class Board {
 				}
 			}
 			else{
-				if(!feldFreiRechts(höhe,breite)){
+				if(!feldFreiRechts(hoehe,breite)){
 					return false;
 				}
-				if(richtungRechtsLinks(höhe,breite,s) || richtungRechtsOben(höhe,breite,s) || richtungRechtsUnten(höhe,breite,s)){
-					if(richtungRechtsLinks(höhe,breite,s)){
+				if(richtungRechtsLinks(hoehe,breite,s) || richtungRechtsOben(hoehe,breite,s) || richtungRechtsUnten(hoehe,breite,s)){
+					if(richtungRechtsLinks(hoehe,breite,s)){
 						
 					}
-					if(richtungRechtsOben(höhe,breite,s)){
+					if(richtungRechtsOben(hoehe,breite,s)){
 						
 					}
-					if(richtungRechtsUnten(höhe,breite,s)){
+					if(richtungRechtsUnten(hoehe,breite,s)){
 						
 					}
 					return true;
@@ -287,21 +287,21 @@ public class Board {
 			
 		}
 		else{
-			if(!feldFrei(höhe,breite)){
+			if(!feldFrei(hoehe,breite)){
 				return false;
 			}
-			if(richtungOben(höhe, breite, s) || richtungUnten(höhe, breite, s) || 
-				richtungLinks(höhe, breite, s) || richtungRechts(höhe, breite, s)){
-				if(richtungOben(höhe, breite, s)){
+			if(richtungOben(hoehe, breite, s) || richtungUnten(hoehe, breite, s) || 
+				richtungLinks(hoehe, breite, s) || richtungRechts(hoehe, breite, s)){
+				if(richtungOben(hoehe, breite, s)){
 					
 				}
-				if(richtungUnten(höhe, breite, s)){
+				if(richtungUnten(hoehe, breite, s)){
 					
 				}
-				if(richtungLinks(höhe, breite, s)){
+				if(richtungLinks(hoehe, breite, s)){
 	
 				}
-				if(richtungRechts(höhe, breite, s)){
+				if(richtungRechts(hoehe, breite, s)){
 					
 				}
 				return true;
