@@ -2,13 +2,23 @@ import java.util.Scanner;
 
 
 public class Schiffe {
-	private int size=1;
-	private int index=0;
+	private int size;
+	public final String name;
 	private int height;
 	private int width;
-	private Direction richtung= new Direction();
-	private int regZeit=0;
-	private boolean versenkt= false;
+	private int index;
+	public int schaden;
+	public final int typ;
+	private Direction richtung;
+	protected int regZeit;
+	private boolean versenkt;
+	
+	public Schiffe(){
+		this.richtung=new Direction();
+		this.versenkt=false;
+		this.typ=0;
+		this.name="Schiff";
+	}
 	
 	public void setHeight(int h){
 		this.height=h;
@@ -16,6 +26,18 @@ public class Schiffe {
 	
 	public int getHeight(){
 		return this.height;
+	}
+	
+	public int getTyp(){
+		return this.typ;
+	}
+	
+	public String getName(){
+		return this.name;
+	}
+	
+	public int getSchaden(){
+		return this.schaden;
 	}
 	
 	public void setWidth(int w){
@@ -30,7 +52,7 @@ public class Schiffe {
 		return this.size;
 	}
 	
-	public int getId(){
+	public int getIndex(){
 		return index;
 	}
 	
@@ -49,6 +71,10 @@ public class Schiffe {
 		if (this.regZeit>0){
 			this.regZeit--;
 		}
+	}
+	
+	public boolean schussBereit(){
+		return(versenkt==false&&regZeit==0);
 	}
 	
 	public Direction getDirection(){

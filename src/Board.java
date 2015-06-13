@@ -1453,18 +1453,21 @@ public class Board {
 	public boolean schießen(int h, int b, int a, Schiffe s){
 		//unfertig
 		boolean treffer=false;
-		int gr=s.getSize()-2;
+		int gr=s.getSchaden();
 		if(gr==0){
 			gr++;
 		}
-			if(a==1){
-				if(gr==1){
-					if(this.getSquare(h, b).getCounter()==1){
-						treffer=true;
-						this.setSchiffTreffer(h,b);
-					}
-				}
-				else if(gr==2){
+		if(gr==1){
+			if(this.getSquare(h, b).getCounter()==1){
+				this.setSchiffTreffer(h,b);
+				return true;
+			}
+			else if(this.getSquare(h, b).getCounter()==0){
+				this.setWasserTreffer(h, b);
+			}
+		}
+			if(a==1){	
+				if(gr==2){
 					if(h>=(size-1)/2){
 						for(int i=h;i>h-2;i--){
 							if(this.getSquare(i, b).getCounter()==1){
@@ -1514,13 +1517,7 @@ public class Board {
 				}
 			}
 			if(a==2){
-				if(gr==1){
-					if(this.getSquare(h, b).getCounter()==1){
-						treffer=true;
-						this.setSchiffTreffer(h,b);
-					}
-				}
-				else if(gr==2){
+				if(gr==2){
 					if(b>=(size-1)/2){
 						for(int i=b;i>b-2;i--){
 							if(this.getSquare(h, i).getCounter()==1){

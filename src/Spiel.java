@@ -69,37 +69,38 @@ public class Spiel {
 		int uBootZähler=1;
 		for(int i=1;i<=schiffeZahl;i++){
 			System.out.println("Welches Schiff soll als "+i+". erstellt werden?");
-			System.out.println(" 1 = Zerstörer, 2 = Fregatte, 3 = Korvette, 4 = Uboot");
+			System.out.println("Bitte gib eine Zahl ein:");
+			System.out.println("1 = Uboot");
+			System.out.println("2 = Korvette");
+			System.out.println("3 = Fregatte");
+			System.out.println("4 = Zerstörer");
 			int x = scSchiffe.nextInt();
-			switch(x){
-				case 1: 
+			if(x==4){ 
 				schiffListe.add(new Zerstörer(zerstörerZähler));
 				zerstörerZähler++;
 				System.out.println("Ein Zerstörer wurde erstellt!");
-				break;
-						
-				case 2: 
+			}
+			else if(x==3){ 
 				schiffListe.add(new Fregatte(fregattenZähler));
 				fregattenZähler++;
 				System.out.println("Eine Fregatte wurde erstellt!");
-				break;
+			}
 						
-				case 3:
+			else if(x==2){
 				schiffListe.add(new Korvette(korvettenZähler));
 				korvettenZähler++;
 				System.out.println("Eine Korvette wurde erstellt!");
-				break;
+			}
 				
-				case 4:
+			else if(x==1){
 				schiffListe.add(new UBoot(uBootZähler));
 				uBootZähler++;
 				System.out.println("Ein UBoot wurde erstellt!");
-				break;
+			}
 				
-				default: 
+			else{ 
 				System.out.println("Bitte eine Zahl zwischen 1 und 4 eingeben!");
 				i--;
-				break;
 			}
 		}
 	}
@@ -166,12 +167,16 @@ public class Spiel {
 					System.out.println(i.getName()+" ist an der Reihe!");
 					System.out.println("");
 					i.schießen();
+					for(Schiffe x:i.getSchiffListe()){
+						System.out.println(x.getReg());
+					}
 				}
 				if(abbruchBed()){
 					break;
 				}
 			}
 			rundenZahl++;
+			System.out.println("Runde "+ (rundenZahl-1) + " ist zu Ende.");
 			for(Spieler k:spielerArray){
 				for(Schiffe s:k.getSchiffListe()){
 					s.updateReg();
