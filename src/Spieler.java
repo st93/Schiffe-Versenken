@@ -2,25 +2,25 @@ import java.util.*;
 
 
 public class Spieler {
-	private boolean imSpiel=true;
-	private int anzahlSchiffe=5;
-	private String name;
-	private Board spielerFeld;
+	protected boolean imSpiel;
+	protected String name;
+	protected Board spielerFeld;
 	private Scanner scHoehe= new Scanner(System.in);
 	private Scanner scBreite= new Scanner(System.in);
 	private Scanner scDir= new Scanner(System.in);
 	private Scanner scs= new Scanner(System.in);
 	private Scanner scAus= new Scanner(System.in);
 	private Scanner scGeg= new Scanner(System.in);
-	private ArrayList<Schiffe> schiffListe;
-	private Spieler[] spielerArray;
+	protected ArrayList<Schiffe> schiffListe;
+	protected Spieler[] spielerArray;
 	
 	public Spieler(String name){
 		this.imSpiel=true;
 		this.name=name;
 	}
+	
 	public Spieler(){
-		
+		this.imSpiel=true;
 	}
 	
 	/*
@@ -366,10 +366,6 @@ public class Spieler {
 		return imSpiel;
 	}
 	
-	public int getAnzahlSchiffe(){
-		return this.anzahlSchiffe;
-	}
-	
 	public void setName(String s){
 		this.name=s;
 	}
@@ -431,14 +427,14 @@ public class Spieler {
 				Schiffe s=schiffListe.get(i);
 				s.getDirection().clean();
 				System.out.println("Setze " + s.getName()+ " "+s.getIndex());
-				int höhe=frageHoehe();
+				int hoehe=frageHoehe();
 				int breite=frageBreite();
 				boolean l=false;
 				boolean r=false;
 				boolean u=false;
 				boolean o=false;
-				if(spielerFeld.koordinatenCheck(höhe, breite, s)){
-					s.setHeight(höhe);
+				if(spielerFeld.koordinatenCheck(hoehe, breite, s)){
+					s.setHeight(hoehe);
 					s.setWidth(breite);
 					System.out.println(s.getName()+" "+s.getIndex()+ " kann hier gesetzt werden!");
 					System.out.println("");
@@ -465,28 +461,28 @@ public class Spieler {
 					
 					int y=scDir.nextInt();
 					if(y==1 && l==true){
-						spielerFeld.schiffSetzenLinks(höhe,breite,s);
+						spielerFeld.schiffSetzenLinks(hoehe,breite,s);
 						System.out.println(s.getName()+ " "+ s.getIndex()+" wurde nach Links gesetzt");
 						s.getDirection().clean();
 						s.getDirection().setLinks(true);
 						spielerFeld.print();
 					}
 					else if(y==2 && r==true){
-						spielerFeld.schiffSetzenRechts(höhe,breite,s);
+						spielerFeld.schiffSetzenRechts(hoehe,breite,s);
 						System.out.println(s.getName()+ " "+ s.getIndex()+" wurde nach Rechts gesetzt");
 						s.getDirection().clean();
 						s.getDirection().setRechts(true);
 						spielerFeld.print();
 					}
 					else if(y==4 && u==true){
-						spielerFeld.schiffSetzenUnten(höhe,breite,s);
+						spielerFeld.schiffSetzenUnten(hoehe,breite,s);
 						System.out.println(s.getName()+ " "+ s.getIndex()+" wurde nach unten gesetzt");
 						s.getDirection().clean();
 						s.getDirection().setUnten(true);
 						spielerFeld.print();
 					}
 					else if(y==3 && o==true){
-						spielerFeld.schiffSetzenOben(höhe,breite,s);
+						spielerFeld.schiffSetzenOben(hoehe,breite,s);
 						System.out.println(s.getName()+ " "+ s.getIndex()+" wurde nach oben gesetzt");
 						s.getDirection().clean();
 						s.getDirection().setOben(true);
