@@ -86,14 +86,14 @@ public class KI extends Spieler{
 				System.out.println("Zeile: "+ breite);
 				System.out.println(s.getName()+" "+s.getIndex()+ " kann hier gesetzt werden!");
 				System.out.println("");
-				System.out.println(this.name+" wählt die Richtung, in die das Uboot gesetzt werden soll!");
+				System.out.println(this.name+" wählt die Richtung, in die das Boot gesetzt werden soll!");
 				System.out.println("");
 				System.out.println("");
 				l=s.getDirection().getLinks();
 				r=s.getDirection().getRechts();
 				o=s.getDirection().getOben();
 				u=s.getDirection().getUnten();
-				int y=5;
+				int y=randomInt(1,4);
 				while(!(y==1&&l||y==2&&r||y==3&&o||y==4&&u)){
 					y=randomInt(1,4);
 				}

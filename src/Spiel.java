@@ -38,17 +38,20 @@ public class Spiel {
  	 * Methode, mit der ein Array mit allen Spielern gefüllt wird
  	 */
 	public void erstelleSpieler(){	
-		System.out.println("Wie viele Spieler nehmen teil? (tippe 2-6)\n");
+		System.out.println("Wie viele Spieler nehmen teil? (tippe 2-6)");
 		spielerZahl=scSpieler.nextInt();
 		
 		if(spielerZahl<2 || spielerZahl>6){
 			System.out.println("Bitte eine Spielerzahl zwischen 2 und 6 eingeben!");
 			erstelleSpieler();
 		}
+		System.out.println("Sollen Spieler vom Computer gesteuert werden?");
+		System.out.println("Tippe, wie viele Spieler vom Computer gesteuert werden sollen?");
+		
 		
 		spielerArray= new Spieler [spielerZahl];
 		for(int i=1; i<=spielerZahl; i++){
-			System.out.println("Wie ist der Name von Spieler " + i + " ?\n");
+			System.out.println("Wie ist der Name von Spieler " + i + " ?");
 			String sname=scSpieler.next();
 			spielerArray[i-1]=new Spieler(sname);
 			System.out.println(sname);

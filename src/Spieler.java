@@ -438,7 +438,7 @@ public class Spieler {
 					s.setWidth(breite);
 					System.out.println(s.getName()+" "+s.getIndex()+ " kann hier gesetzt werden!");
 					System.out.println("");
-					System.out.println("Wähle die Richtung, in die das Uboot gesetzt werden soll!");
+					System.out.println("Wähle die Richtung, in die das Boot gesetzt werden soll!");
 					System.out.println("");
 					System.out.println("Tippe:");
 					if(s.getDirection().getLinks()){
