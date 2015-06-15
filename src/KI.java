@@ -1,18 +1,21 @@
 import java.util.*;
 public class KI extends Spieler{
 	public KI(int x){
+		super("Computer "+x);
+	}
+	public KI(String y){
 		super();
-		this.name="Computer "+x;
+		this.name=y;
 	}
 	
 	public void schuss(Schiffe s, Spieler sp){
 		sp.getSpielerFeld().printFeind();
-		int hoehe=randomInt(1,spielerFeld.getSize());
-		int breite=randomInt(1,spielerFeld.getSize());
+		int hoehe=randomInt(1,spielerFeld.getSize()-1);
+		int breite=randomInt(1,spielerFeld.getSize()-1);
 		int a=randomInt(1,2);
 		System.out.println(this.name+" w‰hlt ZielKoordinaten..");
-		System.out.println("Zeile: "+hoehe);
-		System.out.println("Spalte: "+breite);
+		System.out.println("Zeile: "+hoehe+1);
+		System.out.println("Spalte: "+breite+1);
 		if(a==1){
 			System.out.println("Ausrichtung: vertikal");
 		}
@@ -47,16 +50,15 @@ public class KI extends Spieler{
 			}
 			
 		}
-		int geg=randomInt(1,spielerArray.length);
+		int geg=randomInt(0,spielerArray.length-1);
 		if(!spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
 			this.spielerWahl();
 		}
-		System.out.println(spielerArray[geg].getName()+"wurde ausgew‰hlt");
+		System.out.println(spielerArray[geg].getName()+" wurde ausgew‰hlt");
 		return spielerArray[geg];
 	}
 
 	public Schiffe bootWahl(){
-		System.out.println(this.name+" w‰hlt ein Boot zum Schieﬂen!");
 		int b=randomInt(1,4);
 		for(Schiffe s:schiffListe){
 			if(s.getTyp()==b && s.schussBereit()){
@@ -73,8 +75,8 @@ public class KI extends Spieler{
 			Schiffe s=schiffListe.get(i);
 			s.getDirection().clean();
 			System.out.println("Setze " + s.getName()+ " "+s.getIndex());
-			int hoehe=randomInt(1,spielerFeld.getSize());
-			int breite=randomInt(1,spielerFeld.getSize());
+			int hoehe=randomInt(1,spielerFeld.getSize()-1);
+			int breite=randomInt(1,spielerFeld.getSize()-1);
 			boolean l=false;
 			boolean r=false;
 			boolean u=false;

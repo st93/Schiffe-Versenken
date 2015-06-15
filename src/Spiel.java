@@ -7,6 +7,7 @@ public class Spiel {
 	private Spieler[] spielerArray;
 	private ArrayList<Schiffe> schiffListe;
 	private int spielerZahl;
+	private int kISpieler;
 	private int rundenZahl=0;
 	private Scanner scSpieler=new Scanner(System.in);
 	private Scanner scSpielfeld=new Scanner(System.in);
@@ -47,14 +48,27 @@ public class Spiel {
 		}
 		System.out.println("Sollen Spieler vom Computer gesteuert werden?");
 		System.out.println("Tippe, wie viele Spieler vom Computer gesteuert werden sollen?");
-		
+		kISpieler=scSpieler.nextInt();
 		
 		spielerArray= new Spieler [spielerZahl];
+		int kIZähler=1;
 		for(int i=1; i<=spielerZahl; i++){
-			System.out.println("Wie ist der Name von Spieler " + i + " ?");
-			String sname=scSpieler.next();
-			spielerArray[i-1]=new Spieler(sname);
-			System.out.println(sname);
+			
+			
+			if(i<=kISpieler){
+				System.out.println("Wie ist der Name von Spieler " + i + " ?");
+				String sname=scSpieler.next();
+				spielerArray[i-1]=new Spieler(sname);
+				System.out.println(sname+" wurde dem Spiel hinzugefügt!");
+			}
+			else{
+				System.out.println("Wie ist der Name von Computer "+kIZähler+" ?");
+				String cname=scSpieler.next();
+				spielerArray[i-1]=new KI(cname);
+				System.out.println(cname+" wurde dem Spiel hinzugefügt!");
+				
+			}
+			
 			
 		}
 	}

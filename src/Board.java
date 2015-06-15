@@ -1454,16 +1454,16 @@ public class Board {
 		//unfertig
 		boolean treffer=false;
 		int gr=s.getSchaden();
-		if(gr==0){
-			gr++;
-		}
 		if(gr==1){
 			if(this.getSquare(h, b).getCounter()==1){
 				this.setSchiffTreffer(h,b);
+				s.setReg();
 				return true;
 			}
 			else if(this.getSquare(h, b).getCounter()==0){
 				this.setWasserTreffer(h, b);
+				s.setReg();
+				return false;
 			}
 		}
 			if(a==1){	
@@ -1491,7 +1491,7 @@ public class Board {
 						}
 					}
 				}
-				else{
+				else if(gr==3){
 					if(h>=(size-1)/2){
 						for(int i=h;i>h-3;i--){
 							if(this.getSquare(i, b).getCounter()==1){
@@ -1541,7 +1541,7 @@ public class Board {
 						}
 					}
 				}
-				else{
+				else if(gr==3){
 					if(b>=(size-1)/2){
 						for(int i=b;i>b-3;i--){
 							if(this.getSquare(h, i).getCounter()==1){
@@ -1566,6 +1566,7 @@ public class Board {
 					}
 				}
 			}
+			s.setReg();
 			return treffer;
 		
 	}

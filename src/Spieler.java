@@ -220,7 +220,7 @@ public class Spieler {
 		if(sp.getSpielerFeld().schieﬂen(hoehe,breite,a,s)){
 			System.out.println("Treffer!!!");
 			sp.getSpielerFeld().printFeind();
-			s.setReg();
+			//s.setReg();
 			System.out.println(s.getName() + " hat geschossen.");
 			if(sp.spielerAus()){
 				this.schiessen();
@@ -234,7 +234,7 @@ public class Spieler {
 		else{
 			System.out.println("Kein Treffer..");
 			sp.getSpielerFeld().printFeind();
-			s.setReg();
+			//s.setReg();
 		}
 	}
 	
@@ -371,7 +371,7 @@ public class Spieler {
 	}
 	
 	public String getName(){
-		return name;
+		return this.name;
 	}
 	
 	public Board getSpielerFeld(){
