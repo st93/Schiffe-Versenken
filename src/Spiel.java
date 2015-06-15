@@ -55,7 +55,7 @@ public class Spiel {
 		for(int i=1; i<=spielerZahl; i++){
 			
 			
-			if(i<=kISpieler){
+			if(i<=spielerZahl-kISpieler){
 				System.out.println("Wie ist der Name von Spieler " + i + " ?");
 				String sname=scSpieler.next();
 				spielerArray[i-1]=new Spieler(sname);
@@ -66,6 +66,7 @@ public class Spiel {
 				String cname=scSpieler.next();
 				spielerArray[i-1]=new KI(cname);
 				System.out.println(cname+" wurde dem Spiel hinzugefuegt!");
+				kIZaehler++;
 				
 			}
 			
