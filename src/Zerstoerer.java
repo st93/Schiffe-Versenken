@@ -44,10 +44,6 @@ public class Zerstoerer extends Schiffe {
 		return this.name;
 	}
 	
-	public void schießen(int b, int h){
-		
-	}
-	
 	public int getReg(){
 		return this.regZeit;
 	}

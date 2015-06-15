@@ -36,7 +36,7 @@ public class Spiel {
 	}
 	
  	/*
- 	 * Methode, mit der ein Array mit allen Spielern gefüllt wird
+ 	 * Methode, mit der ein Array mit allen Spielern gefï¿½llt wird
  	 */
 	public void erstelleSpieler(){	
 		System.out.println("Wie viele Spieler nehmen teil? (tippe 2-6)");
@@ -51,7 +51,7 @@ public class Spiel {
 		kISpieler=scSpieler.nextInt();
 		
 		spielerArray= new Spieler [spielerZahl];
-		int kIZähler=1;
+		int kIZaehler=1;
 		for(int i=1; i<=spielerZahl; i++){
 			
 			
@@ -59,13 +59,13 @@ public class Spiel {
 				System.out.println("Wie ist der Name von Spieler " + i + " ?");
 				String sname=scSpieler.next();
 				spielerArray[i-1]=new Spieler(sname);
-				System.out.println(sname+" wurde dem Spiel hinzugefügt!");
+				System.out.println(sname+" wurde dem Spiel hinzugefuegt!");
 			}
 			else{
-				System.out.println("Wie ist der Name von Computer "+kIZähler+" ?");
+				System.out.println("Wie ist der Name von Computer "+kIZaehler+" ?");
 				String cname=scSpieler.next();
 				spielerArray[i-1]=new KI(cname);
-				System.out.println(cname+" wurde dem Spiel hinzugefügt!");
+				System.out.println(cname+" wurde dem Spiel hinzugefuegt!");
 				
 			}
 			
@@ -80,38 +80,38 @@ public class Spiel {
 		schiffListe= new ArrayList<Schiffe>();
 		System.out.println("Wie viele Schiffe soll es geben?");
 		int schiffeZahl=scSchiffe.nextInt();
-		int zerstörerZähler=1;
-		int fregattenZähler=1;
-		int	korvettenZähler=1;
-		int uBootZähler=1;
+		int zerstoererZaehler=1;
+		int fregattenZaehler=1;
+		int	korvettenZaehler=1;
+		int uBootZaehler=1;
 		for(int i=1;i<=schiffeZahl;i++){
 			System.out.println("Welches Schiff soll als "+i+". erstellt werden?");
 			System.out.println("Bitte gib eine Zahl ein:");
 			System.out.println("1 = Uboot");
 			System.out.println("2 = Korvette");
 			System.out.println("3 = Fregatte");
-			System.out.println("4 = Zerstörer");
+			System.out.println("4 = Zerstoerer");
 			int x = scSchiffe.nextInt();
 			if(x==4){ 
-				schiffListe.add(new Zerstoerer(zerstörerZähler));
-				zerstörerZähler++;
-				System.out.println("Ein Zerstörer wurde erstellt!");
+				schiffListe.add(new Zerstoerer(zerstoererZaehler));
+				zerstoererZaehler++;
+				System.out.println("Ein Zerstoerer wurde erstellt!");
 			}
 			else if(x==3){ 
-				schiffListe.add(new Fregatte(fregattenZähler));
-				fregattenZähler++;
+				schiffListe.add(new Fregatte(fregattenZaehler));
+				fregattenZaehler++;
 				System.out.println("Eine Fregatte wurde erstellt!");
 			}
 						
 			else if(x==2){
-				schiffListe.add(new Korvette(korvettenZähler));
-				korvettenZähler++;
+				schiffListe.add(new Korvette(korvettenZaehler));
+				korvettenZaehler++;
 				System.out.println("Eine Korvette wurde erstellt!");
 			}
 				
 			else if(x==1){
-				schiffListe.add(new UBoot(uBootZähler));
-				uBootZähler++;
+				schiffListe.add(new UBoot(uBootZaehler));
+				uBootZaehler++;
 				System.out.println("Ein UBoot wurde erstellt!");
 			}
 				
@@ -133,15 +133,15 @@ public class Spiel {
 	}
 	
 	/*
-	 * Methode, um die Größe des Spielfelds abzufragen und ein Spielfeld für jeden Spieler zu erstellen
+	 * Methode, um die Groesse des Spielfelds abzufragen und ein Spielfeld fï¿½r jeden Spieler zu erstellen
 	 */
 	public void erstelleSpielfeld(){
-		System.out.println("Wie groß soll das Spielfeld sein?");
+		System.out.println("Wie groï¿½ soll das Spielfeld sein?");
 		System.out.println("Gib eine Zahl ein! (min. 6)");
 		int feldSize=scSpielfeld.nextInt();
 	
 		if(feldSize<6){
-			System.out.println("Bitte eine ganze Zahl, welche größer als 6 ist eingeben!");
+			System.out.println("Bitte eine ganze Zahl, welche groeï¿½er als 6 ist eingeben!");
 			erstelleSpielfeld();
 		}
 	
@@ -153,7 +153,7 @@ public class Spiel {
 	}
 
 	/*
-	 * Methode, um die Schiffliste an die Spieler zu übertragen
+	 * Methode, um die Schiffliste an die Spieler zu ï¿½bertragen
 	 */
 	public void schiffeZuSpieler(){
 		for(Spieler k:spielerArray){
@@ -162,7 +162,7 @@ public class Spiel {
 	}
 	
 	/*
-	 * Methode, um das Spielerarray an die einzelnen Spieler zu übergeben
+	 * Methode, um das Spielerarray an die einzelnen Spieler zu ï¿½bergeben
 	 */
 	public void spielerZuSpieler(){
 		for(Spieler k:spielerArray){
@@ -204,7 +204,7 @@ public class Spiel {
 	}
 	
 	/*
-	 * Methode, welche das Spielerarray durchläuft und testet, ob noch mehr als ein Spieler im Spiel sind
+	 * Methode, welche das Spielerarray durchlaeuft und testet, ob noch mehr als ein Spieler im Spiel sind
 	 */
 	public boolean abbruchBed(){
 		int x=0;
