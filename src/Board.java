@@ -53,9 +53,9 @@ public class Board {
 	}
 	
 	/*
-	 * Methode, um Koordianten zu überprüfen und die mögliche Richtung, das Schiff zu setzen auf true zu ändern.
-	 * liefert true, wenn das übergebene Schiff an den übergebenen Koordinaten gesetzt werden kann.
-	 * fragt alle möglichen Fälle ab
+	 * Methode, um Koordianten zu Ã¼berprÃ¼fen und die moegliche Richtung, das Schiff zu setzen auf true zu Ã¤ndern.
+	 * liefert true, wenn das Ã¼bergebene Schiff an den Ã¼bergebenen Koordinaten gesetzt werden kann.
+	 * fragt alle moeglichen FÃ¤lle ab
 	 */
 	public boolean koordinatenCheck(int h, int b, Schiffe s){
 		this.hoehe=h;
@@ -312,10 +312,10 @@ public class Board {
 		}
 	}
 	
-	public boolean richtungOben(int höhe, int breite, Schiffe s){ //prüft, ob vom Startpunkt nach oben das Schiff 
+	public boolean richtungOben(int hoehe, int breite, Schiffe s){ //prÃ¼ft, ob vom Startpunkt nach oben das Schiff 
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann (nicht am Rand)
-		if(höhe-schiffSize>0){	
-			for(int i=höhe-schiffSize;i<=höhe;i++){
+		if(hoehe-schiffSize>0){	
+			for(int i=hoehe-schiffSize;i<=hoehe;i++){
 				if(feldFrei(i,breite)){
 					s.getDirection().setOben(true);
 				}
@@ -325,9 +325,9 @@ public class Board {
 				}
 			}
 		}
-		else if(höhe-schiffSize==0){
-			if(feldFreiOben(höhe-schiffSize,breite)){
-				for(int i=höhe-schiffSize+1;i<=höhe;i++){
+		else if(hoehe-schiffSize==0){
+			if(feldFreiOben(hoehe-schiffSize,breite)){
+				for(int i=hoehe-schiffSize+1;i<=hoehe;i++){
 					if(feldFrei(i,breite)){
 						s.getDirection().setOben(true);
 					}
@@ -349,10 +349,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungUnten(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach unten das Schiff
+	public boolean richtungUnten(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach unten das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann  (nicht am Rand)
-		if(höhe+schiffSize<this.size-1){
-			for(int i=höhe;i<=höhe+schiffSize;i++){
+		if(hoehe+schiffSize<this.size-1){
+			for(int i=hoehe;i<=hoehe+schiffSize;i++){
 				if(feldFrei(i,breite)){
 					s.getDirection().setUnten(true);
 				}
@@ -362,9 +362,9 @@ public class Board {
 				}
 			}
 		}
-		else if(höhe+schiffSize==this.size-1){
-			if(feldFreiUnten(höhe+schiffSize,breite)){
-				for(int i=höhe;i<höhe+schiffSize;i++){
+		else if(hoehe+schiffSize==this.size-1){
+			if(feldFreiUnten(hoehe+schiffSize,breite)){
+				for(int i=hoehe;i<hoehe+schiffSize;i++){
 					if(feldFrei(i,breite)){
 						s.getDirection().setUnten(true);
 					}
@@ -386,11 +386,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungLinks(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach links das Schiff
+	public boolean richtungLinks(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach links das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann  (nicht am Rand)
 		if(breite-schiffSize>0){	
 			for(int i=breite-schiffSize;i<=breite;i++){
-				if(feldFrei(höhe,i)){
+				if(feldFrei(hoehe,i)){
 					s.getDirection().setLinks(true);
 				}
 				else{
@@ -400,9 +400,9 @@ public class Board {
 			}
 		}
 		else if(breite-schiffSize==0){
-			if(feldFreiLinks(höhe,breite-schiffSize)){
+			if(feldFreiLinks(hoehe,breite-schiffSize)){
 				for(int i=breite-schiffSize+1;i<=breite;i++){
-					if(feldFrei(höhe,i)){
+					if(feldFrei(hoehe,i)){
 						s.getDirection().setLinks(true);
 					}
 					else{
@@ -423,11 +423,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungRechts(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach rechts das Schiff
+	public boolean richtungRechts(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach rechts das Schiff
 		int schiffSize=s.getSize()-1;								   //gesetzt werden kann (nicht am Rand)
 		if(breite+schiffSize<this.size-1){
 			for(int i=breite;i<=breite+schiffSize;i++){
-				if(feldFrei(höhe,i)){
+				if(feldFrei(hoehe,i)){
 					s.getDirection().setRechts(true);
 				}
 				else{
@@ -437,9 +437,9 @@ public class Board {
 			}
 		}
 		else if(breite+schiffSize==this.size-1){
-			if(feldFreiRechts(höhe,breite+schiffSize)){
+			if(feldFreiRechts(hoehe,breite+schiffSize)){
 				for(int i=breite;i<breite+schiffSize;i++){
-					if(feldFrei(höhe,i)){
+					if(feldFrei(hoehe,i)){
 						s.getDirection().setRechts(true);
 					}
 					else{
@@ -460,11 +460,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck1Rechts(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt oben-links nach rechts das Schiff
+	public boolean richtungEck1Rechts(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt oben-links nach rechts das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
 		if(breite+schiffSize<this.size){
 			for(int i=breite+1;i<=breite+schiffSize;i++){
-				if(feldFreiOben(höhe,i)){
+				if(feldFreiOben(hoehe,i)){
 					s.getDirection().setRechts(true);
 				}
 				else{
@@ -480,10 +480,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck1Unten(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt oben-links nach unten das Schiff
+	public boolean richtungEck1Unten(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt oben-links nach unten das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
-				if(höhe+schiffSize<this.size-1){
-			for(int i=höhe+1;i<=höhe+schiffSize;i++){
+				if(hoehe+schiffSize<this.size-1){
+			for(int i=hoehe+1;i<=hoehe+schiffSize;i++){
 				if(feldFreiLinks(i,breite)){
 					s.getDirection().setUnten(true);
 				}
@@ -500,11 +500,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck2Links(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt oben-rechts nach links das Schiff
+	public boolean richtungEck2Links(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt oben-rechts nach links das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
 		if(breite-schiffSize>0){
 			for(int i=breite-schiffSize;i<=breite-1;i++){
-				if(feldFreiOben(höhe,i)){
+				if(feldFreiOben(hoehe,i)){
 					s.getDirection().setLinks(true);
 				}
 				else{
@@ -520,10 +520,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck2Unten(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt oben-rechts nach unten das Schiff
+	public boolean richtungEck2Unten(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt oben-rechts nach unten das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
-				if(höhe+schiffSize<this.size-1){
-			for(int i=höhe+1;i<=höhe+schiffSize;i++){
+				if(hoehe+schiffSize<this.size-1){
+			for(int i=hoehe+1;i<=hoehe+schiffSize;i++){
 				if(feldFreiRechts(i,breite)){
 					s.getDirection().setUnten(true);
 				}
@@ -540,11 +540,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck3Links(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt unten-rechts nach links das Schiff
+	public boolean richtungEck3Links(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt unten-rechts nach links das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
 		if(breite-schiffSize>0){
 			for(int i=breite-schiffSize;i<=breite-1;i++){
-				if(feldFreiUnten(höhe,i)){
+				if(feldFreiUnten(hoehe,i)){
 					s.getDirection().setLinks(true);
 				}
 				else{
@@ -560,10 +560,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck3Oben(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt unten-rechts nach oben das Schiff
+	public boolean richtungEck3Oben(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt unten-rechts nach oben das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
-		if(höhe-schiffSize>0){
-			for(int i=höhe-schiffSize;i<=höhe-1;i++){
+		if(hoehe-schiffSize>0){
+			for(int i=hoehe-schiffSize;i<=hoehe-1;i++){
 				if(feldFreiRechts(i,breite)){
 					s.getDirection().setOben(true);
 				}
@@ -580,11 +580,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck4Rechts(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt unten-links nach rechts das Schiff
+	public boolean richtungEck4Rechts(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt unten-links nach rechts das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
 		if(breite+schiffSize<this.size-1){
 			for(int i=breite+1;i<=breite+schiffSize;i++){
-				if(feldFreiUnten(höhe,i)){
+				if(feldFreiUnten(hoehe,i)){
 					s.getDirection().setRechts(true);
 				}
 				else{
@@ -600,10 +600,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungEck4Oben(int höhe, int breite, Schiffe s){//prüft, ob vom Eckpunkt unten-links nach oben das Schiff
+	public boolean richtungEck4Oben(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Eckpunkt unten-links nach oben das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
-		if(höhe-schiffSize>0){
-			for(int i=höhe-schiffSize;i<=höhe-1;i++){
+		if(hoehe-schiffSize>0){
+			for(int i=hoehe-schiffSize;i<=hoehe-1;i++){
 				if(feldFreiLinks(i,breite)){
 					s.getDirection().setOben(true);
 				}
@@ -620,11 +620,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungLinksRechts(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach rechts das Schiff
+	public boolean richtungLinksRechts(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach rechts das Schiff
 		int schiffSize=s.getSize();								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
 		if(breite+schiffSize<this.size-1){
 			for(int i=breite;i<=breite+schiffSize;i++){
-				if(feldFreiLinks(höhe,i)){
+				if(feldFreiLinks(hoehe,i)){
 					s.getDirection().setRechts(true);
 				}
 				else{
@@ -640,10 +640,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungLinksOben(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach oben das Schiff
+	public boolean richtungLinksOben(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach oben das Schiff
 		int schiffSize=s.getSize()-1;								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
-		if(höhe-schiffSize>0){
-			for(int i=höhe-schiffSize;i<=höhe;i++){
+		if(hoehe-schiffSize>0){
+			for(int i=hoehe-schiffSize;i<=hoehe;i++){
 				if(feldFreiLinks(i,breite)){
 					s.getDirection().setOben(true);
 				}
@@ -653,9 +653,9 @@ public class Board {
 				}
 			}
 		}
-		else if(höhe-schiffSize==0){
-			if(feldFreiEck1(höhe-schiffSize,breite)){
-				for(int i=höhe-schiffSize+1;i<=höhe;i++){
+		else if(hoehe-schiffSize==0){
+			if(feldFreiEck1(hoehe-schiffSize,breite)){
+				for(int i=hoehe-schiffSize+1;i<=hoehe;i++){
 					if(feldFreiLinks(i,breite)){
 						s.getDirection().setOben(true);
 					}
@@ -677,10 +677,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungLinksUnten(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach unten das Schiff
+	public boolean richtungLinksUnten(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach unten das Schiff
 		int schiffSize=s.getSize()-1;								   //gesetzt werden kann linker Rand if-abfrage, wegen ecken
-		if(höhe+schiffSize<this.size-1){
-			for(int i=höhe;i<=höhe+schiffSize;i++){
+		if(hoehe+schiffSize<this.size-1){
+			for(int i=hoehe;i<=hoehe+schiffSize;i++){
 				if(feldFreiLinks(i,breite)){
 					s.getDirection().setUnten(true);
 				}
@@ -690,9 +690,9 @@ public class Board {
 				}
 			}
 		}
-		else if(höhe+schiffSize==this.size-1){
-			if(feldFreiEck4(höhe+schiffSize,breite)){
-				for(int i=höhe;i<höhe+schiffSize;i++){
+		else if(hoehe+schiffSize==this.size-1){
+			if(feldFreiEck4(hoehe+schiffSize,breite)){
+				for(int i=hoehe;i<hoehe+schiffSize;i++){
 					if(feldFreiLinks(i,breite)){
 						s.getDirection().setUnten(true);
 					}
@@ -714,11 +714,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungRechtsLinks(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach links das Schiff
+	public boolean richtungRechtsLinks(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach links das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann rechter Rand if-abfrage, wegen ecken
 		if(breite-schiffSize>0){
 			for(int i=breite-schiffSize;i<=breite;i++){
-				if(feldFreiRechts(höhe,i)){
+				if(feldFreiRechts(hoehe,i)){
 					s.getDirection().setLinks(true);
 				}
 				else{
@@ -734,10 +734,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungRechtsUnten(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach unten das Schiff
+	public boolean richtungRechtsUnten(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach unten das Schiff
 		int schiffSize=s.getSize()-1;								   //gesetzt werden kann rechter Rand if-abfrage, wegen ecken
-		if(höhe+schiffSize<this.size-1){
-			for(int i=höhe;i<=höhe+schiffSize;i++){
+		if(hoehe+schiffSize<this.size-1){
+			for(int i=hoehe;i<=hoehe+schiffSize;i++){
 				if(feldFreiRechts(i,breite)){
 					s.getDirection().setUnten(true);
 				}
@@ -747,9 +747,9 @@ public class Board {
 				}
 			}
 		}
-		else if(höhe+schiffSize==this.size-1){
-			if(feldFreiEck3(höhe+schiffSize,breite)){
-				for(int i=höhe;i<höhe+schiffSize;i++){
+		else if(hoehe+schiffSize==this.size-1){
+			if(feldFreiEck3(hoehe+schiffSize,breite)){
+				for(int i=hoehe;i<hoehe+schiffSize;i++){
 					if(feldFreiRechts(i,breite)){
 						s.getDirection().setUnten(true);
 					}
@@ -771,10 +771,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungRechtsOben(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach oben das Schiff
+	public boolean richtungRechtsOben(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach oben das Schiff
 		int schiffSize=s.getSize()-1;								   //gesetzt werden kann rechter Rand if-abfrage, wegen ecken
-		if(höhe-schiffSize>0){
-			for(int i=höhe-schiffSize;i<=höhe;i++){
+		if(hoehe-schiffSize>0){
+			for(int i=hoehe-schiffSize;i<=hoehe;i++){
 				if(feldFreiRechts(i,breite)){
 					s.getDirection().setOben(true);
 				}
@@ -784,9 +784,9 @@ public class Board {
 				}
 			}
 		}
-		else if(höhe-schiffSize==0){
-			if(feldFreiEck2(höhe-schiffSize,breite)){
-				for(int i=höhe-schiffSize+1;i<=höhe;i++){
+		else if(hoehe-schiffSize==0){
+			if(feldFreiEck2(hoehe-schiffSize,breite)){
+				for(int i=hoehe-schiffSize+1;i<=hoehe;i++){
 					if(feldFreiRechts(i,breite)){
 						s.getDirection().setOben(true);
 					}
@@ -808,10 +808,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungObenUnten(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach unten das Schiff
+	public boolean richtungObenUnten(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach unten das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann oberer Rand if-abfrage, wegen Ecken
-		if(höhe+schiffSize<this.size){
-			for(int i=höhe;i<=höhe+schiffSize;i++){
+		if(hoehe+schiffSize<this.size){
+			for(int i=hoehe;i<=hoehe+schiffSize;i++){
 				if(feldFreiOben(i,breite)){
 					s.getDirection().setUnten(true);
 				}
@@ -828,11 +828,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungObenLinks(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach links das Schiff
+	public boolean richtungObenLinks(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach links das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann oberer Rand if-abfrage, wegen Ecken
 		if(breite-schiffSize>0){
 			for(int i=breite-schiffSize;i<=breite-1;i++){
-				if(feldFreiOben(höhe,i)){
+				if(feldFreiOben(hoehe,i)){
 					s.getDirection().setLinks(true);
 				}
 				else{
@@ -842,9 +842,9 @@ public class Board {
 			}
 		}
 		else if(breite-schiffSize==0){
-			if(feldFreiEck1(höhe,breite-schiffSize)){
+			if(feldFreiEck1(hoehe,breite-schiffSize)){
 				for(int i=breite-schiffSize+1;i<=breite;i++){
-					if(feldFreiOben(höhe,i)){
+					if(feldFreiOben(hoehe,i)){
 						s.getDirection().setLinks(true);
 					}
 					else{
@@ -865,11 +865,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungObenRechts(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach rechts das Schiff
+	public boolean richtungObenRechts(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach rechts das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann oberer Rand if-abfrage, wegen Ecken
 		if(breite+schiffSize<this.size-1){
 			for(int i=breite;i<=breite+schiffSize;i++){
-				if(feldFreiOben(höhe,i)){
+				if(feldFreiOben(hoehe,i)){
 					s.getDirection().setRechts(true);
 				}
 				else{
@@ -879,9 +879,9 @@ public class Board {
 			}
 		}
 		else if(breite+schiffSize==this.size-1){
-			if(feldFreiEck2(höhe,breite+schiffSize)){
+			if(feldFreiEck2(hoehe,breite+schiffSize)){
 				for(int i=breite;i<breite+schiffSize;i++){
-					if(feldFreiOben(höhe,i)){
+					if(feldFreiOben(hoehe,i)){
 						s.getDirection().setRechts(true);
 					}
 					else{
@@ -902,11 +902,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungUntenLinks(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach links das Schiff
+	public boolean richtungUntenLinks(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach links das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann unterer Rand if-abfrage, wegen Ecken
 		if(breite-schiffSize>0){
 			for(int i=breite-schiffSize;i<=breite-1;i++){
-				if(feldFreiUnten(höhe,i)){
+				if(feldFreiUnten(hoehe,i)){
 					s.getDirection().setLinks(true);
 				}
 				else{
@@ -916,9 +916,9 @@ public class Board {
 			}
 		}
 		else if(breite-schiffSize==0){
-			if(feldFreiEck4(höhe,breite-schiffSize)){
+			if(feldFreiEck4(hoehe,breite-schiffSize)){
 				for(int i=breite-schiffSize+1;i<=breite;i++){
-					if(feldFreiUnten(höhe,i)){
+					if(feldFreiUnten(hoehe,i)){
 						s.getDirection().setLinks(true);
 					}
 					else{
@@ -939,11 +939,11 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungUntenRechts(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach rechts das Schiff
+	public boolean richtungUntenRechts(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach rechts das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann unterer Rand if-abfrage, wegen Ecken
 		if(breite+schiffSize<this.size-1){
 			for(int i=breite;i<=breite+schiffSize;i++){
-				if(feldFreiUnten(höhe,i)){
+				if(feldFreiUnten(hoehe,i)){
 					s.getDirection().setRechts(true);
 				}
 				else{
@@ -953,9 +953,9 @@ public class Board {
 			}
 		}
 		else if(breite+schiffSize==this.size-1){
-			if(feldFreiEck3(höhe,breite+schiffSize)){
+			if(feldFreiEck3(hoehe,breite+schiffSize)){
 				for(int i=breite;i<breite+schiffSize;i++){
-					if(feldFreiUnten(höhe,i)){
+					if(feldFreiUnten(hoehe,i)){
 						s.getDirection().setRechts(true);
 					}
 					else{
@@ -976,10 +976,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean richtungUntenOben(int höhe, int breite, Schiffe s){//prüft, ob vom Startpunkt nach oben das Schiff
+	public boolean richtungUntenOben(int hoehe, int breite, Schiffe s){//prÃ¼ft, ob vom Startpunkt nach oben das Schiff
 		int schiffSize=s.getSize()-1;								  //gesetzt werden kann unterer Rand if-abfrage, wegen Ecken
-		if(höhe-schiffSize>0){
-			for(int i=höhe-schiffSize;i<=höhe;i++){
+		if(hoehe-schiffSize>0){
+			for(int i=hoehe-schiffSize;i<=hoehe;i++){
 				if(feldFreiUnten(i,breite)){
 					s.getDirection().setOben(true);
 				}
@@ -996,54 +996,54 @@ public class Board {
 		return true;
 	}
 	
-	public boolean feldFrei(int höhe,int breite){
+	public boolean feldFrei(int hoehe,int breite){
 		boolean y=true;
-		for(int i=höhe-1;i<=höhe+1;i++){  // ob über, auf und unter dem Feld Wasser ist
+		for(int i=hoehe-1;i<=hoehe+1;i++){  // ob Ã¼ber, auf und unter dem Feld Wasser ist
 			if(this.getSquare(i, breite).getCounter()!=0){
 				y=false;
 			}
 		} // end for
 		for(int k=breite-1;k<=breite+1;k++){ //ob links, auf und rechts von dem Feld Wasser ist
-			if(this.getSquare(höhe, k).getCounter()!=0){
+			if(this.getSquare(hoehe, k).getCounter()!=0){
 				y=false;
 			}
 		}
 		return y;
 	}
 	
-	public boolean feldFreiOben(int höhe,int breite){// obere Reihe Nachbarn prüfen
+	public boolean feldFreiOben(int hoehe,int breite){// obere Reihe Nachbarn prÃ¼fen
 		boolean y=true;
-		for(int i=höhe;i<=höhe+1;i++){
+		for(int i=hoehe;i<=hoehe+1;i++){
 			if(this.getSquare(i, breite).getCounter()!=0){
 				y=false;
 			}
 		}
 		for(int k=breite-1;k<=breite+1;k++){
-			if(this.getSquare(höhe, k).getCounter()!=0){
+			if(this.getSquare(hoehe, k).getCounter()!=0){
 				y=false;
 			}
 		}
 		return y;
 	}
 	
-	public boolean feldFreiUnten(int höhe,int breite){// untere Reihe Nachbarn prüfen
+	public boolean feldFreiUnten(int hoehe,int breite){// untere Reihe Nachbarn prÃ¼fen
 		boolean y=true;
-		for(int i=höhe-1;i<=höhe;i++){
+		for(int i=hoehe-1;i<=hoehe;i++){
 			if(this.getSquare(i, breite).getCounter()!=0){
 				y=false;
 			}
 		}
 		for(int k=breite-1;k<=breite+1;k++){
-			if(this.getSquare(höhe, k).getCounter()!=0){
+			if(this.getSquare(hoehe, k).getCounter()!=0){
 				y=false;
 			}
 		}
 		return y;
 	}
 	
-	public boolean feldFreiEck1(int höhe, int breite){
-		if((this.getSquare(höhe, breite).getCounter()==0)&&(this.getSquare(höhe+1, breite).getCounter()==0)&&
-				(this.getSquare(höhe, breite+1).getCounter()==0)){
+	public boolean feldFreiEck1(int hoehe, int breite){
+		if((this.getSquare(hoehe, breite).getCounter()==0)&&(this.getSquare(hoehe+1, breite).getCounter()==0)&&
+				(this.getSquare(hoehe, breite+1).getCounter()==0)){
 			return true;
 		}
 		else{
@@ -1051,9 +1051,9 @@ public class Board {
 		}
 	}
 	
-	public boolean feldFreiEck2(int höhe, int breite){
-		if((this.getSquare(höhe, breite).getCounter()==0)&&(this.getSquare(höhe+1, breite).getCounter()==0)&&
-				(this.getSquare(höhe, breite-1).getCounter()==0)){
+	public boolean feldFreiEck2(int hoehe, int breite){
+		if((this.getSquare(hoehe, breite).getCounter()==0)&&(this.getSquare(hoehe+1, breite).getCounter()==0)&&
+				(this.getSquare(hoehe, breite-1).getCounter()==0)){
 			return true;
 		}
 		else{
@@ -1061,9 +1061,9 @@ public class Board {
 		}
 	}
 	
-	public boolean feldFreiEck3(int höhe, int breite){
-		if((this.getSquare(höhe, breite).getCounter()==0)&&(this.getSquare(höhe-1, breite).getCounter()==0)&&
-				(this.getSquare(höhe, breite-1).getCounter()==0)){
+	public boolean feldFreiEck3(int hoehe, int breite){
+		if((this.getSquare(hoehe, breite).getCounter()==0)&&(this.getSquare(hoehe-1, breite).getCounter()==0)&&
+				(this.getSquare(hoehe, breite-1).getCounter()==0)){
 			return true;
 		}
 		else{
@@ -1071,9 +1071,9 @@ public class Board {
 		}
 	}
 	
-	public boolean feldFreiEck4(int höhe, int breite){
-		if((this.getSquare(höhe, breite).getCounter()==0)&&(this.getSquare(höhe-1, breite).getCounter()==0)&&
-				(this.getSquare(höhe, breite+1).getCounter()==0)){
+	public boolean feldFreiEck4(int hoehe, int breite){
+		if((this.getSquare(hoehe, breite).getCounter()==0)&&(this.getSquare(hoehe-1, breite).getCounter()==0)&&
+				(this.getSquare(hoehe, breite+1).getCounter()==0)){
 			return true;
 		}
 		else{
@@ -1081,38 +1081,38 @@ public class Board {
 		}
 	}
 	
-	public boolean feldFreiLinks(int höhe,int breite){// linke Reihe Nachbarn prüfen
+	public boolean feldFreiLinks(int hoehe,int breite){// linke Reihe Nachbarn prÃ¼fen
 		boolean y=true;
-		for(int i=höhe-1;i<=höhe+1;i++){
+		for(int i=hoehe-1;i<=hoehe+1;i++){
 			if(this.getSquare(i, breite).getCounter()!=0){
 				y=false;
 			}
 		}
 		for(int k=breite;k<=breite+1;k++){
-			if(this.getSquare(höhe,k).getCounter()!=0){
+			if(this.getSquare(hoehe,k).getCounter()!=0){
 				y=false;
 			}
 		}
 		return y;
 	}
 	
-	public boolean feldFreiRechts(int höhe,int breite){// rechte Reihe Nachbarn prüfen
+	public boolean feldFreiRechts(int hoehe,int breite){// rechte Reihe Nachbarn prÃ¼fen
 		boolean y=true;
-		for(int i=höhe-1;i<=höhe+1;i++){
+		for(int i=hoehe-1;i<=hoehe+1;i++){
 			if(this.getSquare(i, breite).getCounter()!=0){
 				y=false;
 			}
 		}
 		for(int k=breite-1;k<=breite;k++){
-			if(this.getSquare(höhe, k).getCounter()!=0){
+			if(this.getSquare(hoehe, k).getCounter()!=0){
 				y=false;
 			}
 		}
 		return y;
 	}
 	
-	public boolean obenLinks(int höhe, int breite){//prüft, ob die Koordinaten zur Ecke oben-links gehören
-		if(höhe==0 && breite==0){
+	public boolean obenLinks(int hoehe, int breite){//prÃ¼ft, ob die Koordinaten zur Ecke oben-links gehoeren
+		if(hoehe==0 && breite==0){
 			return true;
 		}
 		else{
@@ -1120,8 +1120,8 @@ public class Board {
 		}
 	}
 	
-	public boolean obenRechts(int höhe, int breite){//prüft, ob die Koordinaten zur Ecke oben-rechts gehören
-		if(höhe==0 && breite==this.size-1){
+	public boolean obenRechts(int hoehe, int breite){//prÃ¼ft, ob die Koordinaten zur Ecke oben-rechts gehoeren
+		if(hoehe==0 && breite==this.size-1){
 			return true;
 		}
 		else{
@@ -1129,8 +1129,8 @@ public class Board {
 		}
 	}
 	
-	public boolean untenRechts(int höhe, int breite){//prüft, ob die Koordinaten zur Ecke unten-Rechts gehören
-		if(höhe==this.size-1 && breite==this.size-1){
+	public boolean untenRechts(int hoehe, int breite){//prÃ¼ft, ob die Koordinaten zur Ecke unten-Rechts gehoeren
+		if(hoehe==this.size-1 && breite==this.size-1){
 			return true;
 		}
 		else{
@@ -1138,8 +1138,8 @@ public class Board {
 		}
 	}
 	
-	public boolean untenLinks(int höhe, int breite){//prüft, ob die Koordinaten zur Ecke unten-links gehören
-		if(höhe==this.size-1 && breite==0){
+	public boolean untenLinks(int hoehe, int breite){//prÃ¼ft, ob die Koordinaten zur Ecke unten-links gehoeren
+		if(hoehe==this.size-1 && breite==0){
 			return true;
 		}
 		else{
@@ -1147,8 +1147,8 @@ public class Board {
 		}
 	}
 	
-	public boolean oben(int höhe, int breite){
-		if(höhe==0){
+	public boolean oben(int hoehe, int breite){
+		if(hoehe==0){
 			return true;
 		}
 		else{
@@ -1156,9 +1156,9 @@ public class Board {
 		}
 	}
 	
-	public boolean unten(int höhe, int breite){
-		höhe++;
-		if(höhe==size){
+	public boolean unten(int hoehe, int breite){
+		hoehe++;
+		if(hoehe==size){
 			return true;
 		}
 		else{
@@ -1166,7 +1166,7 @@ public class Board {
 		}
 	}
 	
-	public boolean links(int höhe, int breite){
+	public boolean links(int hoehe, int breite){
 		if(breite==0){
 			return true;
 		}
@@ -1175,7 +1175,7 @@ public class Board {
 		}
 	}
 	
-	public boolean rechts(int höhe, int breite){
+	public boolean rechts(int hoehe, int breite){
 		breite++;
 		if(breite==size){
 			return true;
@@ -1198,17 +1198,17 @@ public class Board {
 			}
 		}
 		System.out.println("");
-		int zähler=1;
+		int zaehler=1;
         for(Square[]array:feld){
-        	if(zähler<10){
-        		System.out.print(zähler);
+        	if(zaehler<10){
+        		System.out.print(zaehler);
         		System.out.print("  ");
-        		zähler++;
+        		zaehler++;
         	}
         	else{
-        		System.out.print(zähler);
+        		System.out.print(zaehler);
         		System.out.print(" ");
-        		zähler++;
+        		zaehler++;
         	}
         	for(Square i:array){
             	switch (i.getCounter()){
@@ -1264,17 +1264,17 @@ public class Board {
 			}
 		}
 		System.out.println("");
-		int zähler=1;
+		int zaehler=1;
         for(Square[]array:feld){
-        	if(zähler<10){
-        		System.out.print(zähler);
+        	if(zaehler<10){
+        		System.out.print(zaehler);
         		System.out.print("  ");
-        		zähler++;
+        		zaehler++;
         	}
         	else{
-        		System.out.print(zähler);
+        		System.out.print(zaehler);
         		System.out.print(" ");
-        		zähler++;
+        		zaehler++;
         	}
         	for(Square i:array){
             	switch (i.getCounter()){
@@ -1329,114 +1329,114 @@ public class Board {
         System.out.println("");
     }
 	
-	public boolean versenktLinks(int höhe, int breite, Schiffe s){
+	public boolean versenktLinks(int hoehe, int breite, Schiffe s){
 		boolean versenkt=true;
 		int schiffSize=s.getSize();
 		for(int i=breite-schiffSize+1;i<=breite;i++){
-			if(this.getSquare(höhe, i).getCounter()==1||this.getSquare(höhe, i).getCounter()==0){
+			if(this.getSquare(hoehe, i).getCounter()==1||this.getSquare(hoehe, i).getCounter()==0){
 				versenkt=false;
 				return versenkt;
 			}
 		}
 		s.setVersenkt();
-		this.versenktSetzenLinks(höhe, breite, s);
+		this.versenktSetzenLinks(hoehe, breite, s);
 		return versenkt;
 	}
 	
-	public boolean versenktRechts(int höhe, int breite, Schiffe s){
+	public boolean versenktRechts(int hoehe, int breite, Schiffe s){
 		boolean versenkt=true;
 		int schiffSize=s.getSize();
 		for(int i=breite;i<=breite+schiffSize-1;i++){
-			if(this.getSquare(höhe, i).getCounter()==1||this.getSquare(höhe, i).getCounter()==0){
+			if(this.getSquare(hoehe, i).getCounter()==1||this.getSquare(hoehe, i).getCounter()==0){
 				versenkt=false;
 				return versenkt;
 			}
 		}
 		s.setVersenkt();
-		this.versenktSetzenRechts(höhe, breite, s);
+		this.versenktSetzenRechts(hoehe, breite, s);
 		return versenkt;
 	}
 	
-	public boolean versenktOben(int höhe, int breite, Schiffe s){
+	public boolean versenktOben(int hoehe, int breite, Schiffe s){
 		boolean versenkt=true;
 		int schiffSize=s.getSize();
-		for(int i=höhe-schiffSize+1;i<=höhe;i++){
-			if(this.getSquare(höhe, i).getCounter()==1||this.getSquare(höhe, i).getCounter()==0){
+		for(int i=hoehe-schiffSize+1;i<=hoehe;i++){
+			if(this.getSquare(hoehe, i).getCounter()==1||this.getSquare(hoehe, i).getCounter()==0){
 				versenkt=false;
 				return versenkt;
 			}
 		}
 		s.setVersenkt();
-		this.versenktSetzenOben(höhe, breite, s);
+		this.versenktSetzenOben(hoehe, breite, s);
 		return versenkt;
 	}
 	
-	public boolean versenktUnten(int höhe, int breite, Schiffe s){
+	public boolean versenktUnten(int hoehe, int breite, Schiffe s){
 		boolean versenkt=true;
 		int schiffSize=s.getSize();
-		for(int i=höhe;i<=höhe+schiffSize-1;i++){
-			if(this.getSquare(höhe, i).getCounter()==1||this.getSquare(höhe, i).getCounter()==0){
+		for(int i=hoehe;i<=hoehe+schiffSize-1;i++){
+			if(this.getSquare(hoehe, i).getCounter()==1||this.getSquare(hoehe, i).getCounter()==0){
 				versenkt=false;
 				return versenkt;
 			}
 		}
 		s.setVersenkt();
-		this.versenktSetzenUnten(höhe, breite, s);
+		this.versenktSetzenUnten(hoehe, breite, s);
 		return versenkt;
 	}
 	
-	public void schiffSetzenLinks(int höhe, int breite, Schiffe s){
+	public void schiffSetzenLinks(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
 		for(int i=breite-schiffSize+1;i<=breite;i++){
-			this.setSchiff(höhe,i);
+			this.setSchiff(hoehe,i);
 		}
 	}
 	
-	public void schiffSetzenRechts(int höhe, int breite, Schiffe s){
+	public void schiffSetzenRechts(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
 		for(int i=breite;i<=breite+schiffSize-1;i++){
-			this.setSchiff(höhe,i);
+			this.setSchiff(hoehe,i);
 		}
 	}
 	
-	public void schiffSetzenOben(int höhe, int breite, Schiffe s){
+	public void schiffSetzenOben(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
-		for(int i=höhe-schiffSize+1;i<=höhe;i++){
+		for(int i=hoehe-schiffSize+1;i<=hoehe;i++){
 			this.setSchiff(i,breite);
 		}
 	}
 	
-	public void schiffSetzenUnten(int höhe, int breite, Schiffe s){
+	public void schiffSetzenUnten(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
-		for(int i=höhe;i<=höhe+schiffSize-1;i++){
+		for(int i=hoehe;i<=hoehe+schiffSize-1;i++){
 			this.setSchiff(i,breite);
 		}
 	}
 	
-	public void versenktSetzenLinks(int höhe, int breite, Schiffe s){
+	public void versenktSetzenLinks(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
 		for(int i=breite-schiffSize+1;i<=breite;i++){
-			this.setSchiffVersenkt(höhe,i);
+			this.setSchiffVersenkt(hoehe,i);
 		}
 	}
 	
-	public void versenktSetzenRechts(int höhe, int breite, Schiffe s){
+	public void versenktSetzenRechts(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
 		for(int i=breite;i<=breite+schiffSize-1;i++){
-			this.setSchiffVersenkt(höhe,i);
+			this.setSchiffVersenkt(hoehe,i);
 		}
 	}
 	
-	public void versenktSetzenOben(int höhe, int breite, Schiffe s){
+	public void versenktSetzenOben(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
-		for(int i=höhe-schiffSize+1;i<=höhe;i++){
+		for(int i=hoehe-schiffSize+1;i<=hoehe;i++){
 			this.setSchiffVersenkt(i,breite);
 		}
 	}
 	
-	public void versenktSetzenUnten(int höhe, int breite, Schiffe s){
+	public void versenktSetzenUnten(int hoehe, int breite, Schiffe s){
 		int schiffSize=s.getSize();
-		for(int i=höhe;i<=höhe+schiffSize-1;i++){
+		for(int i=hoehe;i<=hoehe+schiffSize-1;i++){
 			this.setSchiffVersenkt(i,breite);
 		}
 	}
@@ -1450,7 +1450,7 @@ public class Board {
 		}
 	}
 	
-	public boolean schießen(int h, int b, int a, Schiffe s){
+	public boolean schiessen(int h, int b, int a, Schiffe s){
 		//unfertig
 		boolean treffer=false;
 		int gr=s.getSchaden();

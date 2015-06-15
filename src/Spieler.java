@@ -63,7 +63,7 @@ public class Spieler {
 	}
 	
 	/*
-	 * Methode, die prüft, ob ein Schiff versenkt ist
+	 * Methode, die prï¿½ft, ob ein Schiff versenkt ist
 	 */
 	public boolean versenktup(Spieler[] spielerArray){
 		for(Spieler i:spielerArray){
@@ -105,8 +105,8 @@ public class Spieler {
 	}
 	
 	/*
-	 * Überprüft, ob ein Schiff verfügbar ist
-	 * liefert true, wenn mindestens ein Schiff verfügbar ist
+	 * ï¿½berprï¿½ft, ob ein Schiff verfï¿½gbar ist
+	 * liefert true, wenn mindestens ein Schiff verfï¿½gbar ist
 	 */
 	public boolean schiffCheck(){
 		for(Schiffe s:schiffListe){
@@ -136,13 +136,13 @@ public class Spieler {
 	}
 	
 	/*
-	 * Überprüft zuerst, ob ein Spieler besiegt wurde und schießt, wenn ein Schiff verfügbar ist
+	 * ï¿½berprï¿½ft zuerst, ob ein Spieler besiegt wurde und schieï¿½t, wenn ein Schiff verfï¿½gbar ist
 	 */
 	public void shoot(Spieler sp){
 		this.versenktup(spielerArray);
 		if(!sp.spielerAus()){
 			if(this.schiffCheck()){
-				this.bootVerfügbar();
+				this.bootVerfuegbar();
 				Schiffe s=this.bootWahl();
 				this.schuss(s,sp);
 			}
@@ -154,9 +154,9 @@ public class Spieler {
 	}
 	
 	/*
-	 * Überprüft, mit welchem Boot geschossen werden kann
+	 * ï¿½berprï¿½ft, mit welchem Boot geschossen werden kann
 	 */
-	public void bootVerfügbar(){
+	public void bootVerfuegbar(){
 		boolean u=false;
 		boolean k=false;
 		boolean f=false;
@@ -194,7 +194,7 @@ public class Spieler {
 			System.out.println("Es kann mit einer Fregatte geschossen werden.");
 		}
 		if(z){
-			System.out.println("Es kann mit einem Zerstörer geschossen werden.");
+			System.out.println("Es kann mit einem Zerstï¿½rer geschossen werden.");
 		}
 	}
 	
@@ -204,20 +204,20 @@ public class Spieler {
 	public void schuss(Schiffe s, Spieler sp){
 		sp.getSpielerFeld().printFeind();
 		System.out.println("Tippen sie die Zielkoordinaten!");
-		System.out.println("Wählen sie eine Zeile!");
+		System.out.println("Wï¿½hlen sie eine Zeile!");
 		int hoehe=scHoehe.nextInt()-1;
-		System.out.println("Wählen sie eine Spalte!");
+		System.out.println("Wï¿½hlen sie eine Spalte!");
 		int breite=scBreite.nextInt()-1;
 		if(!spielerFeld.schussKoordinaten(hoehe, breite)){
-			System.out.println("Bitte wählen Sie Koordinaten innerhalb des Feldes");
+			System.out.println("Bitte wï¿½hlen Sie Koordinaten innerhalb des Feldes");
 			this.schuss(s,sp);
 		}
-		System.out.println("Wählen sie die Ausrichtung!(1=vertikal; 2=horizontal)");
+		System.out.println("Wï¿½hlen sie die Ausrichtung!(1=vertikal; 2=horizontal)");
 		int a=scAus.nextInt();
 		if(!(a==2||a==1)){
 			System.out.println("Fehler, Bitte tippen Sie 1 oder 2.");
 		}
-		if(sp.getSpielerFeld().schießen(hoehe,breite,a,s)){
+		if(sp.getSpielerFeld().schiessen(hoehe,breite,a,s)){
 			System.out.println("Treffer!!!");
 			sp.getSpielerFeld().printFeind();
 			//s.setReg();
@@ -239,49 +239,49 @@ public class Spieler {
 	}
 	
 	/*
-	 * Methode, mit welcher der Gegner für den nächsten Schuss bestimmt wird
+	 * Methode, mit welcher der Gegner fï¿½r den nï¿½chsten Schuss bestimmt wird
 	 */
 	public Spieler spielerWahl(){
 		for(int i=0;i<spielerArray.length;i++){
 			if(spielerArray[i].getImSpiel()&&spielerArray[i].getName()!=this.getName()){
-				System.out.println(spielerArray[i].getName()+" kann angegriffen werden! wähle: "+i);
+				System.out.println(spielerArray[i].getName()+" kann angegriffen werden! wï¿½hle: "+i);
 			}
 			
 		}
 		int geg=scGeg.nextInt();
 		if(!spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
-			System.out.println("Bitte wähle einen der genannten Spieler aus!");
+			System.out.println("Bitte wï¿½hle einen der genannten Spieler aus!");
 			this.spielerWahl();
 		}
 		return spielerArray[geg];
 	}
 	
 	/*
-	 * Methode, um zu prüfen, ob ein Schiff enthalten und verfügbar ist
+	 * Methode, um zu prï¿½fen, ob ein Schiff enthalten und verfï¿½gbar ist
 	 */
-	public boolean schiffEnthalten(int größe){
+	public boolean schiffEnthalten(int groesse){
 		for(Schiffe s:schiffListe){
-			if(s.getSize()==größe && s.getVersenkt()){
+			if(s.getSize()==groesse && s.getVersenkt()){
 				return true;
 			}
 		}
 		return false;
 	}
 	/*
-	 * Methode, mit der das Boot zum Schießen ausgewählt wird
+	 * Methode, mit der das Boot zum Schieï¿½en ausgewï¿½hlt wird
 	 */
 	public Schiffe bootWahl(){
-		System.out.println("Wählen sie ein Boot zum Schießen! 1=Uboot 2=Korvette 3=Fregatte 4=Zerstörer");
+		System.out.println("Wï¿½hlen sie ein Boot zum Schieï¿½en! 1=Uboot 2=Korvette 3=Fregatte 4=Zerstï¿½rer");
 		int b=scs.nextInt();
 		//Schiffe s;
 		for(Schiffe s:schiffListe){
 			if(s.getTyp()==b&&s.schussBereit()){
-				System.out.println(s.getName()+" "+ s.getIndex()+" soll schießen");
+				System.out.println(s.getName()+" "+ s.getIndex()+" soll schieï¿½en");
 				return s;
 			}
 			
 		}
-		System.out.println("Bitte wähle ein verfügbares Boot aus!");
+		System.out.println("Bitte wï¿½hle ein verfï¿½gbares Boot aus!");
 		return bootWahl();
 	}
 		/*for(int i=1;i<5;i++){
@@ -290,7 +290,7 @@ public class Spieler {
 			}
 		}*/
 		/*if(b==4){
-			System.out.println("Es soll mit einem Zerstörer geschossen werden!");
+			System.out.println("Es soll mit einem Zerstï¿½rer geschossen werden!");
 			for(int i=0;i<schiffListe.size();i++){
 				s=schiffListe.get(i);
 				if(s.getTyp()==4&&s.schussBereit()){
@@ -339,7 +339,7 @@ public class Spieler {
 			for(int i=0;i<schiffListe.size();i++){
 				s=schiffListe.get(i);
 				if(s.getTyp()==2&&s.schussBereit()){
-					System.out.println(s.getName()+" wird schießen!");
+					System.out.println(s.getName()+" wird schieï¿½en!");
 					return s;
 				}
 			}
@@ -390,8 +390,8 @@ public class Spieler {
 	}
 	
 	/*
-	 * Übernimmt die Schiffliste aus der Klasse Spiel und kopiert sie, damit die Listen
-	 * von jedem Spieler einzeln verändert werden können
+	 * ï¿½bernimmt die Schiffliste aus der Klasse Spiel und kopiert sie, damit die Listen
+	 * von jedem Spieler einzeln verï¿½ndert werden kï¿½nnen
 	 */
 	public void setSchiffListe(List<Schiffe> schiffListeAlt){
 		this.schiffListe= new ArrayList<Schiffe>();
@@ -420,7 +420,7 @@ public class Spieler {
 	}
 	
 	/*
-	 * Methode zum setzen der Schiffe (mit Überprüfung der Koordinaten)
+	 * Methode zum setzen der Schiffe (mit ï¿½berprï¿½fung der Koordinaten)
 	 */
 	public void setzeSchiffe(){
 			for(int i=0;i<schiffListe.size();i++){
@@ -438,24 +438,24 @@ public class Spieler {
 					s.setWidth(breite);
 					System.out.println(s.getName()+" "+s.getIndex()+ " kann hier gesetzt werden!");
 					System.out.println("");
-					System.out.println("Wähle die Richtung, in die das Boot gesetzt werden soll!");
+					System.out.println("Wï¿½hle die Richtung, in die das Boot gesetzt werden soll!");
 					System.out.println("");
 					System.out.println("Tippe:");
 					if(s.getDirection().getLinks()){
 						l=true;
-						System.out.println("'1' für links");
+						System.out.println("'1' fï¿½r links");
 					}
 					if(s.getDirection().getRechts()){
 						r=true;
-						System.out.println("'2' für rechts");
+						System.out.println("'2' fï¿½r rechts");
 					}
 					if(s.getDirection().getOben()){
 						o=true;
-						System.out.println("'3' für oben");
+						System.out.println("'3' fï¿½r oben");
 					}
 					if(s.getDirection().getUnten()){
 						u=true;
-						System.out.println("'4' für unten");
+						System.out.println("'4' fï¿½r unten");
 					}
 					System.out.println("");
 					
@@ -490,7 +490,7 @@ public class Spieler {
 					}
 					else{
 						System.out.println("Fehler");
-						System.out.println("Bitte wähle eine Richtung aus, in die das Boot gesetzt werden kann");
+						System.out.println("Bitte wï¿½hle eine Richtung aus, in die das Boot gesetzt werden kann");
 						spielerFeld.print();
 						i--;
 					}
@@ -512,14 +512,14 @@ public class Spieler {
 				
 				case 2:
 					System.out.println("Setze Uboot " +s.getIndex());
-					int höhe=frageHöhe();
+					int hï¿½he=frageHï¿½he();
 					int breite=frageBreite();
 					boolean l=false;
 					boolean r=false;
 					boolean u=false;
 					boolean o=false;
-					if(spielerFeld.koordinatenCheck(höhe, breite, s)){
-						s.setHeight(höhe);
+					if(spielerFeld.koordinatenCheck(hï¿½he, breite, s)){
+						s.setHeight(hï¿½he);
 						s.setWidth(breite);
 						System.out.println("Das Uboot kann gesetzt werden!");
 						if(s.getDirection().getLinks()){
@@ -538,32 +538,32 @@ public class Spieler {
 							System.out.println("Das Uboot kann von der Startposition nach unten gesetzt werden!");
 							u=true;
 						}
-						System.out.println("Wähle die Richtung, in die das Uboot gesetzt werden soll!"
+						System.out.println("Wï¿½hle die Richtung, in die das Uboot gesetzt werden soll!"
 								+"(links=1, rechts=2, unten=3, oben=4)");
 						int y=scDir.nextInt();
 						if(y==1 && l==true){
-							spielerFeld.schiffSetzenLinks(höhe,breite,s);
+							spielerFeld.schiffSetzenLinks(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Links gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setLinks(true);
 							spielerFeld.print();
 						}
 						else if(y==2 && r==true){
-							spielerFeld.schiffSetzenRechts(höhe,breite,s);
+							spielerFeld.schiffSetzenRechts(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Rechts gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setRechts(true);
 							spielerFeld.print();
 						}
 						else if(y==3 && u==true){
-							spielerFeld.schiffSetzenUnten(höhe,breite,s);
+							spielerFeld.schiffSetzenUnten(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach unten gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setUnten(true);
 							spielerFeld.print();
 						}
 						else if(y==4 && o==true){
-							spielerFeld.schiffSetzenOben(höhe,breite,s);
+							spielerFeld.schiffSetzenOben(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach oben gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setOben(true);
@@ -584,14 +584,14 @@ public class Spieler {
 				
 				case 3:
 					System.out.println("Setze Korvette " +s.getIndex());
-					höhe=frageHöhe();
+					hï¿½he=frageHï¿½he();
 					breite=frageBreite();
 					l=false;
 					r=false;
 					u=false;
 					o=false;
-					if(spielerFeld.koordinatenCheck(höhe, breite, s)){
-						s.setHeight(höhe);
+					if(spielerFeld.koordinatenCheck(hï¿½he, breite, s)){
+						s.setHeight(hï¿½he);
 						s.setWidth(breite);
 						System.out.println("Die Korvette kann gesetzt werden!");
 						if(s.getDirection().getLinks()){
@@ -610,32 +610,32 @@ public class Spieler {
 							System.out.println("Die Korvette kann von der Startposition nach unten gesetzt werden!");
 							u=true;
 						}
-						System.out.println("Wähle die Richtung, in die Die Korvette gesetzt werden soll!"
+						System.out.println("Wï¿½hle die Richtung, in die Die Korvette gesetzt werden soll!"
 								+"(links=1, rechts=2, unten=3, oben=4)");
 						int y=scDir.nextInt();
 						if(y==1 && l==true){
-							spielerFeld.schiffSetzenLinks(höhe,breite,s);
+							spielerFeld.schiffSetzenLinks(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Links gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setLinks(true);
 							spielerFeld.print();
 						}
 						else if(y==2 && r==true){
-							spielerFeld.schiffSetzenRechts(höhe,breite,s);
+							spielerFeld.schiffSetzenRechts(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Rechts gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setRechts(true);
 							spielerFeld.print();
 						}
 						else if(y==3 && u==true){
-							spielerFeld.schiffSetzenUnten(höhe,breite,s);
+							spielerFeld.schiffSetzenUnten(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach unten gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setUnten(true);
 							spielerFeld.print();
 						}
 						else if(y==4 && o==true){
-							spielerFeld.schiffSetzenOben(höhe,breite,s);
+							spielerFeld.schiffSetzenOben(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach oben gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setOben(true);
@@ -656,14 +656,14 @@ public class Spieler {
 				
 				case 4: 
 					System.out.println("Setze Fregatte " +s.getIndex());
-					höhe=frageHöhe();
+					hï¿½he=frageHï¿½he();
 					breite=frageBreite();
 					l=false;
 					r=false;
 					u=false;
 					o=false;
-					if(spielerFeld.koordinatenCheck(höhe, breite, s)){
-						s.setHeight(höhe);
+					if(spielerFeld.koordinatenCheck(hï¿½he, breite, s)){
+						s.setHeight(hï¿½he);
 						s.setWidth(breite);
 						System.out.println("Die Fregatte kann gesetzt werden!");
 						if(s.getDirection().getLinks()){
@@ -682,32 +682,32 @@ public class Spieler {
 							System.out.println("Die Fregatte kann von der Startposition nach unten gesetzt werden!");
 							u=true;
 						}
-						System.out.println("Wähle die Richtung, in die die Fregatte gesetzt werden soll!"
+						System.out.println("Wï¿½hle die Richtung, in die die Fregatte gesetzt werden soll!"
 								+"(links=1, rechts=2, unten=3, oben=4)");
 						int y=scDir.nextInt();
 						if(y==1 && l==true){
-							spielerFeld.schiffSetzenLinks(höhe,breite,s);
+							spielerFeld.schiffSetzenLinks(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Links gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setLinks(true);
 							spielerFeld.print();
 						}
 						else if(y==2 && r==true){
-							spielerFeld.schiffSetzenRechts(höhe,breite,s);
+							spielerFeld.schiffSetzenRechts(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Rechts gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setRechts(true);
 							spielerFeld.print();
 						}
 						else if(y==3 && u==true){
-							spielerFeld.schiffSetzenUnten(höhe,breite,s);
+							spielerFeld.schiffSetzenUnten(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach unten gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setUnten(true);
 							spielerFeld.print();
 						}
 						else if(y==4 && o==true){
-							spielerFeld.schiffSetzenOben(höhe,breite,s);
+							spielerFeld.schiffSetzenOben(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach oben gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setOben(true);
@@ -727,59 +727,59 @@ public class Spieler {
 				
 				
 				case 5:
-					System.out.println("Setze Zerstörer " +s.getIndex());
-					höhe=frageHöhe();
+					System.out.println("Setze Zerstï¿½rer " +s.getIndex());
+					hï¿½he=frageHï¿½he();
 					breite=frageBreite();
 					l=false;
 					r=false;
 					u=false;
 					o=false;
-					if(spielerFeld.koordinatenCheck(höhe, breite, s)){
-						s.setHeight(höhe);
+					if(spielerFeld.koordinatenCheck(hï¿½he, breite, s)){
+						s.setHeight(hï¿½he);
 						s.setWidth(breite);
-						System.out.println("Der Zerstörer kann gesetzt werden!");
+						System.out.println("Der Zerstï¿½rer kann gesetzt werden!");
 						if(s.getDirection().getLinks()){
-							System.out.println("Der Zerstörer kann von der Startposition nach links gesetzt werden!");
+							System.out.println("Der Zerstï¿½rer kann von der Startposition nach links gesetzt werden!");
 							l=true;
 						}
 						if(s.getDirection().getRechts()){
-							System.out.println("Der Zerstörer kann von der Startposition nach rechts gesetzt werden!");
+							System.out.println("Der Zerstï¿½rer kann von der Startposition nach rechts gesetzt werden!");
 							r=true;
 						}
 						if(s.getDirection().getOben()){
-							System.out.println("Der Zerstörer kann von der Startposition nach oben gesetzt werden!");
+							System.out.println("Der Zerstï¿½rer kann von der Startposition nach oben gesetzt werden!");
 							o=true;
 						}
 						if(s.getDirection().getUnten()){
-							System.out.println("Der Zerstörer kann von der Startposition nach unten gesetzt werden!");
+							System.out.println("Der Zerstï¿½rer kann von der Startposition nach unten gesetzt werden!");
 							u=true;
 						}
-						System.out.println("Wähle die Richtung, in die der Zerstörer gesetzt werden soll!"
+						System.out.println("Wï¿½hle die Richtung, in die der Zerstï¿½rer gesetzt werden soll!"
 								+"(links=1, rechts=2, unten=3, oben=4)");
 						int y=scDir.nextInt();
 						if(y==1 && l==true){
-							spielerFeld.schiffSetzenLinks(höhe,breite,s);
+							spielerFeld.schiffSetzenLinks(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Links gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setLinks(true);
 							spielerFeld.print();
 						}
 						else if(y==2 && r==true){
-							spielerFeld.schiffSetzenRechts(höhe,breite,s);
+							spielerFeld.schiffSetzenRechts(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach Rechts gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setRechts(true);
 							spielerFeld.print();
 						}
 						else if(y==3 && u==true){
-							spielerFeld.schiffSetzenUnten(höhe,breite,s);
+							spielerFeld.schiffSetzenUnten(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach unten gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setUnten(true);
 							spielerFeld.print();
 						}
 						else if(y==4 && o==true){
-							spielerFeld.schiffSetzenOben(höhe,breite,s);
+							spielerFeld.schiffSetzenOben(hï¿½he,breite,s);
 							System.out.println("Das Boot wurde nach oben gesetzt");
 							s.getDirection().clean();
 							s.getDirection().setOben(true);
@@ -805,7 +805,7 @@ public class Spieler {
 			}
 		//}
 		/*else{
-			System.out.println("Bitte wähle Koordinaten innerhalb des Spielfeldes aus!");
+			System.out.println("Bitte wï¿½hle Koordinaten innerhalb des Spielfeldes aus!");
 			//Rekursion
 		}*/
 		
@@ -819,8 +819,8 @@ public class Spieler {
 	 */
 	public int frageHoehe(){
 		System.out.println("In welcher Zeile soll der Startpunkt sein?");
-		int höhe=scHoehe.nextInt();
-		return höhe-1;
+		int hoehe=scHoehe.nextInt();
+		return hoehe-1;
 	}
 	/*
 	 * Methode, um die Spalte abzufragen

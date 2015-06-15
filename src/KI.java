@@ -22,7 +22,7 @@ public class KI extends Spieler{
 		if(a==2){
 			System.out.println("Ausrichtung: horizontal");
 		}
-		if(sp.getSpielerFeld().schieﬂen(hoehe,breite,a,s)){
+		if(sp.getSpielerFeld().schiessen(hoehe,breite,a,s)){
 			System.out.println("Treffer!!!");
 			sp.getSpielerFeld().printFeind();
 			s.setReg();
