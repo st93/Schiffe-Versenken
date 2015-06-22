@@ -9,13 +9,30 @@ public class KI extends Spieler{
 	}
 	
 	public void schuss(Schiffe s, Spieler sp){
+		System.out.println("Ich komme hier an");
 		sp.getSpielerFeld().printFeind();
-		int hoehe=randomInt(1,spielerFeld.getSize()-1);
-		int breite=randomInt(1,spielerFeld.getSize()-1);
-		int a=randomInt(1,2);
+		int[] last;
+		int hoehe;
+		int breite;
+		if(sp.getGetroffen()){
+			last=sp.getSpielerFeld().getLetzterTreffer();
+			hoehe=Abfragen.randomIntArround(last[0]);
+			breite=Abfragen.randomIntArround(last[1]);
+			//hoehe=Abfragen.randomIntArround(sp.getSpielerFeld().getLetzterTreffer()[0]);
+			//breite=Abfragen.randomIntArround(sp.getSpielerFeld().getLetzterTreffer()[1]);
+			if(!spielerFeld.schussKoordinaten(hoehe, breite)){
+				System.out.println("Bitte waehlen Sie Koordinaten innerhalb des Feldes");
+				this.schuss(s,sp);
+			}
+		}
+		else{
+			hoehe=Abfragen.randomInt(1,spielerFeld.getSize()-1);
+			breite=Abfragen.randomInt(1,spielerFeld.getSize()-1);			
+		}
+		int a=Abfragen.randomInt(1,2);
 		System.out.println(this.name+" w�hlt ZielKoordinaten..");
-		System.out.println("Zeile: "+hoehe+1);
-		System.out.println("Spalte: "+breite+1);
+		System.out.println("Zeile: "+(hoehe+1));
+		System.out.println("Spalte: "+(breite+1));
 		if(a==1){
 			System.out.println("Ausrichtung: vertikal");
 		}
@@ -25,6 +42,7 @@ public class KI extends Spieler{
 		if(sp.getSpielerFeld().schiessen(hoehe,breite,a,s)){
 			System.out.println("Treffer!!!");
 			sp.getSpielerFeld().printFeind();
+			sp.setGetroffen(true);
 			s.setReg();
 			System.out.println(s.getName() + " hat geschossen.");
 			if(sp.spielerAus()){
@@ -44,22 +62,41 @@ public class KI extends Spieler{
 	}
 	
 	public Spieler spielerWahl(){
+		int x;
+		if(this.getGetroffen()){
+			x=-1;
+		}
+		else{
+			x=0;
+		}
 		for(int i=0;i<spielerArray.length;i++){
 			if(spielerArray[i].getImSpiel()&&spielerArray[i].getName()!=this.getName()){
 				System.out.println(spielerArray[i].getName()+" kann angegriffen werden! w�hle: "+i);
+				if(spielerArray[i].getGetroffen()){
+					x++;
+				}
 			}
 			
 		}
-		int geg=randomInt(0,spielerArray.length-1);
-		if(spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
-			System.out.println(spielerArray[geg].getName()+" wurde ausgew�hlt");
-			return spielerArray[geg];
+		int geg=Abfragen.randomInt(0,spielerArray.length-1);
+		if(x>0){
+			if(spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()&&spielerArray[geg].getGetroffen()){
+				System.out.println(spielerArray[geg].getName()+" wurde ausgew�hlt");
+				return spielerArray[geg];
+			}
+		}
+		else{
+			if(spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
+				System.out.println(spielerArray[geg].getName()+" wurde ausgew�hlt");
+				return spielerArray[geg];
+			}
 		}
 		return this.spielerWahl();
+		
 	}
 
 	public Schiffe bootWahl(){
-		int b=randomInt(1,4);
+		int b=Abfragen.randomInt(1,4);
 		for(Schiffe s:schiffListe){
 			if(s.getTyp()==b && s.schussBereit()){
 				System.out.println(s.getName()+" "+ s.getIndex()+" soll schie�en");
@@ -75,8 +112,8 @@ public class KI extends Spieler{
 			Schiffe s=schiffListe.get(i);
 			s.getDirection().clean();
 			System.out.println("Setze " + s.getName()+ " "+s.getIndex());
-			int hoehe=randomInt(1,spielerFeld.getSize()-1);
-			int breite=randomInt(1,spielerFeld.getSize()-1);
+			int hoehe=Abfragen.randomInt(1,spielerFeld.getSize()-1);
+			int breite=Abfragen.randomInt(1,spielerFeld.getSize()-1);
 			boolean l=false;
 			boolean r=false;
 			boolean u=false;
@@ -95,9 +132,9 @@ public class KI extends Spieler{
 				r=s.getDirection().getRechts();
 				o=s.getDirection().getOben();
 				u=s.getDirection().getUnten();
-				int y=randomInt(1,4);
+				int y=Abfragen.randomInt(1,4);
 				while(!(y==1&&l||y==2&&r||y==3&&o||y==4&&u)){
-					y=randomInt(1,4);
+					y=Abfragen.randomInt(1,4);
 				}
 				if(y==1 && l==true){
 					spielerFeld.schiffSetzenLinks(hoehe,breite,s);
@@ -136,11 +173,5 @@ public class KI extends Spieler{
 		}
 	}
 	
-	public static int randomInt(int min, int max) {
-
-	    Random random = new Random();
-	    int randomNum = random.nextInt((max - min) + 1) + min;
-
-	    return randomNum;
-	}
+	
 }

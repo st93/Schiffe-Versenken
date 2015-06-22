@@ -8,14 +8,17 @@ public class Spieler implements Serializable{
 	protected Board spielerFeld;
 	protected ArrayList<Schiffe> schiffListe;
 	protected Spieler[] spielerArray;
+	private boolean getroffen;
 	
 	public Spieler(String name){
 		this.imSpiel=true;
 		this.name=name;
+		this.setGetroffen(false);
 	}
 	
 	public Spieler(){
 		this.imSpiel=true;
+		this.setGetroffen(false);
 	}
 	
 	/*
@@ -68,6 +71,7 @@ public class Spieler implements Serializable{
 						if(i.getSpielerFeld().versenktLinks(k.getHeight(), k.getWidth(), k)){
 							System.out.println("Schiff wurde versenkt");
 							i.getSpielerFeld().printFeind();
+							this.setGetroffen(false);
 							return true;
 						}
 					}
@@ -75,6 +79,7 @@ public class Spieler implements Serializable{
 						if(i.getSpielerFeld().versenktRechts(k.getHeight(), k.getWidth(), k)){
 							System.out.println("Schiff wurde versenkt");
 							i.getSpielerFeld().printFeind();
+							this.setGetroffen(false);
 							return true;
 						}
 					}
@@ -82,6 +87,7 @@ public class Spieler implements Serializable{
 						if(i.getSpielerFeld().versenktOben(k.getHeight(), k.getWidth(), k)){
 							System.out.println("Schiff wurde versenkt");
 							i.getSpielerFeld().printFeind();
+							this.setGetroffen(false);
 							return true;
 						}
 					}
@@ -89,6 +95,7 @@ public class Spieler implements Serializable{
 						if(i.getSpielerFeld().versenktUnten(k.getHeight(), k.getWidth(), k)){
 							System.out.println("Schiff wurde versenkt");
 							i.getSpielerFeld().printFeind();
+							this.setGetroffen(false);
 							return true;
 						}
 					}
@@ -824,5 +831,13 @@ public class Spieler implements Serializable{
 		System.out.println("In welcher Spalte soll der Startpunkt sein?");
 		int breite=Abfragen.frageOrt();
 		return breite;
+	}
+
+	public boolean getGetroffen() {
+		return getroffen;
+	}
+
+	public void setGetroffen(boolean getroffen) {
+		this.getroffen = getroffen;
 	}
 }

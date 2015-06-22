@@ -12,6 +12,7 @@ public class Board implements Serializable {
 	private char schiffVersenkt='V';
 	private int hoehe;
 	private int breite;
+	private int[] letzterTreffer={1,1};
 	
 	public Board (int size){
 		this.size=size;
@@ -30,6 +31,14 @@ public class Board implements Serializable {
 		return this.size;
 	}
 	
+	public int[] getLetzterTreffer() {
+		return letzterTreffer;
+	}
+
+	public void setLetzterTreffer(int[] letzterTreffer) {
+		this.letzterTreffer = letzterTreffer;
+	}
+
 	public Square getSquare(int h, int w){
 		return feld[h][w];
 	}
@@ -1460,6 +1469,8 @@ public class Board implements Serializable {
 			if(this.getSquare(h, b).getCounter()==1){
 				this.setSchiffTreffer(h,b);
 				s.setReg();
+				this.getLetzterTreffer()[0]=h;
+				this.getLetzterTreffer()[1]=b;
 				return true;
 			}
 			else if(this.getSquare(h, b).getCounter()==0){
@@ -1475,6 +1486,8 @@ public class Board implements Serializable {
 							if(this.getSquare(i, b).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(i, b);
+								this.getLetzterTreffer()[0]=i;
+								this.getLetzterTreffer()[1]=b;
 							}
 							else if(this.getSquare(i, b).getCounter()==0){
 								this.setWasserTreffer(i, b);
@@ -1486,6 +1499,8 @@ public class Board implements Serializable {
 							if(this.getSquare(i, b).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(i, b);
+								this.getLetzterTreffer()[0]=i;
+								this.getLetzterTreffer()[1]=b;
 							}
 							else if(this.getSquare(i, b).getCounter()==0){
 								this.setWasserTreffer(i, b);
@@ -1499,6 +1514,8 @@ public class Board implements Serializable {
 							if(this.getSquare(i, b).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(i, b);
+								this.getLetzterTreffer()[0]=i;
+								this.getLetzterTreffer()[1]=b;
 							}
 							else if(this.getSquare(i, b).getCounter()==0){
 								this.setWasserTreffer(i, b);
@@ -1510,6 +1527,8 @@ public class Board implements Serializable {
 							if(this.getSquare(i, b).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(i, b);
+								this.getLetzterTreffer()[0]=i;
+								this.getLetzterTreffer()[1]=b;
 							}
 							else if(this.getSquare(i, b).getCounter()==0){
 								this.setWasserTreffer(i, b);
@@ -1525,6 +1544,8 @@ public class Board implements Serializable {
 							if(this.getSquare(h, i).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(h, i);
+								this.getLetzterTreffer()[0]=h;
+								this.getLetzterTreffer()[1]=i;
 							}
 							else if(this.getSquare(h, i).getCounter()==0){
 								this.setWasserTreffer(h, i);
@@ -1536,6 +1557,8 @@ public class Board implements Serializable {
 							if(this.getSquare(h, i).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(h, i);
+								this.getLetzterTreffer()[0]=h;
+								this.getLetzterTreffer()[1]=i;
 							}
 							else if(this.getSquare(h, i).getCounter()==0){
 								this.setWasserTreffer(h, i);
@@ -1549,6 +1572,8 @@ public class Board implements Serializable {
 							if(this.getSquare(h, i).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(h, i);
+								this.getLetzterTreffer()[0]=h;
+								this.getLetzterTreffer()[1]=i;
 							}
 							else if(this.getSquare(h, i).getCounter()==0){
 								this.setWasserTreffer(h, i);
@@ -1560,6 +1585,8 @@ public class Board implements Serializable {
 							if(this.getSquare(h, i).getCounter()==1){
 								treffer=true;
 								this.setSchiffTreffer(h, i);
+								this.getLetzterTreffer()[0]=h;
+								this.getLetzterTreffer()[1]=i;
 							}
 							else if(this.getSquare(h, i).getCounter()==0){
 								this.setWasserTreffer(h, i);
