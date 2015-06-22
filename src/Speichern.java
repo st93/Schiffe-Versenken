@@ -24,8 +24,7 @@ public class Speichern implements Serializable {
 	public static void speichern(Spieler[] spielerArray){
 		System.out.println("Möchten Sie speichern?");
 		System.out.println("Ja:'1' Nein: '2'");
-		Scanner sc=new Scanner(System.in);
-		int string=sc.nextInt();
+		int string=Abfragen.frageInt();
 		
 		if(string==1){
 			try {
@@ -40,6 +39,7 @@ public class Speichern implements Serializable {
 				e.printStackTrace();
 			}
 		}
+		
 			
 		
 		
