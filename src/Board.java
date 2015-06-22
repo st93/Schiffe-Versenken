@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Board {
+
+public class Board implements Serializable {
 	private int size;
 	
 	private Square[][] feld;

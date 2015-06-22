@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Direction {
+
+public class Direction implements Serializable {
 	private boolean links=false;
 	private boolean rechts=false;
 	private boolean oben=false;

@@ -13,7 +13,7 @@ public class KI extends Spieler{
 		int hoehe=randomInt(1,spielerFeld.getSize()-1);
 		int breite=randomInt(1,spielerFeld.getSize()-1);
 		int a=randomInt(1,2);
-		System.out.println(this.name+" wählt ZielKoordinaten..");
+		System.out.println(this.name+" wï¿½hlt ZielKoordinaten..");
 		System.out.println("Zeile: "+hoehe+1);
 		System.out.println("Spalte: "+breite+1);
 		if(a==1){
@@ -46,23 +46,23 @@ public class KI extends Spieler{
 	public Spieler spielerWahl(){
 		for(int i=0;i<spielerArray.length;i++){
 			if(spielerArray[i].getImSpiel()&&spielerArray[i].getName()!=this.getName()){
-				System.out.println(spielerArray[i].getName()+" kann angegriffen werden! wähle: "+i);
+				System.out.println(spielerArray[i].getName()+" kann angegriffen werden! wï¿½hle: "+i);
 			}
 			
 		}
 		int geg=randomInt(0,spielerArray.length-1);
-		if(!spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
-			this.spielerWahl();
+		if(spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
+			System.out.println(spielerArray[geg].getName()+" wurde ausgewï¿½hlt");
+			return spielerArray[geg];
 		}
-		System.out.println(spielerArray[geg].getName()+" wurde ausgewählt");
-		return spielerArray[geg];
+		return this.spielerWahl();
 	}
 
 	public Schiffe bootWahl(){
 		int b=randomInt(1,4);
 		for(Schiffe s:schiffListe){
 			if(s.getTyp()==b && s.schussBereit()){
-				System.out.println(s.getName()+" "+ s.getIndex()+" soll schießen");
+				System.out.println(s.getName()+" "+ s.getIndex()+" soll schieï¿½en");
 				return s;
 			}
 			
@@ -88,7 +88,7 @@ public class KI extends Spieler{
 				System.out.println("Zeile: "+ breite);
 				System.out.println(s.getName()+" "+s.getIndex()+ " kann hier gesetzt werden!");
 				System.out.println("");
-				System.out.println(this.name+" wählt die Richtung, in die das Boot gesetzt werden soll!");
+				System.out.println(this.name+" wï¿½hlt die Richtung, in die das Boot gesetzt werden soll!");
 				System.out.println("");
 				System.out.println("");
 				l=s.getDirection().getLinks();
