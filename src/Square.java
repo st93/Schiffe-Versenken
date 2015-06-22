@@ -1,7 +1,5 @@
-import java.io.Serializable;
 
-
-public class Square implements Serializable {
+public class Square {
 	
 	private int counter=0;
 	
@@ -14,7 +12,7 @@ public class Square implements Serializable {
 			this.counter=counter;
 		}
 		else{
-			System.out.println("keine gï¿½ltige Eingabe");
+			System.out.println("keine gültige Eingabe");
 		}
 	}
 	
@@ -27,7 +25,7 @@ public class Square implements Serializable {
 			this.counter=newCounter;
 		}
 		else{
-			System.out.println("keine gï¿½ltige Eingabe");
+			System.out.println("keine gültige Eingabe");
 		}
 	}
 	

@@ -1,3 +1,13 @@
-/Speichern.class
-/Scanner.class
-/Abfragen.class
+/Board.class
+/Direction.class
+/Fregatte.class
+/IO.class
+/KI.class
+/Korvette.class
+/Schiffe.class
+/Spiel.class
+/Spieler.class
+/Spielfeld_alt.class
+/Square.class
+/UBoot.class
+/Zerstoerer.class

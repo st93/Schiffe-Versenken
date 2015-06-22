@@ -1,8 +1,7 @@
-import java.io.Serializable;
 import java.util.Scanner;
 
 
-public class Schiffe implements Serializable {
+public class Schiffe {
 	private int size;
 	public final String name;
 	private int height;
