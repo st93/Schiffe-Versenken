@@ -1,11 +1,16 @@
-import java.io.Serializable;
 import java.util.*;
 
 
-public class Spieler implements Serializable{
+public class Spieler {
 	protected boolean imSpiel;
 	protected String name;
 	protected Board spielerFeld;
+	private Scanner scHoehe= new Scanner(System.in);
+	private Scanner scBreite= new Scanner(System.in);
+	private Scanner scDir= new Scanner(System.in);
+	private Scanner scs= new Scanner(System.in);
+	private Scanner scAus= new Scanner(System.in);
+	private Scanner scGeg= new Scanner(System.in);
 	protected ArrayList<Schiffe> schiffListe;
 	protected Spieler[] spielerArray;
 	
@@ -199,16 +204,16 @@ public class Spieler implements Serializable{
 	public void schuss(Schiffe s, Spieler sp){
 		sp.getSpielerFeld().printFeind();
 		System.out.println("Tippen sie die Zielkoordinaten!");
-		System.out.println("Waehlen sie eine Zeile!");
-		int hoehe=Abfragen.frageOrt();
-		System.out.println("Waehlen sie eine Spalte!");
-		int breite=Abfragen.frageOrt();
+		System.out.println("W�hlen sie eine Zeile!");
+		int hoehe=scHoehe.nextInt()-1;
+		System.out.println("W�hlen sie eine Spalte!");
+		int breite=scBreite.nextInt()-1;
 		if(!spielerFeld.schussKoordinaten(hoehe, breite)){
-			System.out.println("Bitte waehlen Sie Koordinaten innerhalb des Feldes");
+			System.out.println("Bitte w�hlen Sie Koordinaten innerhalb des Feldes");
 			this.schuss(s,sp);
 		}
-		System.out.println("Waehlen sie die Ausrichtung!(1=vertikal; 2=horizontal)");
-		int a=Abfragen.frageInt();
+		System.out.println("W�hlen sie die Ausrichtung!(1=vertikal; 2=horizontal)");
+		int a=scAus.nextInt();
 		if(!(a==2||a==1)){
 			System.out.println("Fehler, Bitte tippen Sie 1 oder 2.");
 		}
@@ -243,12 +248,12 @@ public class Spieler implements Serializable{
 			}
 			
 		}
-		int geg=Abfragen.frageInt();
-		if(spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
-			return spielerArray[geg];
+		int geg=scGeg.nextInt();
+		if(!spielerArray[geg].getImSpiel()&&spielerArray[geg].getName()!=this.getName()){
+			System.out.println("Bitte w�hle einen der genannten Spieler aus!");
+			this.spielerWahl();
 		}
-		System.out.println("Bitte w�hle einen der genannten Spieler aus!");
-		return this.spielerWahl();
+		return spielerArray[geg];
 	}
 	
 	/*
@@ -267,7 +272,7 @@ public class Spieler implements Serializable{
 	 */
 	public Schiffe bootWahl(){
 		System.out.println("W�hlen sie ein Boot zum Schie�en! 1=Uboot 2=Korvette 3=Fregatte 4=Zerst�rer");
-		int b=Abfragen.frageInt();
+		int b=scs.nextInt();
 		//Schiffe s;
 		for(Schiffe s:schiffListe){
 			if(s.getTyp()==b&&s.schussBereit()){
@@ -454,7 +459,7 @@ public class Spieler implements Serializable{
 					}
 					System.out.println("");
 					
-					int y=Abfragen.frageInt();
+					int y=scDir.nextInt();
 					if(y==1 && l==true){
 						spielerFeld.schiffSetzenLinks(hoehe,breite,s);
 						System.out.println(s.getName()+ " "+ s.getIndex()+" wurde nach Links gesetzt");
@@ -814,15 +819,15 @@ public class Spieler implements Serializable{
 	 */
 	public int frageHoehe(){
 		System.out.println("In welcher Zeile soll der Startpunkt sein?");
-		int hoehe=Abfragen.frageOrt();
-		return hoehe;
+		int hoehe=scHoehe.nextInt();
+		return hoehe-1;
 	}
 	/*
 	 * Methode, um die Spalte abzufragen
 	 */
 	public int frageBreite(){
 		System.out.println("In welcher Spalte soll der Startpunkt sein?");
-		int breite=Abfragen.frageOrt();
-		return breite;
+		int breite=scBreite.nextInt();
+		return breite-1;
 	}
 }

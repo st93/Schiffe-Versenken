@@ -22,26 +22,12 @@ public class Spiel {
 	 * Methode, mit der das Spiel eingeleitet wird und alle erforderlichen Daten abgefragt werden
 	 */
 	public void einleitung(){
+		erstelleSpieler();
+		erstelleSpielfeld(); 
+		erstelleSchiffe();
+		schiffeZuSpieler();
+		schiffeAufFeld();
 		
-		
-		System.out.println("Möchten Sie ein Spiel laden?");
-		System.out.println("Ja:'1' Nein:'2'");
-		int i=Abfragen.frageInt();
-		if(i==1){
-			try {
-				this.spielerArray=Speichern.laden();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-		}
-		else{
-			erstelleSpieler();
-			erstelleSpielfeld(); 
-			erstelleSchiffe();
-			schiffeZuSpieler();
-			schiffeAufFeld();
-		}		
 	}
 
 	
@@ -52,7 +38,7 @@ public class Spiel {
  	/*
  	 * Methode, mit der ein Array mit allen Spielern gef�llt wird
  	 */
-	public void erstelleSpieler(){
+	public void erstelleSpieler(){	
 		System.out.println("Wie viele Spieler nehmen teil? (tippe 2-6)");
 		spielerZahl=scSpieler.nextInt();
 		
@@ -209,14 +195,11 @@ public class Spiel {
 				}
 			}
 			rundenZahl++;
-			if(!abbruchBed()){
-				System.out.println("Runde "+ (rundenZahl-1) + " ist zu Ende.");
-				for(Spieler k:spielerArray){
-					for(Schiffe s:k.getSchiffListe()){
-						s.updateReg();
-					}
+			System.out.println("Runde "+ (rundenZahl-1) + " ist zu Ende.");
+			for(Spieler k:spielerArray){
+				for(Schiffe s:k.getSchiffListe()){
+					s.updateReg();
 				}
-				Speichern.speichern(this.spielerArray);
 			}
 		}
 	}
