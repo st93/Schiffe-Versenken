@@ -8,6 +8,7 @@ public class Spieler implements Serializable{
 	protected Board spielerFeld;
 	protected ArrayList<Schiffe> schiffListe;
 	protected Spieler[] spielerArray;
+	protected int speicherRunde;
 	
 	public Spieler(String name){
 		this.imSpiel=true;
@@ -359,6 +360,14 @@ public class Spieler implements Serializable{
 	
 	public boolean getImSpiel(){
 		return imSpiel;
+	}
+	
+	public int getSpeicherRunde(){
+		return this.speicherRunde;
+	}
+	
+	public void setSpeicherRunde(int x){
+		this.speicherRunde=x;
 	}
 	
 	public void setName(String s){

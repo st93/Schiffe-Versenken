@@ -8,7 +8,7 @@ public class Spiel {
 	private ArrayList<Schiffe> schiffListe;
 	private int spielerZahl;
 	private int kISpieler;
-	private int rundenZahl=0;
+	private int rundenZahl=1;
 	private Scanner scSpieler=new Scanner(System.in);
 	private Scanner scSpielfeld=new Scanner(System.in);
 	private Scanner scSchiffe = new Scanner(System.in);
@@ -33,14 +33,15 @@ public class Spiel {
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
+			this.rundenZahl=spielerArray[0].getSpeicherRunde();
 		}
 		else{
 			erstelleSpieler();
 			erstelleSpielfeld(); 
 			erstelleSchiffe();
 			schiffeZuSpieler();
-			schiffeAufFeld();
+		schiffeAufFeld();
 		}		
 	}
 
@@ -212,6 +213,7 @@ public class Spiel {
 			if(!abbruchBed()){
 				System.out.println("Runde "+ (rundenZahl-1) + " ist zu Ende.");
 				for(Spieler k:spielerArray){
+					k.setSpeicherRunde(rundenZahl);
 					for(Schiffe s:k.getSchiffListe()){
 						s.updateReg();
 					}
