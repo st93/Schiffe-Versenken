@@ -9,55 +9,85 @@ public class KI extends Spieler{
 	}
 	
 	public void schuss(Schiffe s, Spieler sp){
-		System.out.println("Ich komme hier an");
 		sp.getSpielerFeld().printFeind();
 		int[] last;
-		int hoehe;
-		int breite;
+		int hoehe=0;
+		int breite=0;
 		if(sp.getGetroffen()){
 			last=sp.getSpielerFeld().getLetzterTreffer();
-			hoehe=Abfragen.randomIntArround(last[0]);
-			breite=Abfragen.randomIntArround(last[1]);
-			//hoehe=Abfragen.randomIntArround(sp.getSpielerFeld().getLetzterTreffer()[0]);
-			//breite=Abfragen.randomIntArround(sp.getSpielerFeld().getLetzterTreffer()[1]);
-			if(!spielerFeld.schussKoordinaten(hoehe, breite)){
-				System.out.println("Bitte waehlen Sie Koordinaten innerhalb des Feldes");
-				this.schuss(s,sp);
-			}
-		}
-		else{
-			hoehe=Abfragen.randomInt(1,spielerFeld.getSize()-1);
-			breite=Abfragen.randomInt(1,spielerFeld.getSize()-1);			
-		}
-		int a=Abfragen.randomInt(1,2);
-		System.out.println(this.name+" w�hlt ZielKoordinaten..");
-		System.out.println("Zeile: "+(hoehe+1));
-		System.out.println("Spalte: "+(breite+1));
-		if(a==1){
-			System.out.println("Ausrichtung: vertikal");
-		}
-		if(a==2){
-			System.out.println("Ausrichtung: horizontal");
-		}
-		if(sp.getSpielerFeld().schiessen(hoehe,breite,a,s)){
-			System.out.println("Treffer!!!");
-			sp.getSpielerFeld().printFeind();
-			sp.setGetroffen(true);
-			s.setReg();
-			System.out.println(s.getName() + " hat geschossen.");
-			if(sp.spielerAus()){
-				this.schiessen();
+			int zufall=Abfragen.randomInt(1, 2);
+			int zufall2=Abfragen.randomInt(1, 2);
+			if(zufall==1){
+				if(zufall2==1){
+					hoehe=last[0];
+					breite=last[1]+Abfragen.randomInt(1,5);
+				}
+				else{
+					hoehe=last[0];
+					breite=last[1]-Abfragen.randomInt(1,5);
+				}
 			}
 			else{
-				this.shoot(sp);
+				if(zufall2==2){
+					breite=last[0];
+					hoehe=last[1]+Abfragen.randomInt(1,5);
+				}
+				else{
+					breite=last[0];
+					hoehe=last[1]-Abfragen.randomInt(1,5);
+				}
 			}
-			
 			
 		}
 		else{
-			System.out.println("Kein Treffer..");
-			sp.getSpielerFeld().printFeind();
-			s.setReg();
+			hoehe=Abfragen.randomInt(0,(spielerFeld.getSize()-1));
+			breite=Abfragen.randomInt(0,(spielerFeld.getSize()-1));			
+		}
+		if(!spielerFeld.schussKoordinaten(hoehe, breite)){
+			System.out.println("fehler");
+			this.schuss(s,sp);
+		}
+		else{
+			System.out.println("koordinaten okay");
+			int a=Abfragen.randomInt(1,2);
+			System.out.println(this.name+" w�hlt ZielKoordinaten..");
+			System.out.println("Zeile: "+(hoehe+1));
+			System.out.println("Spalte: "+(breite+1));
+			if(a==1){
+				System.out.println("Ausrichtung: vertikal");
+			}
+			if(a==2){
+				System.out.println("Ausrichtung: horizontal");
+			}
+			if(sp.getSpielerFeld().schiessen(hoehe,breite,a,s)){
+				System.out.println("Treffer!!!");
+				sp.getSpielerFeld().printFeind();
+				sp.setGetroffen(true);
+				sp.setSchussVersuche(5);
+				s.setReg();
+				System.out.println(s.getName() + " hat geschossen.");
+				if(sp.spielerAus()){
+					this.schiessen();
+				}
+				else{
+					this.shoot(sp);
+				}
+				
+				
+			}
+			else{
+				System.out.println("Kein Treffer..");
+				sp.getSpielerFeld().printFeind();
+				if(sp.getGetroffen()){
+					if(sp.getSchussVersuche()>0){
+						sp.setSchussVersuche(sp.getSchussVersuche()-1);
+					}
+					else{
+						sp.setGetroffen(false);
+					}
+				}
+				s.setReg();
+			}		
 		}
 	}
 	

@@ -22,7 +22,7 @@ public class Abfragen {
 	public static int randomIntArround(int x){
 		int y=randomInt(x-1,x+1);
 		while(y==x){
-			randomInt(x-1,x+1);
+			y=randomInt(x-1,x+1);
 		}
 		
 		return y;

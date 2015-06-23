@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.Scanner;
 
-public class Speichern implements Serializable {
+public class Speichern{
 	private static File f= new File("C://Users/Sven/Studium/Medieninformatik/2.Semester/Programmieren2//test.txt");
 	
 	public static Spieler[] laden() throws ClassNotFoundException{

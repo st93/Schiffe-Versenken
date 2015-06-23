@@ -9,6 +9,7 @@ public class Spieler implements Serializable{
 	protected ArrayList<Schiffe> schiffListe;
 	protected Spieler[] spielerArray;
 	private boolean getroffen;
+	private int schussVersuche;
 	
 	public Spieler(String name){
 		this.imSpiel=true;
@@ -21,6 +22,14 @@ public class Spieler implements Serializable{
 		this.setGetroffen(false);
 	}
 	
+	public int getSchussVersuche() {
+		return schussVersuche;
+	}
+
+	public void setSchussVersuche(int schussVersuche) {
+		this.schussVersuche = schussVersuche;
+	}
+
 	/*
 	 * Methode, welche wahr ist, wenn in der Schiffliste eines Spielers kein Schiff mehr intakt ist
 	 */

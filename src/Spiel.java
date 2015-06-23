@@ -204,13 +204,12 @@ public class Spiel {
 					}
 				}
 				if(abbruchBed()){
-					System.out.println("Ende!");
 					break;
 				}
 			}
 			rundenZahl++;
 			if(!abbruchBed()){
-				System.out.println("Runde "+ (rundenZahl-1) + " ist zu Ende.");
+				System.out.println("Runde "+ (rundenZahl) + " ist zu Ende.");
 				for(Spieler k:spielerArray){
 					for(Schiffe s:k.getSchiffListe()){
 						s.updateReg();
@@ -232,7 +231,6 @@ public class Spiel {
 			}
 		}
 		if(x>1){
-			System.out.println("Das Spiel geht mit "+ x+" Spielern weiter");
 			return false;
 		}
 		else{
