@@ -1,5 +1,8 @@
+package Allgemeines;
 import java.io.*;
 import java.util.Scanner;
+
+import SpielLogik.Spieler;
 
 public class Speichern{
 	private static File f= new File("C://Users/Sven/Studium/Medieninformatik/2.Semester/Programmieren2//test.txt");

@@ -1,23 +1,29 @@
+package Schiffe;
 
-public class Fregatte extends Schiffe {
+
+import SpielLogik.*;
+
+public class UBoot extends Schiffe {
+	//private boolean status;
+	//private boolean schussFrei;
 	private int index;
 	public final int typ;
-	public final String name;
 	private int size;
+	public final String name;
 	protected int regZeit;
 	public final int schaden;
 	private boolean versenkt;
 	private Direction richtung;
 	
-	public Fregatte(int index){
+	public UBoot(int index){
 		this.index=index;
-		this.typ=3;
-		this.name="Fregatte";
+		this.typ=1;
+		this.name="Uboot";
+		this.size=2;
+		this.schaden=1;
 		this.regZeit=0;
-		this.size=4;
-		this.schaden=2;
-		this.versenkt=false;
 		this.richtung=new Direction();
+		this.versenkt=false;
 	}
 	
 	public int getSize(){
@@ -32,16 +38,16 @@ public class Fregatte extends Schiffe {
 		return this.schaden;
 	}
 	
+	public void setReg(){
+		this.regZeit=1;
+	}
+	
 	public int getTyp(){
 		return this.typ;
 	}
 	
 	public String getName(){
 		return this.name;
-	}
-	
-	public void setReg(){
-		this.regZeit=2;
 	}
 	
 	public int getReg(){
@@ -57,5 +63,4 @@ public class Fregatte extends Schiffe {
 			this.regZeit--;
 		}
 	}
-
 }

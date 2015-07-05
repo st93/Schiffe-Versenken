@@ -1,3 +1,7 @@
+package SpielLogik;
+import Schiffe.*;
+import Allgemeines.*;
+
 import java.util.*;
 public class KI extends Spieler{
 	public KI(int x){

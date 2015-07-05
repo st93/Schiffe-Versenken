@@ -1,31 +1,29 @@
+package Schiffe;
+import SpielLogik.*;
 
-public class Zerstoerer extends Schiffe {
+public class Fregatte extends Schiffe {
 	private int index;
 	public final int typ;
 	public final String name;
 	private int size;
-	private Direction richtung;
 	protected int regZeit;
 	public final int schaden;
 	private boolean versenkt;
+	private Direction richtung;
 	
-	public Zerstoerer(int index){
+	public Fregatte(int index){
 		this.index=index;
-		this.typ=4;
-		this.name="Zerstörer";
+		this.typ=3;
+		this.name="Fregatte";
 		this.regZeit=0;
-		this.schaden=3;
-		this.size=5;
+		this.size=4;
+		this.schaden=2;
 		this.versenkt=false;
 		this.richtung=new Direction();
 	}
 	
 	public int getSize(){
 		return this.size;
-	}
-	
-	public void setReg(){
-		this.regZeit=3;
 	}
 	
 	public int getIndex(){
@@ -44,6 +42,10 @@ public class Zerstoerer extends Schiffe {
 		return this.name;
 	}
 	
+	public void setReg(){
+		this.regZeit=2;
+	}
+	
 	public int getReg(){
 		return this.regZeit;
 	}
@@ -57,5 +59,5 @@ public class Zerstoerer extends Schiffe {
 			this.regZeit--;
 		}
 	}
-	
+
 }

@@ -1,3 +1,5 @@
+package Allgemeines;
+
 import java.util.*;
 public class Abfragen {
 	private static Scanner sc=new Scanner(System.in);

@@ -1,3 +1,6 @@
+package Schiffe;
+import SpielLogik.*;
+
 import java.io.Serializable;
 import java.util.Scanner;
 

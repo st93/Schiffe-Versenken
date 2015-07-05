@@ -1,3 +1,6 @@
+package Schiffe;
+
+import SpielLogik.*;
 
 public class Korvette extends Schiffe {
 	private int index;

@@ -1,8 +1,16 @@
+package SpielLogik;
+
+import Schiffe.*;
+import gui.*;
+
 import java.io.Serializable;
 import java.util.*;
 
+import Allgemeines.Abfragen;
+
 
 public class Spieler implements Serializable{
+	protected GUISpielfeld guifeld;
 	protected boolean imSpiel;
 	protected String name;
 	protected Board spielerFeld;
@@ -10,6 +18,7 @@ public class Spieler implements Serializable{
 	protected Spieler[] spielerArray;
 	private boolean getroffen;
 	private int schussVersuche;
+	private boolean isKI;
 	
 	public Spieler(String name){
 		this.imSpiel=true;
@@ -420,13 +429,10 @@ public class Spieler implements Serializable{
 			if(typ==4){
 				this.schiffListe.add(new Zerstoerer(s.getIndex()));	
 			}
-			if(typ==0){
-				System.out.println("leider klappt das nicht...");
-			}
 		}
 	}
 	
-	public List<Schiffe> getSchiffListe(){
+	public ArrayList<Schiffe> getSchiffListe(){
 		return this.schiffListe;
 	}
 	
@@ -848,5 +854,22 @@ public class Spieler implements Serializable{
 
 	public void setGetroffen(boolean getroffen) {
 		this.getroffen = getroffen;
+	}
+	
+	public GUISpielfeld getGuifeld(){
+		return this.guifeld;
+	}
+	public void setGuifeld(GUISpielfeld guiSpielfeld){
+		this.guifeld=guiSpielfeld;
+	}
+
+	public void setIsKI(boolean b) {
+		this.isKI=b;
+		
+	}
+
+	public boolean getIsKI() {
+	
+		return isKI;
 	}
 }

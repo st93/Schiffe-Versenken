@@ -1,29 +1,35 @@
+package Schiffe;
 
-public class UBoot extends Schiffe {
-	//private boolean status;
-	//private boolean schussFrei;
+
+import SpielLogik.*;
+
+public class Zerstoerer extends Schiffe {
 	private int index;
 	public final int typ;
-	private int size;
 	public final String name;
+	private int size;
+	private Direction richtung;
 	protected int regZeit;
 	public final int schaden;
 	private boolean versenkt;
-	private Direction richtung;
 	
-	public UBoot(int index){
+	public Zerstoerer(int index){
 		this.index=index;
-		this.typ=1;
-		this.name="Uboot";
-		this.size=2;
-		this.schaden=1;
+		this.typ=4;
+		this.name="Zerst�rer";
 		this.regZeit=0;
-		this.richtung=new Direction();
+		this.schaden=3;
+		this.size=5;
 		this.versenkt=false;
+		this.richtung=new Direction();
 	}
 	
 	public int getSize(){
 		return this.size;
+	}
+	
+	public void setReg(){
+		this.regZeit=3;
 	}
 	
 	public int getIndex(){
@@ -32,10 +38,6 @@ public class UBoot extends Schiffe {
 	
 	public int getSchaden(){
 		return this.schaden;
-	}
-	
-	public void setReg(){
-		this.regZeit=1;
 	}
 	
 	public int getTyp(){
@@ -59,4 +61,5 @@ public class UBoot extends Schiffe {
 			this.regZeit--;
 		}
 	}
+	
 }

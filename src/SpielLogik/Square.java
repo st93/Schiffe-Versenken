@@ -1,3 +1,4 @@
+package SpielLogik;
 import java.io.Serializable;
 
 

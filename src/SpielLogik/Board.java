@@ -1,3 +1,6 @@
+package SpielLogik;
+import Schiffe.*;
+
 import java.io.Serializable;
 
 
@@ -26,6 +29,10 @@ public class Board implements Serializable {
 		
 		
 		
+	}
+	
+	public Square[][] getFeld(){
+		return this.feld;
 	}
 	
 	public int getSize(){
@@ -73,6 +80,9 @@ public class Board implements Serializable {
 	public boolean koordinatenCheck(int h, int b, Schiffe s){
 		this.hoehe=h;
 		this.breite=b;
+		if(!schussKoordinaten(hoehe, breite)){
+			return false;
+		}
 		if(oben(hoehe,breite)){
 			if(obenLinks(hoehe,breite)){
 				if(!feldFreiEck1(hoehe,breite)){
@@ -1592,12 +1602,4 @@ public class Board implements Serializable {
 		return treffer;
 		
 	}
-	
-    public static void main(String[]args){
-        //System.out.println("Wie gross soll das Feld sein?");
-        //int a=io.readline();
-       
-        Spielfeld_alt game =new Spielfeld_alt(10);
-        game.print();
-    }
 }

@@ -1,6 +1,12 @@
+package SpielLogik;
+import Schiffe.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import Allgemeines.Abfragen;
+import Allgemeines.Speichern;
 //import java.io.*;
 public class Spiel {
 	
@@ -17,6 +23,9 @@ public class Spiel {
 	public Spiel(){
 		
 	}
+	public Spiel(Spieler[] spielerArray){
+		this.spielerArray=spielerArray;
+	}
 	
 	/*
 	 * Methode, mit der das Spiel eingeleitet wird und alle erforderlichen Daten abgefragt werden
@@ -31,7 +40,6 @@ public class Spiel {
 			try {
 				this.spielerArray=Speichern.laden();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		}
