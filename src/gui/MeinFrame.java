@@ -52,7 +52,8 @@ public class MeinFrame extends JFrame{
 	private boolean spielBereit;
 	private Spiel game;
 	private GUISchiffe[] setzen;
-	private GUISpielverlauf[] spielverlauf;
+	private GUISpielverlaufV2[] spielverlauf;
+	private GUISpielfeld[] spielfelder;
 	private int aktiveSpielverlauf;
 	
 	private Thread t;
@@ -60,6 +61,7 @@ public class MeinFrame extends JFrame{
 	private boolean gewaehlt=false;
 	private boolean treffer=false;
 	private int rundenZahl=0;
+	private boolean abbruch=false;
 	
 	private JLabel titel;
 	
@@ -337,14 +339,23 @@ public class MeinFrame extends JFrame{
 	}
 	
 	public void gameloop(){
-		this.spielverlauf=new GUISpielverlauf[spielerZahl];
+		this.spielverlauf=new GUISpielverlaufV2[spielerZahl];
+		this.spielfelder=new GUISpielfeld[spielerZahl];
 		for(int i=0;i<spielerArray.length;i++){
-			spielverlauf[i]=new GUISpielverlauf(spielerArray,spielerArray[i]);
+			spielfelder[i]=new GUISpielfeld(spielFeldGr);
+			spielerArray[i].setGuifeld(spielfelder[i]);
+		}
+		for(Spieler y:spielerArray){
+			y.setSpielerArray(spielerArray);
+		}
+		for(int i=0;i<spielerArray.length;i++){
+			System.out.println(i);
+			spielverlauf[i]=new GUISpielverlaufV2(spielfelder,spielerArray[i],i);
 			spielverlauf[i].getSchussBtn().addActionListener(new MeinSchussListener());
 		}
 		t=new Thread(){
 			public void run(){
-				while(!game.abbruchBed()){
+				while(!game.abbruchBed()&&!abbruch){
 					System.out.println("ich bin ein thread");
 					for(int i=0;i<spielerArray.length;i++){
 						aktiveSpielverlauf=i;
@@ -353,11 +364,9 @@ public class MeinFrame extends JFrame{
 							if(aktiv.getImSpiel()){
 								if(!aktiv.getIsKI()){
 									getContentPane().removeAll();
-									revalidate();
-									repaint();
-									spielverlauf[i].setAktiveS(aktiv);
-									spielverlauf[i].resetSchiffBox();
-									spielverlauf[i].updateFeld();
+									//spielverlauf[i].setAktiveS(aktiv);
+									//spielverlauf[i].resetSchiffBox();
+									//spielverlauf[i].updateFeld();
 									
 									add(spielverlauf[i]);
 									revalidate();
@@ -367,7 +376,6 @@ public class MeinFrame extends JFrame{
 										if(gewaehlt){
 											tSteuerung=false;
 											
-											System.out.println("endlosPisse");
 											try {
 												sleep(1000);
 											} catch (InterruptedException e) {
@@ -390,6 +398,7 @@ public class MeinFrame extends JFrame{
 								}
 							}
 							if(game.abbruchBed()){
+								abbruch=true;
 								break;
 							}
 							if(treffer){
@@ -411,6 +420,9 @@ public class MeinFrame extends JFrame{
 							}
 						}
 						
+					}
+					else{
+						abbruch=true;
 					}
 					//Speichern einfügen
 				}
@@ -441,6 +453,9 @@ private class MeinSchussListener implements ActionListener{
 			if(spielverlauf[aktiveSpielverlauf].schiessen()){
 				treffer=true;
 			}
+			/*for(GUISpielverlaufV1 x : spielverlauf){
+				x.updateFeld();
+			}*/
 			gewaehlt=true;
 		}
 		
@@ -643,6 +658,7 @@ private class MeinSchussListener implements ActionListener{
 				spielerArray[i].setSchiffListe(erstelleSchiffe());
 				spielerArray[i].erstelleFeld(spielFeldGr);
 				spielerArray[i].setIsKI(true);
+				spielerArray[i].setSpielerArray(spielerArray);
 				System.out.println("dran ist computer: "+spielerArray[i].getName());
 				spielerArray[i].setzeSchiffe();
 			}
@@ -651,6 +667,7 @@ private class MeinSchussListener implements ActionListener{
 				spielerArray[i].setSchiffListe(erstelleSchiffe());
 				spielerArray[i].erstelleFeld(spielFeldGr);
 				spielerArray[i].setIsKI(false);
+				spielerArray[i].setSpielerArray(spielerArray);
 				System.out.println("spieler");
 				//spielerArray[i].setzeSchiffe();
 			}

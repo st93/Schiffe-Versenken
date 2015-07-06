@@ -207,7 +207,7 @@ public class GUISchiffe extends JPanel {
 				setzeSchiff(schiffNum);
 				schiffNum++;
 				updateFeld();
-				spieler.setGuifeld(feld);
+				//spieler.setGuifeld(feld);
 			}
 			else{
 				setzeSchiff(schiffNum);

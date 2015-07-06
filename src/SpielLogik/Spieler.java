@@ -887,6 +887,10 @@ public class Spieler implements Serializable{
 		this.isKI=b;
 		
 	}
+	
+	public Spieler[] getSpielerArray(){
+		return spielerArray;
+	}
 
 	public boolean getIsKI() {
 	

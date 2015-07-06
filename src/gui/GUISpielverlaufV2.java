@@ -27,7 +27,7 @@ import javax.swing.event.ChangeListener;
 import Schiffe.*;
 import SpielLogik.*;
 
-public class GUISpielverlauf extends JPanel{
+public class GUISpielverlaufV2 extends JPanel{
 	private int feldgr;
 	private Spieler[] spielerArray;
 	private Spieler aktiveS;
@@ -36,10 +36,11 @@ public class GUISpielverlauf extends JPanel{
 	private int intZeile=-1;
 	private int intSpalte=-1;
 	private Schiffe aktiveSchiff;
-	private GUISpielfeld feld;
+	private GUISpielfeld aktivFeld;
 	private int spielerIndex=0;
 	private int tabIndex=-1;
 	private boolean treffer;
+	private Spieler ziel;
 	
 	
 	private JPanel[] alleFelder;
@@ -59,13 +60,14 @@ public class GUISpielverlauf extends JPanel{
 	private JPanel felder;
 	private JButton schuss;
 	
-	public GUISpielverlauf(Spieler[] spielerArray,Spieler spieler){
+	public GUISpielverlaufV2(GUISpielfeld[]spielfelder,Spieler spieler,int index){
 		super();
-		this.spielerArray=spielerArray;
+		this.spielerArray=spieler.getSpielerArray();
+		this.aktiveS=spielerArray[index];
 		
-		this.aktiveS=spieler;
+		this.feldgr=spielerArray[0].getSpielerFeld().getSize();
+		
 		instruc.setText(aktiveS.getName()+" ist an der Reihe");
-		feldgr=spielerArray[0].getSpielerFeld().getSize();
 		setBackground(Design.hintergrund);
 		
 		setLayout(new GridBagLayout());
@@ -77,25 +79,22 @@ public class GUISpielverlauf extends JPanel{
 		
 		felder=new JPanel();
 		
-		alleFelder=new JPanel[spielerArray.length];
-		alleSpielfelder=new GUISpielfeld[spielerArray.length];
+		this.alleFelder=new JPanel[spielerArray.length];
+		alleSpielfelder=spielfelder;
 		
 		tabs=new JTabbedPane();
 		tabs.setBackground(Design.hintergrund);
 		tabs.addChangeListener(new MeinChangeListener());
-		for(int i=0;i<spielerArray.length;i++){
-			if(spielerArray[i]==aktiveS){
-				alleSpielfelder[i]=spielerArray[i].getGuifeld();
-				//alleSpielfelder[i]=new GUISpielfeld(feldgr);
-				
-			}
-			else{
-				alleSpielfelder[i]=new GUISpielfeld(feldgr);
-				for (MeinButton[] x:alleSpielfelder[i].getBtnArray()){
+		
+		for(int i=0;i<spielfelder.length;i++){
+			if(spielerArray[i]!=aktiveS){;
+				System.out.println(spielerArray[i].getName()+" ist nicht aktiv");
+				for(MeinButton[] x:alleSpielfelder[i].getBtnArray()){
 					for(MeinButton y:x){
 						y.addActionListener(new MeinActionListenerSchiessen());
 					}
 				}
+				
 			}
 			tabs.setPreferredSize(new Dimension(258*2,269*2));
 			alleFelder[i]=new JPanel();
@@ -208,7 +207,7 @@ public class GUISpielverlauf extends JPanel{
 		}
 		spalteBox.setSelectedIndex(-1);
 		spalteBox.setMaximumRowCount(5);
-		//spalteBox.addItemListener(new meinZeilenSpaltenListener());
+		spalteBox.addItemListener(new meinZeilenSpaltenListener());
 		pgbc.gridx=1;
 		pgbc.gridy=2;
 		alleEig.add(spalteBox,pgbc);
@@ -250,6 +249,8 @@ public class GUISpielverlauf extends JPanel{
 		updateFeld();*/
 		
 		System.out.println(tabs.getSelectedIndex());
+		repaint();
+		revalidate();
 		setVisible(true);
 		
 	}
@@ -259,6 +260,9 @@ public class GUISpielverlauf extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			resetSchiffBox();
+			if(ausrichtung==1){
+				MeinButton[][] array=ziel.getGuifeld().getBtnArray();
+			}
 			updateFeld();
 		}
 		
@@ -270,36 +274,36 @@ public class GUISpielverlauf extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int x=tabs.getSelectedIndex();
-			feld=(GUISpielfeld) alleSpielfelder[x];
-			MeinButton[][] btnArray=feld.getBtnArray();
+			aktivFeld=(GUISpielfeld) alleSpielfelder[x];
+			MeinButton[][] btnArray=aktivFeld.getBtnArray();
 			MeinButton btn=(MeinButton)e.getSource();
 				
-				int i=btn.getSpalte();
-				int k=btn.getZeile();
+			int i=btn.getSpalte();
+			int k=btn.getZeile();
 						
-				if(btn.getIsClicked()){
+			if(btn.getIsClicked()){
 				btn.setIsClicked(false);
 				btn.setBackground(Design.wasser);
 				updateFeld();
 				nullGekl=true;
 							
+			}
+			else{
+				if(nullGekl){
+					btn.setIsClicked(true);
+					btn.setBackground(Design.zeiger);
+					nullGekl=false;
+						
 				}
 				else{
-					if(nullGekl){
-						btn.setIsClicked(true);
-						btn.setBackground(Design.zeiger);
-						nullGekl=false;
-						
-					}
-					else{
-						btnArray[intSpalte-1][intZeile-1].setIsClicked(false);
-						btnArray[intSpalte-1][intZeile-1].setBackground(Design.wasser);
-						updateFeld();
-						btn.setIsClicked(true);
-						btn.setBackground(Design.zeiger);
+					btnArray[intSpalte-1][intZeile-1].setIsClicked(false);
+					btnArray[intSpalte-1][intZeile-1].setBackground(Design.wasser);
+					updateFeld();
+					btn.setIsClicked(true);
+					btn.setBackground(Design.zeiger);
 								
-					}
 				}
+			}
 			intSpalte=i+1;
 			intZeile=k+1;
 			spalteBox.setSelectedIndex(i);
@@ -337,11 +341,14 @@ public class GUISpielverlauf extends JPanel{
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			System.out.println("tab wurde geändert");
 			System.out.println(tabs.getSelectedIndex());
 			int i=tabs.getSelectedIndex();
 			if(i!=tabIndex){
-				tabIndex=i;
+				if(i>=0){
+					tabIndex=i;
+					aktivFeld=alleSpielfelder[i];
+					ziel=spielerArray[i];
+				}
 			}
 			resetPara();
 			
@@ -359,6 +366,7 @@ public class GUISpielverlauf extends JPanel{
 					for(Schiffe schiffe:aktiveS.getSchiffListe()){
 						if(schiffe.getTyp()==1){
 							aktiveSchiff=schiffe;
+							testeBereit();
 							break;
 						}
 					}
@@ -367,6 +375,7 @@ public class GUISpielverlauf extends JPanel{
 					for(Schiffe schiffe:aktiveS.getSchiffListe()){
 						if(schiffe.getTyp()==2){
 							aktiveSchiff=schiffe;
+							testeBereit();
 							break;
 						}
 					}
@@ -375,6 +384,7 @@ public class GUISpielverlauf extends JPanel{
 					for(Schiffe schiffe:aktiveS.getSchiffListe()){
 						if(schiffe.getTyp()==3){
 							aktiveSchiff=schiffe;
+							testeBereit();
 							break;
 						}
 					}
@@ -383,6 +393,7 @@ public class GUISpielverlauf extends JPanel{
 					for(Schiffe schiffe:aktiveS.getSchiffListe()){
 						if(schiffe.getTyp()==4){
 							aktiveSchiff=schiffe;
+							testeBereit();
 							break;
 						}
 					}
@@ -440,35 +451,62 @@ public class GUISpielverlauf extends JPanel{
 	
 	public void updateFeld(){
 		for(Spieler spieler:spielerArray){
-			feld=spieler.getGuifeld();
+			GUISpielfeld feldX=spieler.getGuifeld();
 			spieler.getSpielerFeld().printCounter();
 			Square[][]s=spieler.getSpielerFeld().getFeld();
 			for (int i=0;i<spieler.getSpielerFeld().getSize();i++){
 				for(int k=0;k<spieler.getSpielerFeld().getSize();k++){
-					System.out.println(s[i][k].getCounter());
 //					if(spieler==aktiveS){
-						if(s[i][k].getCounter()==0){
-							feld.getBtnArray()[k][i].setBackground(Design.wasser);
-							feld.getBtnArray()[k][i].setIsClicked(false);
+					  switch(s[i][k].getCounter()){
+			                
+			                	case 0:
+			                		feldX.getBtnArray()[k][i].setBackground(Design.wasser);
+			                		break;
+			                	case 1:
+			                		feldX.getBtnArray()[k][i].setBackground(Design.schiff);
+			                		break;
+			                		
+			                	case 2:
+			                		feldX.getBtnArray()[k][i].setBackground(Design.sTreffer);
+			                		break;
+			                		
+			                	case 3:
+			                		feldX.getBtnArray()[k][i].setBackground(Design.wTreffer);
+			                		break;
+			                		
+			                	case 4:
+			                		feldX.getBtnArray()[k][i].setBackground(Design.versenkt);
+			                		break;
+			                		
+			                	default:
+			                		feldX.getBtnArray()[k][i].setBackground(Color.PINK);
+			                		break;
+			                }
+					  feldX.getBtnArray()[k][i].setIsClicked(false);
+					  }
+
+						/*if(s[i][k].getCounter()==0){
+							feldX.getBtnArray()[k][i].setBackground(Design.wasser);
+							feldX.getBtnArray()[k][i].setIsClicked(false);
 						}
 						if(s[i][k].getCounter()==1){
 							
-							feld.getBtnArray()[k][i].setBackground(Design.schiff);
-							feld.getBtnArray()[k][i].setIsClicked(false);
+							feldX.getBtnArray()[k][i].setBackground(Design.schiff);
+							feldX.getBtnArray()[k][i].setIsClicked(false);
 						}
 						if(s[i][k].getCounter()==2){
-							feld.getBtnArray()[k][i].setBackground(Color.RED);
-							feld.getBtnArray()[k][i].setIsClicked(false);
+							feldX.getBtnArray()[k][i].setBackground(Color.RED);
+							feldX.getBtnArray()[k][i].setIsClicked(false);
 						}
 						
 						if(s[i][k].getCounter()==3){
-							feld.getBtnArray()[k][i].setBackground(Design.wTreffer);
-							feld.getBtnArray()[k][i].setIsClicked(false);
+							feldX.getBtnArray()[k][i].setBackground(Design.wTreffer);
+							feldX.getBtnArray()[k][i].setIsClicked(false);
 						}
 						
 						if(s[i][k].getCounter()==4){
-							feld.getBtnArray()[k][i].setBackground(Design.versenkt);
-							feld.getBtnArray()[k][i].setIsClicked(false);
+							feldX.getBtnArray()[k][i].setBackground(Design.versenkt);
+							feldX.getBtnArray()[k][i].setIsClicked(false);
 						}
 //					}
 /*					else{
@@ -497,7 +535,7 @@ public class GUISpielverlauf extends JPanel{
 					}*/
 				}
 			}
-		}
+		
 		revalidate();
 		repaint();
 		
@@ -543,7 +581,7 @@ public class GUISpielverlauf extends JPanel{
 	
 	public void klicken(int zeile,int spalte){
 		
-		feld.getBtnArray()[spalte-1][zeile-1].doClick();
+		aktivFeld.getBtnArray()[spalte-1][zeile-1].doClick();
 		
 	}
 	
@@ -563,7 +601,7 @@ public class GUISpielverlauf extends JPanel{
 	}
 	
 	public boolean schiessen(){
-		Board spielboard=spielerArray[tabIndex].getSpielerFeld();
+		Board spielboard=ziel.getSpielerFeld();
 		System.out.println("spielerArray an der stelle "+tabIndex);
 		if(spielboard.schiessen(intZeile-1, intSpalte-1, ausrichtung, aktiveSchiff)){
 			updateFeld();
@@ -591,6 +629,5 @@ public class GUISpielverlauf extends JPanel{
 	public void setAktiveS(Spieler s){
 		this.aktiveS=s;
 	}
-	
 	
 }
