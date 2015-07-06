@@ -6,6 +6,8 @@ import gui.*;
 import java.io.Serializable;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import Allgemeines.Abfragen;
 
 
@@ -86,6 +88,7 @@ public class Spieler implements Serializable{
 			for(Schiffe k:i.getSchiffListe()){
 				if(!k.getVersenkt()){
 					if(k.getDirection().getLinks()){
+						System.out.println(k.getName()+" Zeile: "+k.getHeight()+" Spalte: "+k.getWidth());
 						if(i.getSpielerFeld().versenktLinks(k.getHeight(), k.getWidth(), k)){
 							System.out.println("Schiff wurde versenkt");
 							i.getSpielerFeld().printFeind();
@@ -137,6 +140,22 @@ public class Spieler implements Serializable{
 		System.out.println("Leider kein Schiff bereit..");
 		return false;
 	}
+	
+	
+	/*
+	 * �berpr�ft, ob ein Schiff verf�gbar ist
+	 * liefert true, wenn mindestens ein Schiff verf�gbar ist
+	 */
+	public boolean guiSchiffCheck(){
+		for(Schiffe s:schiffListe){
+			if((s.getVersenkt()==false)&& s.getReg()==0){
+				return true;
+			}
+		}
+		JOptionPane.showMessageDialog(null, "Leider ist kein Schiff schussbereit", "Information", JOptionPane.OK_OPTION);
+		return false;
+	}
+	
 	
 	/*
 	 * Methode, mit der geschossen wird
@@ -257,6 +276,7 @@ public class Spieler implements Serializable{
 			//s.setReg();
 		}
 	}
+
 	
 	/*
 	 * Methode, mit welcher der Gegner f�r den n�chsten Schuss bestimmt wird

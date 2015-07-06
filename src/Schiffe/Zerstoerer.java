@@ -16,7 +16,7 @@ public class Zerstoerer extends Schiffe {
 	public Zerstoerer(int index){
 		this.index=index;
 		this.typ=4;
-		this.name="Zerst�rer";
+		this.name="Zerstoerer";
 		this.regZeit=0;
 		this.schaden=3;
 		this.size=5;

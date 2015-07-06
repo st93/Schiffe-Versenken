@@ -45,8 +45,8 @@ public class GUISchiffe extends JPanel {
 	private JLabel aus=new JLabel("Ausrichtung: ");
 	
 	private JLabel schiffeLabel=new JLabel();
-	private JComboBox<Integer> zeileBox;
-	private JComboBox<Integer> spalteBox;
+	private JComboBox<Integer> zeileBox=new JComboBox<Integer>();
+	private JComboBox<Integer> spalteBox=new JComboBox<Integer>();
 	private JComboBox<String> ausBox;
 	
 	private JButton setzen;
@@ -118,7 +118,6 @@ public class GUISchiffe extends JPanel {
 			pgbc.gridy=0;
 			alleEig.add(schiffeLabel,pgbc);
 			
-			
 			//JComboBox für die Auswahl der Zeile
 			//
 			zeileBox=new JComboBox<Integer>();
@@ -156,7 +155,7 @@ public class GUISchiffe extends JPanel {
 			ausBox.addItem("Links");
 			ausBox.addItem("Oben");
 			ausBox.addItem("Unten");
-			ausBox.addItemListener(new meinAusrichtungsListener());
+			ausBox.addItemListener(new MeinAusrichtungsListener());
 			pgbc.gridx=1;
 			pgbc.gridy=3;
 			alleEig.add(ausBox,pgbc);
@@ -208,14 +207,16 @@ public class GUISchiffe extends JPanel {
 				setzeSchiff(schiffNum);
 				schiffNum++;
 				updateFeld();
+				spieler.setGuifeld(feld);
 			}
 			else{
 				setzeSchiff(schiffNum);
+				schiffNum++;
 				updateFeld();
 				System.out.println("alle schiffe gesetzt");
 				fertig.setEnabled(true);
 				setzen.setEnabled(false);
-				//setzen.setEnabled(false);
+				spieler.setGuifeld(feld);
 			}
 		}
 		
@@ -264,7 +265,7 @@ public class GUISchiffe extends JPanel {
 			
 	
 	
-	private class meinAusrichtungsListener implements ItemListener{
+	private class MeinAusrichtungsListener implements ItemListener{
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
@@ -344,37 +345,39 @@ public class GUISchiffe extends JPanel {
 
 	
 	public void testDat(){
-		s=slist.get(schiffNum);
-		s.getDirection().clean();
-		if(spieler.getSpielerFeld().koordinatenCheck(intZeile-1, intSpalte-1, s)){
-			System.out.println("Schiff Kann man setzen!");
-			String check=(String)ausBox.getSelectedItem();
-			System.out.println("check= "+check);
-			if(check=="Rechts"&&s.getDirection().getRechts()){
-				setzen.setEnabled(true);
-				System.out.println("rechts");
+		if(schiffNum<spieler.getSchiffListe().size()){
+			s=slist.get(schiffNum);
+			s.getDirection().clean();
+			if(spieler.getSpielerFeld().koordinatenCheck(intZeile-1, intSpalte-1, s)){
+				System.out.println("Schiff Kann man setzen!");
+				String check=(String)ausBox.getSelectedItem();
+				System.out.println("check= "+check);
+				if(check=="Rechts"&&s.getDirection().getRechts()){
+					setzen.setEnabled(true);
+					System.out.println("rechts");
+					
+				}
+				else if(check=="Links"&&s.getDirection().getLinks()){
+					setzen.setEnabled(true);
+					System.out.println("links");
+				}
+				else if(check=="Oben"&&s.getDirection().getOben()){
+					setzen.setEnabled(true);
+					System.out.println("oben");
+				}
+				else if(check=="Unten"&&s.getDirection().getUnten()){
+					setzen.setEnabled(true);
+					System.out.println("unten");
+				}
+				else {
+					setzen.setEnabled(false);
+				}
 				
 			}
-			else if(check=="Links"&&s.getDirection().getLinks()){
-				setzen.setEnabled(true);
-				System.out.println("links");
-			}
-			else if(check=="Oben"&&s.getDirection().getOben()){
-				setzen.setEnabled(true);
-				System.out.println("oben");
-			}
-			else if(check=="Unten"&&s.getDirection().getUnten()){
-				setzen.setEnabled(true);
-				System.out.println("unten");
-			}
-			else {
+			else{
 				setzen.setEnabled(false);
+				System.out.println("kann nicht gesetzt werden");
 			}
-			
-		}
-		else{
-			setzen.setEnabled(false);
-			System.out.println("kann nicht gesetzt werden");
 		}
 	}
 	
@@ -391,14 +394,14 @@ public class GUISchiffe extends JPanel {
 		return fertig;
 	}
 	public void updateFeld(){
-		Square[][] s=spielerFeld.getFeld();
+		Square[][] square=spielerFeld.getFeld();
 		for (int i=0;i<spielerFeld.getSize();i++){
 			for(int k=0;k<spielerFeld.getSize();k++){
-				if(s[k][i].getCounter()==0){
+				if(square[k][i].getCounter()==0){
 					feld.getBtnArray()[k][i].setBackground(Design.wasser);
 					feld.getBtnArray()[k][i].setIsClicked(false);
 				}
-				if(s[i][k].getCounter()==1){
+				if(square[i][k].getCounter()==1){
 					feld.getBtnArray()[k][i].setBackground(Design.schiff);
 					feld.getBtnArray()[k][i].setEnabled(false);
 					feld.getBtnArray()[k][i].setIsClicked(false);
@@ -410,8 +413,12 @@ public class GUISchiffe extends JPanel {
 		ausrichtung=1;
 		intSpalte=-1;
 		intZeile=-1;
+		if(schiffNum<slist.size()){
+			schiffeLabel.setText(slist.get(schiffNum).getName());
+		}
 		zeileBox.setSelectedIndex(-1);
 		spalteBox.setSelectedIndex(-1);
+		ausBox.setSelectedIndex(0);
 		setzen.setEnabled(false);
 	}
 	
@@ -422,15 +429,23 @@ public class GUISchiffe extends JPanel {
 		System.out.println("Schiff: "+schiff.getName()+" Zeile: "+intZeile+"Spalte: "+intSpalte+"Ausrichtung: "+ausrichtung);
 		if(ausrichtung==1){
 			spieler.getSpielerFeld().schiffSetzenRechts(intZeile-1, intSpalte-1, schiff);
+			schiff.getDirection().clean();
+			schiff.setRechts(true);
 		}
 		if(ausrichtung==2){
 			spieler.getSpielerFeld().schiffSetzenLinks(intZeile-1, intSpalte-1, schiff);
+			schiff.getDirection().clean();
+			schiff.setLinks(true);
 		}
 		if(ausrichtung==3){
 			spieler.getSpielerFeld().schiffSetzenOben(intZeile-1, intSpalte-1, schiff);
+			schiff.getDirection().clean();
+			schiff.setOben(true);
 		}
 		if(ausrichtung==4){
 			spieler.getSpielerFeld().schiffSetzenUnten(intZeile-1, intSpalte-1, schiff);
+			schiff.getDirection().clean();
+			schiff.setUnten(true);
 		}
 	}
 	

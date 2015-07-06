@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -51,6 +52,14 @@ public class MeinFrame extends JFrame{
 	private boolean spielBereit;
 	private Spiel game;
 	private GUISchiffe[] setzen;
+	private GUISpielverlauf[] spielverlauf;
+	private int aktiveSpielverlauf;
+	
+	private Thread t;
+	private boolean tSteuerung=true;
+	private boolean gewaehlt=false;
+	private boolean treffer=false;
+	private int rundenZahl=0;
 	
 	private JLabel titel;
 	
@@ -69,7 +78,7 @@ public class MeinFrame extends JFrame{
 		super(name);
 		
 		//minimale Größe festlegen
-		setMinimumSize(new Dimension(500,500));
+		setMinimumSize(new Dimension(950,710));
 		
 		//Farbe Hintergrund
 		getContentPane().setBackground(Design.hintergrund);
@@ -202,11 +211,11 @@ public class MeinFrame extends JFrame{
 				}
 			}
 			else{
+				for(GUISchiffe x:setzen){
+					remove(x);
+				}
 				getContentPane().removeAll();
-				GUISpielverlauf spielverlauf=new GUISpielverlauf(spielerArray);
-				add(spielverlauf);
-				revalidate();
-				repaint();
+				gameloop();
 			}
 		}
 		
@@ -230,10 +239,8 @@ public class MeinFrame extends JFrame{
 			}
 			else{
 				getContentPane().removeAll();
-				GUISpielverlauf spielverlauf=new GUISpielverlauf(spielerArray);
-				add(spielverlauf);
-				revalidate();
-				repaint();
+				System.out.println("vor Gameloop.");
+				gameloop();
 			}
 			/*if(setzen[spielerIndex].getGesetzt()){
 				System.out.println("schiffe wurden gesetzt");
@@ -329,6 +336,116 @@ public class MeinFrame extends JFrame{
 		
 	}
 	
+	public void gameloop(){
+		this.spielverlauf=new GUISpielverlauf[spielerZahl];
+		for(int i=0;i<spielerArray.length;i++){
+			spielverlauf[i]=new GUISpielverlauf(spielerArray,spielerArray[i]);
+			spielverlauf[i].getSchussBtn().addActionListener(new MeinSchussListener());
+		}
+		t=new Thread(){
+			public void run(){
+				while(!game.abbruchBed()){
+					System.out.println("ich bin ein thread");
+					for(int i=0;i<spielerArray.length;i++){
+						aktiveSpielverlauf=i;
+						Spieler aktiv=spielerArray[i];
+						if(aktiv.guiSchiffCheck()){
+							if(aktiv.getImSpiel()){
+								if(!aktiv.getIsKI()){
+									getContentPane().removeAll();
+									revalidate();
+									repaint();
+									spielverlauf[i].setAktiveS(aktiv);
+									spielverlauf[i].resetSchiffBox();
+									spielverlauf[i].updateFeld();
+									
+									add(spielverlauf[i]);
+									revalidate();
+									repaint();
+									while(tSteuerung){
+										yield();	
+										if(gewaehlt){
+											tSteuerung=false;
+											
+											System.out.println("endlosPisse");
+											try {
+												sleep(1000);
+											} catch (InterruptedException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										
+									}
+									
+								
+							
+							
+									tSteuerung=true;
+									gewaehlt=false;
+							
+								}
+								else{
+									//KI misst
+								}
+							}
+							if(game.abbruchBed()){
+								break;
+							}
+							if(treffer){
+								i--;
+								aktiv.versenktup(spielerArray);
+							}
+							treffer=false;
+						}
+						else{
+							getContentPane().removeAll();
+						}
+			
+					}
+					rundenZahl++;
+					if(!game.abbruchBed()){
+						for(Spieler k:spielerArray){
+							for(Schiffe s:k.getSchiffListe()){
+								s.updateReg();
+							}
+						}
+						
+					}
+					//Speichern einfügen
+				}
+			}
+			
+		};
+		t.start();
+}
+	
+private class MeinSchussListener implements ActionListener{
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			/*if(schiffNum<spieler.getSchiffListe().size()-1){
+				setzeSchiff(schiffNum);
+				schiffNum++;
+				updateFeld();
+			}
+			else{
+				setzeSchiff(schiffNum);
+				updateFeld();
+				System.out.println("alle schiffe gesetzt");
+				fertig.setEnabled(true);
+				setzen.setEnabled(false);
+				//setzen.setEnabled(false);
+			}*/
+			
+			if(spielverlauf[aktiveSpielverlauf].schiessen()){
+				treffer=true;
+			}
+			gewaehlt=true;
+		}
+		
+	}
+	
 	private class SchiffListListener implements ListSelectionListener{
 
 		@Override
@@ -379,7 +496,7 @@ public class MeinFrame extends JFrame{
 				}
 			}
 			if(x==schiffWahl.getList(4)){
-				int ubo=(int)schiffWahl.getList(2).getSelectedValue();
+				int ubo=(int)schiffWahl.getList(1).getSelectedValue();
 				int kor=(int)schiffWahl.getList(2).getSelectedValue();
 				int fre=(int)schiffWahl.getList(3).getSelectedValue();
 				int zer=(int)x.getSelectedValue();
@@ -395,6 +512,7 @@ public class MeinFrame extends JFrame{
 		}
 		
 	}
+	
 	
 	private class MeinListListener implements ListSelectionListener{
 

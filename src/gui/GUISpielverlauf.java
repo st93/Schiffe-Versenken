@@ -11,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +21,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import Schiffe.*;
 import SpielLogik.*;
@@ -26,24 +30,27 @@ import SpielLogik.*;
 public class GUISpielverlauf extends JPanel{
 	private int feldgr;
 	private Spieler[] spielerArray;
+	private Spieler aktiveS;
 	private boolean nullGekl=true;
-	private int ausrichtung;
+	private int ausrichtung=2;
 	private int intZeile=-1;
 	private int intSpalte=-1;
-	private Schiffe s;
+	private Schiffe aktiveSchiff;
 	private GUISpielfeld feld;
-	//private Board spielerFeld;
 	private int spielerIndex=0;
+	private int tabIndex=-1;
+	private boolean treffer;
 	
 	
-	
-	private JComboBox zeileBox;
+	private JPanel[] alleFelder;
+	private GUISpielfeld[] alleSpielfelder;
+	private JComboBox<Integer> zeileBox=new JComboBox<Integer>();
 	private JLabel zeile=new JLabel("Zeile:");
-	private JComboBox spalteBox;
+	private JComboBox<Integer> spalteBox=new JComboBox<Integer>();
 	private JLabel spalte=new JLabel("Spalte:");
-	private JComboBox schiffeBox;
+	private JComboBox<String> schiffeBox;
 	private JLabel schiffe=new JLabel("Schiff:");
-	private JComboBox ausBox;
+	private JComboBox<String> ausBox;
 	private JLabel aus=new JLabel("Ausrichtung");
 	
 	private JLabel instruc= new JLabel(" ist an der Reihe");
@@ -52,9 +59,12 @@ public class GUISpielverlauf extends JPanel{
 	private JPanel felder;
 	private JButton schuss;
 	
-	public GUISpielverlauf(Spieler[] spielerArray){
+	public GUISpielverlauf(Spieler[] spielerArray,Spieler spieler){
 		super();
 		this.spielerArray=spielerArray;
+		
+		this.aktiveS=spieler;
+		instruc.setText(aktiveS.getName()+" ist an der Reihe");
 		feldgr=spielerArray[0].getSpielerFeld().getSize();
 		setBackground(Design.hintergrund);
 		
@@ -67,35 +77,55 @@ public class GUISpielverlauf extends JPanel{
 		
 		felder=new JPanel();
 		
+		alleFelder=new JPanel[spielerArray.length];
+		alleSpielfelder=new GUISpielfeld[spielerArray.length];
+		
 		tabs=new JTabbedPane();
-		tabs.setForeground(Design.hintergrund);
+		tabs.setBackground(Design.hintergrund);
+		tabs.addChangeListener(new MeinChangeListener());
 		for(int i=0;i<spielerArray.length;i++){
-			GUISpielfeld sp=spielerArray[i].getGuifeld();
-			for (MeinButton[] x:sp.getBtnArray()){
-				for(MeinButton y:x){
-					y.addActionListener(new MeinActionListenerSchiessen());
+			if(spielerArray[i]==aktiveS){
+				alleSpielfelder[i]=spielerArray[i].getGuifeld();
+				//alleSpielfelder[i]=new GUISpielfeld(feldgr);
+				
+			}
+			else{
+				alleSpielfelder[i]=new GUISpielfeld(feldgr);
+				for (MeinButton[] x:alleSpielfelder[i].getBtnArray()){
+					for(MeinButton y:x){
+						y.addActionListener(new MeinActionListenerSchiessen());
+					}
 				}
 			}
-			//tabs.setPreferredSize(new Dimension(258*2,269*2));
-			tabs.add(spielerArray[i].getName(),sp);
+			tabs.setPreferredSize(new Dimension(258*2,269*2));
+			alleFelder[i]=new JPanel();
+			alleFelder[i].add(alleSpielfelder[i]);
+			tabs.add(spielerArray[i].getName(),alleFelder[i]);
+			updateFeld();
+			revalidate();
+			repaint();
+			
 		}
 		felder.add(tabs);
+		felder.setBackground(Design.hintergrund);
 		
-		gbc.gridx=2;
-		gbc.gridy=1;
+		gbc.gridx=3;
+		gbc.gridy=2;
 		gbc.gridheight=5;
 		gbc.gridwidth=5;
-		add(felder,gbc);
+		add(tabs,gbc);
 		instruc.setFont(Design.titel);
-		gbc.gridx=0;
+		gbc.gridx=3;
 		gbc.gridy=0;
-		gbc.gridwidth=2;
+		gbc.gridheight=1;
+		gbc.gridwidth=5;
 		add(instruc,gbc);
 		
 		alleEig= new JPanel();
-		gbc.gridwidth=1;
+		gbc.gridwidth=3;
+		gbc.gridheight=5;
 		gbc.gridx=0;
-		gbc.gridy=1;
+		gbc.gridy=3;
 		add(alleEig,gbc);
 		alleEig.setLayout(new GridBagLayout());
 		alleEig.setBackground(Design.hintergrund);
@@ -126,11 +156,30 @@ public class GUISpielverlauf extends JPanel{
 		//
 		schiffeBox=new JComboBox<String>();
 		schiffeBox.setFont(Design.inFeld);
-		schiffeBox.addItem("UBoot");
-		schiffeBox.addItem("Korvette");
-		schiffeBox.addItem("Fregatte");
-		schiffeBox.addItem("Zerstörer");
-		//ausBox.addItemListener(new meinAusrichtungsListener());
+		int uboZ=0;
+		int korZ=0;
+		int freZ=0;
+		int zerZ=0;
+		for(Schiffe schiffe:aktiveS.getSchiffListe()){
+			if(schiffe.getTyp()==1&&schiffe.schussBereit()&&uboZ==0){
+				schiffeBox.addItem("UBoot");
+				uboZ++;
+			}
+			if(schiffe.getTyp()==2&&schiffe.schussBereit()&&korZ==0){
+				schiffeBox.addItem("Korvette");
+				korZ++;
+			}
+			if(schiffe.getTyp()==3&&schiffe.schussBereit()&&freZ==0){
+				freZ++;
+				schiffeBox.addItem("Fregatte");
+			}
+			if(schiffe.getTyp()==4&&schiffe.schussBereit()&&zerZ==0){
+				zerZ++;
+				schiffeBox.addItem("Zerstörer");
+			}
+		}
+		schiffeBox.setSelectedIndex(-1);
+		schiffeBox.addItemListener(new SchiffListener());
 		pgbc.gridx=1;
 		pgbc.gridy=0;
 		alleEig.add(schiffeBox,pgbc);
@@ -138,21 +187,21 @@ public class GUISpielverlauf extends JPanel{
 		
 		//JComboBox für die Auswahl der Zeile
 		//
-		zeileBox=new JComboBox<Integer>();
+		this.zeileBox=new JComboBox<Integer>();
 		zeileBox.setFont(Design.inFeld);
 		for(int i=0;i<spielerArray[0].getSpielerFeld().getSize();i++){
 			zeileBox.addItem((i+1));
 		}
 		zeileBox.setSelectedIndex(-1);
 		zeileBox.setMaximumRowCount(5);
-		//zeileBox.addItemListener(new meinZeilenSpaltenListener());
+		zeileBox.addItemListener(new meinZeilenSpaltenListener());
 		pgbc.gridx=1;
 		pgbc.gridy=1;
 		alleEig.add(zeileBox,pgbc);
 		
 		//JComboBox für die Auswahl der Spalte
 		//
-		spalteBox=new JComboBox<Integer>();
+		this.spalteBox=new JComboBox<Integer>();
 		spalteBox.setFont(Design.inFeld);
 		for(int i=0;i<spielerArray[0].getSpielerFeld().getSize();i++){
 			spalteBox.addItem((i+1));
@@ -171,7 +220,7 @@ public class GUISpielverlauf extends JPanel{
 		ausBox.setFont(Design.inFeld);
 		ausBox.addItem("Horizontal");
 		ausBox.addItem("Vertikal");
-		//ausBox.addItemListener(new meinAusrichtungsListener());
+		ausBox.addItemListener(new MeinAusrichtungsListener());
 		pgbc.gridx=1;
 		pgbc.gridy=3;
 		alleEig.add(ausBox,pgbc);
@@ -182,14 +231,15 @@ public class GUISpielverlauf extends JPanel{
 		schuss=new JButton("Schuss");
 		schuss.setFont(Design.inFeld);
 		schuss.setEnabled(false);
-		schuss.addActionListener(new MeinActionListener());
+		schuss.addActionListener(new MeinSchussListener());
 		gbc.gridx=0;
-		gbc.gridy=2;
+		gbc.gridy=10;
 		add(schuss,gbc);
-		setVisible(true);
 		
 			
-		spielerIndex=kITest(spielerIndex);
+		//gbc.gridx=0;
+		//gbc.gridy=10;
+		/*spielerIndex=kITest(spielerIndex);
 		if(spielerIndex<spielerArray.length){
 			feld=spielerArray[spielerIndex].getGuifeld();
 			add(feld,gbc);
@@ -197,33 +247,30 @@ public class GUISpielverlauf extends JPanel{
 			repaint();
 		}
 		
+		updateFeld();*/
+		
+		System.out.println(tabs.getSelectedIndex());
+		setVisible(true);
+		
 	}
 	
-	private class MeinActionListener implements ActionListener{
+	private class MeinSchussListener implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			/*if(schiffNum<spieler.getSchiffListe().size()-1){
-				setzeSchiff(schiffNum);
-				schiffNum++;
-				updateFeld();
-			}
-			else{
-				setzeSchiff(schiffNum);
-				updateFeld();
-				System.out.println("alle schiffe gesetzt");
-				fertig.setEnabled(true);
-				setzen.setEnabled(false);
-				//setzen.setEnabled(false);
-			}*/
+			resetSchiffBox();
+			updateFeld();
 		}
 		
 	}
+	
 	
 	private class MeinActionListenerSchiessen implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			int x=tabs.getSelectedIndex();
+			feld=(GUISpielfeld) alleSpielfelder[x];
 			MeinButton[][] btnArray=feld.getBtnArray();
 			MeinButton btn=(MeinButton)e.getSource();
 				
@@ -232,6 +279,7 @@ public class GUISpielverlauf extends JPanel{
 						
 				if(btn.getIsClicked()){
 				btn.setIsClicked(false);
+				btn.setBackground(Design.wasser);
 				updateFeld();
 				nullGekl=true;
 							
@@ -245,6 +293,7 @@ public class GUISpielverlauf extends JPanel{
 					}
 					else{
 						btnArray[intSpalte-1][intZeile-1].setIsClicked(false);
+						btnArray[intSpalte-1][intZeile-1].setBackground(Design.wasser);
 						updateFeld();
 						btn.setIsClicked(true);
 						btn.setBackground(Design.zeiger);
@@ -255,47 +304,247 @@ public class GUISpielverlauf extends JPanel{
 			intZeile=k+1;
 			spalteBox.setSelectedIndex(i);
 			zeileBox.setSelectedIndex(k);
+			testeBereit();
 		}
 				
 	}
 	
-	public void updateFeld(){
-		for(Spieler spieler:spielerArray){
-			Square[][]s=spieler.getSpielerFeld().getFeld();
-			for (int i=0;i<spieler.getSpielerFeld().getSize();i++){
-				for(int k=0;k<spieler.getSpielerFeld().getSize();k++){
-					if(s[k][i].getCounter()==0){
-						feld.getBtnArray()[k][i].setBackground(Design.wasser);
-						feld.getBtnArray()[k][i].setIsClicked(false);
+	private class MeinAusrichtungsListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			if(e.getStateChange()==ItemEvent.SELECTED){
+				String string=(String)e.getItem();
+				if(string=="Horizontal"){
+					ausrichtung=2;
+					testeBereit();
+				}
+				else if(string=="Vertikal"){
+					ausrichtung=1;
+					testeBereit();
+				}
+				else{
+					schuss.setEnabled(false);
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	private class MeinChangeListener implements ChangeListener{
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			System.out.println("tab wurde geändert");
+			System.out.println(tabs.getSelectedIndex());
+			int i=tabs.getSelectedIndex();
+			if(i!=tabIndex){
+				tabIndex=i;
+			}
+			resetPara();
+			
+		}
+		
+	}
+	
+	private class SchiffListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			if(e.getStateChange()==ItemEvent.SELECTED){
+				String string=(String)e.getItem();
+				if(string=="UBoot"){
+					for(Schiffe schiffe:aktiveS.getSchiffListe()){
+						if(schiffe.getTyp()==1){
+							aktiveSchiff=schiffe;
+							break;
+						}
 					}
-					if(s[i][k].getCounter()==2){
-						feld.getBtnArray()[k][i].setBackground(Design.sTreffer);
-						feld.getBtnArray()[k][i].setIsClicked(false);
+				}
+				if(string=="Korvette"){
+					for(Schiffe schiffe:aktiveS.getSchiffListe()){
+						if(schiffe.getTyp()==2){
+							aktiveSchiff=schiffe;
+							break;
+						}
 					}
-					
-					if(s[k][i].getCounter()==3){
-						feld.getBtnArray()[k][i].setBackground(Design.wTreffer);
-						feld.getBtnArray()[k][i].setIsClicked(false);
+				}
+				if(string=="Fregatte"){
+					for(Schiffe schiffe:aktiveS.getSchiffListe()){
+						if(schiffe.getTyp()==3){
+							aktiveSchiff=schiffe;
+							break;
+						}
 					}
-					
-					if(s[k][i].getCounter()==4){
-						feld.getBtnArray()[k][i].setBackground(Design.versenkt);
-						feld.getBtnArray()[k][i].setIsClicked(false);
+				}
+				if(string=="Zerstörer"){
+					for(Schiffe schiffe:aktiveS.getSchiffListe()){
+						if(schiffe.getTyp()==4){
+							aktiveSchiff=schiffe;
+							break;
+						}
 					}
 				}
 			}
+			
 		}
 		
+	}
+	
+	private class meinZeilenSpaltenListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			if(e.getStateChange()==ItemEvent.SELECTED){
+				Integer i=(Integer)e.getItem();
+				System.out.println(i);
+				System.out.println("Zeile "+intZeile);
+				System.out.println("Spalte "+intSpalte);
+				if((JComboBox<Integer>)e.getSource()==zeileBox){
+					if(i==intZeile){
+						
+					}
+					else if(intZeile<1){
+						intZeile=i;
+						if(intSpalte>0){
+							klicken(i,intSpalte);
+						}
+					}
+					else{
+						klicken(i,intSpalte);
+					}
+					
+				}
+				else if((JComboBox<Integer>)e.getSource()==spalteBox){
+					if(i==intSpalte){
+						
+					}
+					else if(intSpalte<1){
+						intSpalte=i;
+						if(intZeile>0){
+							klicken(i,intZeile);
+						}
+					}
+					else{
+						klicken(intZeile,i);
+					}
+					
+				}
+			}
+			
+		}
+		
+	}
+	
+	public void updateFeld(){
+		for(Spieler spieler:spielerArray){
+			feld=spieler.getGuifeld();
+			spieler.getSpielerFeld().printCounter();
+			Square[][]s=spieler.getSpielerFeld().getFeld();
+			for (int i=0;i<spieler.getSpielerFeld().getSize();i++){
+				for(int k=0;k<spieler.getSpielerFeld().getSize();k++){
+					System.out.println(s[i][k].getCounter());
+//					if(spieler==aktiveS){
+						if(s[i][k].getCounter()==0){
+							feld.getBtnArray()[k][i].setBackground(Design.wasser);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						if(s[i][k].getCounter()==1){
+							
+							feld.getBtnArray()[k][i].setBackground(Design.schiff);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						if(s[i][k].getCounter()==2){
+							feld.getBtnArray()[k][i].setBackground(Color.RED);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						
+						if(s[i][k].getCounter()==3){
+							feld.getBtnArray()[k][i].setBackground(Design.wTreffer);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						
+						if(s[i][k].getCounter()==4){
+							feld.getBtnArray()[k][i].setBackground(Design.versenkt);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+//					}
+/*					else{
+						if(s[i][k].getCounter()==0){
+							feld.getBtnArray()[k][i].setBackground(Design.wasser);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						if(s[i][k].getCounter()==1){
+							feld.getBtnArray()[k][i].setBackground(Design.wasser);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						if(s[i][k].getCounter()==2){
+							feld.getBtnArray()[k][i].setBackground(Design.sTreffer);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						
+						if(s[i][k].getCounter()==3){
+							feld.getBtnArray()[k][i].setBackground(Design.wTreffer);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+						
+						if(s[i][k].getCounter()==4){
+							feld.getBtnArray()[k][i].setBackground(Design.versenkt);
+							feld.getBtnArray()[k][i].setIsClicked(false);
+						}
+					}*/
+				}
+			}
+		}
+		revalidate();
+		repaint();
+		
+	}
+	
+	public void resetSchiffBox(){
+		int uboZ=0;
+		int korZ=0;
+		int freZ=0;
+		int zerZ=0;
+		schiffeBox.removeAllItems();
+		for(Schiffe schiffe:aktiveS.getSchiffListe()){
+			if(schiffe.getTyp()==1&&schiffe.getVersenkt()==false&& schiffe.getReg()==0&&uboZ==0){
+				schiffeBox.addItem("UBoot");
+				uboZ++;
+			}
+			if(schiffe.getTyp()==2&&schiffe.getVersenkt()==false&& schiffe.getReg()==0&&korZ==0){
+				schiffeBox.addItem("Korvette");
+				korZ++;
+			}
+			if(schiffe.getTyp()==3&&schiffe.getVersenkt()==false&& schiffe.getReg()==0&&freZ==0){
+				freZ++;
+				schiffeBox.addItem("Fregatte");
+			}
+			if(schiffe.getTyp()==4&&schiffe.getVersenkt()==false&& schiffe.getReg()==0&&zerZ==0){
+				zerZ++;
+				schiffeBox.addItem("Zerstörer");
+			}
+		}
+		schiffeBox.setSelectedIndex(-1);
 	}
 	
 	public void resetPara(){
 
 		nullGekl=true;
-		ausrichtung=1;
+		ausrichtung=2;
 		intSpalte=-1;
 		intZeile=-1;
-		zeileBox.setSelectedIndex(-1);
-		spalteBox.setSelectedIndex(-1);
+		this.zeileBox.setSelectedIndex(-1);
+		this.spalteBox.setSelectedIndex(-1);
+		repaint();
+	}
+	
+	public void klicken(int zeile,int spalte){
+		
+		feld.getBtnArray()[spalte-1][zeile-1].doClick();
+		
 	}
 	
 	public int kITest(int s){
@@ -312,4 +561,36 @@ public class GUISpielverlauf extends JPanel{
 		}
 		return s;
 	}
+	
+	public boolean schiessen(){
+		Board spielboard=spielerArray[tabIndex].getSpielerFeld();
+		System.out.println("spielerArray an der stelle "+tabIndex);
+		if(spielboard.schiessen(intZeile-1, intSpalte-1, ausrichtung, aktiveSchiff)){
+			updateFeld();
+			return true;
+		}
+		updateFeld();
+		return false;
+		
+	}
+	
+	public void testeBereit(){
+		if(schiffeBox.getSelectedIndex()!=-1&&intZeile!=-1&&intSpalte!=-1){
+			schuss.setEnabled(true);
+		}
+	}
+	
+	public JButton getSchussBtn(){
+		return schuss;
+	}
+	
+	public Schiffe getAktiveSchiff(){
+		return aktiveSchiff;
+	}
+	
+	public void setAktiveS(Spieler s){
+		this.aktiveS=s;
+	}
+	
+	
 }
