@@ -87,8 +87,7 @@ public class GUISpielverlaufV2 extends JPanel{
 		tabs.addChangeListener(new MeinChangeListener());
 		
 		for(int i=0;i<spielfelder.length;i++){
-			if(spielerArray[i]!=aktiveS){;
-				System.out.println(spielerArray[i].getName()+" ist nicht aktiv");
+			if(spielerArray[i]!=aktiveS){
 				for(MeinButton[] x:alleSpielfelder[i].getBtnArray()){
 					for(MeinButton y:x){
 						y.addActionListener(new MeinActionListenerSchiessen());
@@ -247,8 +246,6 @@ public class GUISpielverlaufV2 extends JPanel{
 		}
 		
 		updateFeld();*/
-		
-		System.out.println(tabs.getSelectedIndex());
 		repaint();
 		revalidate();
 		setVisible(true);
@@ -341,7 +338,6 @@ public class GUISpielverlaufV2 extends JPanel{
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			System.out.println(tabs.getSelectedIndex());
 			int i=tabs.getSelectedIndex();
 			if(i!=tabIndex){
 				if(i>=0){
@@ -410,9 +406,6 @@ public class GUISpielverlaufV2 extends JPanel{
 		public void itemStateChanged(ItemEvent e) {
 			if(e.getStateChange()==ItemEvent.SELECTED){
 				Integer i=(Integer)e.getItem();
-				System.out.println(i);
-				System.out.println("Zeile "+intZeile);
-				System.out.println("Spalte "+intSpalte);
 				if((JComboBox<Integer>)e.getSource()==zeileBox){
 					if(i==intZeile){
 						
@@ -602,7 +595,6 @@ public class GUISpielverlaufV2 extends JPanel{
 	
 	public boolean schiessen(){
 		Board spielboard=ziel.getSpielerFeld();
-		System.out.println("spielerArray an der stelle "+tabIndex);
 		if(spielboard.schiessen(intZeile-1, intSpalte-1, ausrichtung, aktiveSchiff)){
 			updateFeld();
 			return true;

@@ -87,8 +87,6 @@ public class GUISpielverlaufV1 extends JPanel{
 		for(int i=0;i<spielerArray.length;i++){
 			if(spielerArray[i]==aktiveS){
 				alleSpielfelder[i]=spielerArray[i].getGuifeld();
-				System.out.println("aktiver Spieler: "+spielerArray[i].getName());
-				//alleSpielfelder[i]=new GUISpielfeld(feldgr);
 				
 			}
 			else{
@@ -254,7 +252,6 @@ public class GUISpielverlaufV1 extends JPanel{
 		
 		updateFeld();*/
 		
-		System.out.println(tabs.getSelectedIndex());
 		repaint();
 		revalidate();
 		setVisible(true);
@@ -347,7 +344,6 @@ public class GUISpielverlaufV1 extends JPanel{
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			System.out.println(tabs.getSelectedIndex());
 			int i=tabs.getSelectedIndex();
 			if(i!=tabIndex){
 				if(i>=0){
@@ -416,9 +412,6 @@ public class GUISpielverlaufV1 extends JPanel{
 		public void itemStateChanged(ItemEvent e) {
 			if(e.getStateChange()==ItemEvent.SELECTED){
 				Integer i=(Integer)e.getItem();
-				System.out.println(i);
-				System.out.println("Zeile "+intZeile);
-				System.out.println("Spalte "+intSpalte);
 				if((JComboBox<Integer>)e.getSource()==zeileBox){
 					if(i==intZeile){
 						
@@ -608,7 +601,6 @@ public class GUISpielverlaufV1 extends JPanel{
 	
 	public boolean schiessen(){
 		Board spielboard=ziel.getSpielerFeld();
-		System.out.println("spielerArray an der stelle "+tabIndex);
 		if(spielboard.schiessen(intZeile-1, intSpalte-1, ausrichtung, aktiveSchiff)){
 			updateFeld();
 			return true;

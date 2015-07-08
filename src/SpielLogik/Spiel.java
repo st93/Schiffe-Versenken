@@ -251,16 +251,6 @@ public class Spiel {
 		}
 	}
 	
-	public static void main (String[]args){
-		Spiel spiel=new Spiel();
-		spiel.einleitung();
-		spiel.spielerZuSpieler();
-		spiel.spielVerlauf();
-		//System.out.println(spielerArray[1].getAnzahlSchiffe());
-		
-
 	
-		
-	}
 
 }
